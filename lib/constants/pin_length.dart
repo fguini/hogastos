@@ -1,0 +1,1 @@
+const pinLength = 4;

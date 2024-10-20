@@ -1,0 +1,18 @@
+{
+    "appTitle": "Hogastos",
+    "actionsCreate": "Crear",
+    "actionsLocalAuth": "Autentica para acceder a la aplicación",
+    "actionsLogin": "Iniciar sesión",
+    "actionsLogout": "Cerrar sesión",
+    "pageCreateUserTitle": "Crea un pin para acceder",
+    "validationsIsRequired": "Es obligatorio",
+    "validationsMinLength": "El tamaño minimo es {length}",
+    "@validationsMinLength": {
+        "placeholders": {
+            "length": {
+                "type": "int",
+                "example": "4"
+            }
+        }
+    }
+}
