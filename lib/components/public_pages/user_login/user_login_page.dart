@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hogastos/components/public_pages/page_without_appbar.dart';
 import 'package:hogastos/configurations/authentication.dart';
 import 'package:hogastos/configurations/routes.dart';
-import 'package:hogastos/configurations/user_settings.dart';
 import 'package:hogastos/constants/pin_length.dart';
-import 'package:hogastos/helpers/biometric_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -75,6 +72,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
           ),
           PinCodeTextField(
             appContext: context,
+            obscureText: true,
+            obscuringCharacter: '*',
             length: pinLength,
             controller: pinController,
             enabled: !_isLoading,
@@ -91,10 +90,17 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
               return null;
             },
+            onCompleted: (_) => handlePinLogin()
           ),
           ElevatedButton(
             onPressed: _isLoading ? null : handlePinLogin,
             child: Text(AppLocalizations.of(context)!.actionsLogin),
+          ),
+          IconButton(
+            onPressed: () => initBiometricLogin(context),
+            icon: Icon(
+              Icons.remove_red_eye_outlined,
+            ),
           ),
         ],
       ),

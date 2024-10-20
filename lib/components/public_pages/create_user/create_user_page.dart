@@ -117,6 +117,8 @@ class _CreateUserPageState extends State<CreateUserPage> {
           ),
           PinCodeTextField(
             appContext: context,
+            obscureText: true,
+            obscuringCharacter: '*',
             length: pinLength,
             controller: pinController,
             enabled: !_isLoading,
