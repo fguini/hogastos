@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/configurations/authentication.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
@@ -73,7 +74,7 @@ class _PageWithMenuState extends State<PageWithMenu> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
-        title: Text(widget.title),
+        title: BodyText(widget.title),
         actions: [
           ...widget.actions,
           ..._user != null

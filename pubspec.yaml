@@ -13,6 +13,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   crypto: ^3.0.6
+  d_chart: ^2.9.1
+  flutter_animate: ^4.5.0
   flutter_secure_storage: ^9.2.2
   local_auth: ^2.3.0
   pin_code_fields: ^8.0.1

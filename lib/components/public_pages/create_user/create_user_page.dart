@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hogastos/components/animations/dialog_transition.dart';
 import 'package:hogastos/components/public_pages/page_without_appbar.dart';
+import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/configurations/authentication.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/configurations/user_settings.dart';
@@ -35,7 +36,7 @@ class _EnableBiometricAuthDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('¿Quieres habilitar el acceso por biometría (huella dactilar o reconocimiento facial)?'), // TODO translate
+            BodyText('¿Quieres habilitar el acceso por biometría (huella dactilar o reconocimiento facial)?'), // TODO translate
             Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -43,12 +44,12 @@ class _EnableBiometricAuthDialog extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: handleReject,
-                  child: Text('No'), // TODO translate
+                  child: BodyText('No'), // TODO translate
                 ),
                 SizedBox(width: 4),
                 ElevatedButton(
                   onPressed: handleConfirm,
-                  child: Text('Si'), // TODO translate
+                  child: BodyText('Si'), // TODO translate
                 ),
               ],
             )
@@ -112,7 +113,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
+          BodyText(
             AppLocalizations.of(context)!.pageCreateUserTitle
           ),
           PinCodeTextField(
@@ -138,7 +139,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
           ),
           ElevatedButton(
             onPressed: _isLoading ? null : handleCreate,
-            child: Text(AppLocalizations.of(context)!.actionsCreate),
+            child: BodyText(AppLocalizations.of(context)!.actionsCreate),
           ),
         ],
       ),
