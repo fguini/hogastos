@@ -7,21 +7,28 @@ AndroidOptions _getAndroidOptions() => const AndroidOptions(
 
 
 const _biometricAuthKey = 'biometric-auth';
+const _isGroupedListInHome = 'is-grouped-list-in-home';
 
 class _SettingsCreator {
   static final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
 
-  static Future<bool> getBiometricAuth() async {
-    var isEnabledString = await storage.read(key: _biometricAuthKey);
+  static Future<bool> _getBooleanValue(String key) async {
+    var value = await storage.read(key: key);
 
-    return isEnabledString == null
-      ? false
-      : bool.parse(isEnabledString);
+    return value == null
+        ? false
+        : bool.parse(value);
   }
 
-  static Future<void> saveBiometricAuth(bool isEnabled) async {
+  static Future<bool> getBiometricAuth() =>
+    _getBooleanValue(_biometricAuthKey);
+  static Future<bool> getIsGroupedListInHome() =>
+    _getBooleanValue(_isGroupedListInHome);
+
+  static Future<void> saveBiometricAuth(bool isEnabled) async =>
     await storage.write(key: _biometricAuthKey, value: isEnabled.toString());
-  }
+  static Future<void> saveIsGroupedListInHome(bool isGrouped) async =>
+    await storage.write(key: _isGroupedListInHome, value: isGrouped.toString());
 }
 
 class UserSettings {
@@ -34,6 +41,7 @@ class UserSettings {
   Future<Settings> getUserSettings() async {
     settings ??= Settings(
       isBiometricAuthEnabled: await _SettingsCreator.getBiometricAuth(),
+      isGroupedListInHome: await _SettingsCreator.getIsGroupedListInHome(),
     );
 
     return settings!;
@@ -41,5 +49,9 @@ class UserSettings {
 
   Future<void> saveBiometricAuth(bool isEnabled) async {
     _SettingsCreator.saveBiometricAuth(isEnabled);
+  }
+
+  Future<void> saveIsGroupedListInHome(bool isGrouped) async {
+    _SettingsCreator.saveIsGroupedListInHome(isGrouped);
   }
 }

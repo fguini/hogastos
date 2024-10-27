@@ -4,6 +4,19 @@
     "actionsLocalAuth": "Autentica para acceder a la aplicación",
     "actionsLogin": "Iniciar sesión",
     "actionsLogout": "Cerrar sesión",
+    "amountCurrency": "{amount}",
+    "@amountCurrency": {
+        "description": "Localization for amount plus currency",
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "simpleCurrency",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                }
+            }
+        }
+    },
     "pageCreateUserTitle": "Crea un pin para acceder",
     "validationsIsRequired": "Es obligatorio",
     "validationsMinLength": "El tamaño minimo es {length}",
