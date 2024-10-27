@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements.dart';
 import 'package:hogastos/components/texts/body_text.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 
 class _GroupedItems {
   final Category category;
@@ -46,15 +47,20 @@ class HomeBankMovementsGroupedList extends StatelessWidget {
         itemCount: _items.length,
         itemBuilder: (_, index) {
           var item = _items[index];
+          var textColor = getTextColor(item.category.color);
 
           return Column(
             children: [
               Card(
                 color: item.category.color,
                 child: ListTile(
-                  title: BodyText(item.category.description),
+                  title: BodyText(
+                    item.category.description,
+                    color: textColor,
+                  ),
                   trailing: BodyText(
-                    '${item.total} €'
+                    AppLocalizations.of(context)!.amountCurrency(item.total),
+                    color: textColor,
                   ),
                 ),
               ),
