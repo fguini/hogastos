@@ -17,6 +17,15 @@
             }
         }
     },
+    "movementsCount": "{count} movimientos",
+    "@movementsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "10"
+            }
+        }
+    },
     "pageCreateUserTitle": "Crea un pin para acceder",
     "validationsIsRequired": "Es obligatorio",
     "validationsMinLength": "El tamaño minimo es {length}",

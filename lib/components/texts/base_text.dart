@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BaseText extends StatelessWidget {
   final String text;
   final double  fontSize;
-  final Color color;
+  final Color? color;
 
   const BaseText(
     this.text,
