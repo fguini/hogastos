@@ -8,7 +8,7 @@ import 'package:hogastos/models/user.dart';
 import 'menu.dart';
 
 class _LoadingAuth extends StatelessWidget {
-  const _LoadingAuth({super.key});
+  const _LoadingAuth();
 
   @override
   Widget build(BuildContext context) {

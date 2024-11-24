@@ -15,7 +15,6 @@ class _EnableBiometricAuthDialog extends StatelessWidget {
   final VoidCallback onContinue;
 
   const _EnableBiometricAuthDialog({
-    super.key,
     required this.onContinue,
   });
 

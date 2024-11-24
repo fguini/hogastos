@@ -8,7 +8,7 @@ import 'package:hogastos/helpers/navigator_helper.dart';
 import 'package:hogastos/models/user.dart';
 
 class _Menu extends StatefulWidget {
-  const _Menu({super.key});
+  const _Menu();
 
   @override
   State<_Menu> createState() => _MenuState();

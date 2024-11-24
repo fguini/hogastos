@@ -1,6 +1,4 @@
-import 'package:d_chart/single_bar/view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals_bar.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/components/texts/title_text.dart';
