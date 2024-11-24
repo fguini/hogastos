@@ -29,31 +29,11 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
 
     setState(() {
       _isGrouped = userSettings.isGroupedListInHome;
+      _incomesOn = userSettings.filtersOnInHome.incomesOn;
+      _expensesOn = userSettings.filtersOnInHome.expensesOn;
+      _notComputableOn = userSettings.filtersOnInHome.notComputableOn;
     });
   }
-
-  List<ItemsByCategory> _getFilteredList() {
-    var filteredItems = widget.items.where((item) =>
-      (item.isComputableIncome && _incomesOn)
-        || (item.isComputableExpense && _expensesOn)
-        || (item.isNotComputable && _notComputableOn)
-    ).toList();
-
-    return ItemsByCategory.getItemsByCategory(filteredItems);
-  }
-
-  void _handleToggleIncomes() => setState(() {
-    _incomesOn = !_incomesOn;
-  });
-
-  void _handleToggleExpenses() => setState(() {
-    _expensesOn = !_expensesOn;
-  });
-
-  void _handleToggleNotComputable() => setState(() {
-    _notComputableOn = !_notComputableOn;
-  });
-
   @override
   void initState() {
     _initUserSettings();
@@ -70,6 +50,43 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
       _isGrouped = newIsGrouped;
     });
   }
+
+  List<ItemsByCategory> _getFilteredList() {
+    var filteredItems = widget.items.where((item) =>
+    (item.isComputableIncome && _incomesOn)
+        || (item.isComputableExpense && _expensesOn)
+        || (item.isNotComputable && _notComputableOn)
+    ).toList();
+
+    return ItemsByCategory.getItemsByCategory(filteredItems);
+  }
+
+  void _handleToggleFilters({
+    bool? incomesOn,
+    bool? expensesOn,
+    bool? notComputableOn,
+  }) {
+    var newIncomesOn = incomesOn ?? _incomesOn;
+    var newExpensesOn = expensesOn ?? _expensesOn;
+    var newNotComputableOn = notComputableOn ?? _notComputableOn;
+
+    UserSettings().saveFiltersOnInHome(
+      newIncomesOn,
+      newExpensesOn,
+      newNotComputableOn,
+    );
+
+    setState(() {
+      _incomesOn = newIncomesOn;
+      _expensesOn = newExpensesOn;
+      _notComputableOn = newNotComputableOn;
+    });
+  }
+
+  void _handleToggleIncomes() => _handleToggleFilters(incomesOn: !_incomesOn);
+  void _handleToggleExpenses() => _handleToggleFilters(expensesOn: !_expensesOn);
+  void _handleToggleNotComputable() => _handleToggleFilters(notComputableOn: !_notComputableOn);
+
 
   @override
   Widget build(BuildContext context) {
