@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 
-class HomeDateNavigator extends StatelessWidget {
+class HomeDateNavigator extends StatefulWidget {
   final MonthAndYear monthAndYear;
   final void Function(MonthAndYear) onChange;
 
@@ -12,22 +12,53 @@ class HomeDateNavigator extends StatelessWidget {
     required this.onChange,
   });
 
-  List<Widget> getMonthAndDates() {
-    return [
-      TextButton(onPressed: () {}, child: BodyText('Sep 2024')),
-      TextButton(onPressed: () {}, child: BodyText('Oct ${monthAndYear.year}')),
-      TextButton(onPressed: () {}, child: BodyText('Nov 2024')),
-    ];
+  @override
+  State<HomeDateNavigator> createState() => _HomeDateNavigatorState();
+}
+
+class _HomeDateNavigatorState extends State<HomeDateNavigator> {
+  List<MonthAndYear> monthAndYears = [];
+
+  void _setMonthAndYears(MonthAndYear center) {
+    setState(() {
+      monthAndYears = [
+        center.getPrevious(),
+        center,
+        center.getNext(),
+      ];
+    });
+  }
+
+  void _initMonthAndYears() => _setMonthAndYears(widget.monthAndYear);
+  void _handlePrevious() => _setMonthAndYears(monthAndYears.first);
+  void _handleNext() => _setMonthAndYears(monthAndYears.last);
+
+  @override
+  void initState() {
+    _initMonthAndYears();
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(onPressed: () {}, icon: Icon(Icons.arrow_left)),
-        ...getMonthAndDates(),
-        IconButton(onPressed: () {}, icon: Icon(Icons.arrow_right)),
+        IconButton(onPressed: _handlePrevious, icon: Icon(Icons.arrow_left)),
+        ...monthAndYears
+          .map((monthAndYear) => TextButton(
+            onPressed: () => widget.onChange(monthAndYear),
+            child: BodyText(
+              monthAndYear.locale(context),
+              color: monthAndYear.equals(widget.monthAndYear)
+                ? theme.primaryColorDark
+                : Colors.black54,
+            ),
+          )),
+        IconButton(onPressed: _handleNext, icon: Icon(Icons.arrow_right)),
       ],
     );
   }

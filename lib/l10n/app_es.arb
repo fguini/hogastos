@@ -34,6 +34,20 @@
     "listGroupByCategory": "Agrupar por categoría",
     "listUngroup": "Desagrupar lista",
     "incomes": "Ingresos",
+    "monthAndYear": "{monthDate} {year}",
+    "@monthAndYear": {
+        "description": "Short month and year text",
+        "placeholders": {
+            "monthDate": {
+                "type": "DateTime",
+                "format": "MMM"
+            },
+            "year": {
+                "type": "int"
+            }
+        }
+    },
+    "huevo": "huevo",
     "movements": "Movimientos",
     "movementsCount": "{count} movimientos",
     "@movementsCount": {

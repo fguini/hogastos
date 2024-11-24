@@ -70,10 +70,7 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  MonthAndYear _currentMonthAndYear = MonthAndYear(
-    month: Month.values.firstWhere((month) => month.index == DateTime.now().month - 1),
-    year: DateTime.now().year
-  );
+  MonthAndYear _currentMonthAndYear = MonthAndYear.now();
 
   void _handleChangeMonthAndYear(MonthAndYear monthAndYear) => setState(() {
     _currentMonthAndYear = monthAndYear;
