@@ -92,7 +92,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         Card(
           child: Container(
             padding: cardPadding,
-            child: HomeTotals(),
+            child: HomeTotals(items: _items),
           ),
         ),
         Flexible(

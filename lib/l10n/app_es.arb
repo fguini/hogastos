@@ -17,6 +17,19 @@
             }
         }
     },
+    "balance": "Balance: {amount}",
+    "@balance": {
+        "description": "Balance title plus amount plus currency",
+        "placeholders": {
+            "amount": {
+                "type": "double",
+                "format": "simpleCurrency",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                }
+            }
+        }
+    },
     "expenses": "Gastos",
     "listGroupByCategory": "Agrupar por categoría",
     "listUngroup": "Desagrupar lista",
@@ -24,6 +37,7 @@
     "movements": "Movimientos",
     "movementsCount": "{count} movimientos",
     "@movementsCount": {
+        "description": "Amount of movements in a category",
         "placeholders": {
             "count": {
                 "type": "int",
@@ -34,9 +48,11 @@
     "notComputable": "No computable",
     "notComputableShort": "NC",
     "pageCreateUserTitle": "Crea un pin para acceder",
+    "totals": "Totales",
     "validationsIsRequired": "Es obligatorio",
     "validationsMinLength": "El tamaño minimo es {length}",
     "@validationsMinLength": {
+        "description": "Min length validation",
         "placeholders": {
             "length": {
                 "type": "int",

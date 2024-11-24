@@ -1,13 +1,33 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals_bar.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/components/texts/title_text.dart';
 
 class HomeTotals extends StatelessWidget {
-  const HomeTotals({super.key});
+  final List<Item> items;
+
+  const HomeTotals({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+
+    var incomes = items
+      .where((item) => item.isComputableIncome)
+      .map((item) => item.amount)
+      .reduce((amount1, amount2) => amount1 + amount2);
+    var expenses = items
+      .where((item) => item.isComputableExpense)
+      .map((item) => item.amount * -1)
+      .reduce((amount1, amount2) => amount1 + amount2);
+
+    var totals = incomes - expenses;
+    var maxAmount = max(incomes, expenses) + 40;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,24 +37,24 @@ class HomeTotals extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TitleText('Totales'), // TODO translate
-            SubtitleText('Balance: 213€'), // TODO translate
+            TitleText(localization.totals),
+            SubtitleText(localization.balance(totals)),
           ],
         ),
         SizedBox(height: 10),
         HomeTotalsBar(
-          text: 'Ingresos', // TODO translate
+          text: localization.incomes,
           color: Theme.of(context).colorScheme.primary,
           spaceBetween: 10,
-          max: 100,
-          value: 80,
+          max: maxAmount,
+          value: incomes,
         ),
         HomeTotalsBar(
-          text: 'Gastos', // TODO translate
+          text: localization.expenses,
           color: Theme.of(context).colorScheme.error,
           spaceBetween: 22,
-          max: 100,
-          value: 30,
+          max: maxAmount,
+          value: expenses,
         ),
       ],
     );
