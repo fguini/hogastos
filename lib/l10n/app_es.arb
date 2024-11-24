@@ -17,6 +17,11 @@
             }
         }
     },
+    "expenses": "Gastos",
+    "listGroupByCategory": "Agrupar por categoría",
+    "listUngroup": "Desagrupar lista",
+    "incomes": "Ingresos",
+    "movements": "Movimientos",
     "movementsCount": "{count} movimientos",
     "@movementsCount": {
         "placeholders": {
@@ -26,6 +31,8 @@
             }
         }
     },
+    "notComputable": "No computable",
+    "notComputableShort": "NC",
     "pageCreateUserTitle": "Crea un pin para acceder",
     "validationsIsRequired": "Es obligatorio",
     "validationsMinLength": "El tamaño minimo es {length}",

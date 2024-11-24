@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_filters.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_simple_list.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_grouped_list.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/items_by_category.dart';
@@ -8,11 +10,9 @@ import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/configurations/user_settings.dart';
 
 class HomeBankMovements extends StatefulWidget {
-  late final List<ItemsByCategory> _items;
+  final List<Item> items;
 
-  HomeBankMovements({super.key, required List<Item> items}) {
-    _items = ItemsByCategory.getItemsByCategory(items);
-  }
+  const HomeBankMovements({super.key, required this.items});
 
   @override
   State<HomeBankMovements> createState() => _HomeBankMovementsState();
@@ -20,6 +20,9 @@ class HomeBankMovements extends StatefulWidget {
 
 class _HomeBankMovementsState extends State<HomeBankMovements> {
   bool _isGrouped = false;
+  bool _incomesOn = true;
+  bool _expensesOn = true;
+  bool _notComputableOn = true;
 
   void _initUserSettings() async {
     var userSettings = await UserSettings().getUserSettings();
@@ -28,6 +31,28 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
       _isGrouped = userSettings.isGroupedListInHome;
     });
   }
+
+  List<ItemsByCategory> _getFilteredList() {
+    var filteredItems = widget.items.where((item) =>
+      (item.isComputableIncome && _incomesOn)
+        || (item.isComputableExpense && _expensesOn)
+        || (item.isNotComputable && _notComputableOn)
+    ).toList();
+
+    return ItemsByCategory.getItemsByCategory(filteredItems);
+  }
+
+  void _handleToggleIncomes() => setState(() {
+    _incomesOn = !_incomesOn;
+  });
+
+  void _handleToggleExpenses() => setState(() {
+    _expensesOn = !_expensesOn;
+  });
+
+  void _handleToggleNotComputable() => setState(() {
+    _notComputableOn = !_notComputableOn;
+  });
 
   @override
   void initState() {
@@ -48,6 +73,9 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
 
   @override
   Widget build(BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
+    var groupedItems = _getFilteredList();
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -56,56 +84,36 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SubtitleText('Movimientos'), // TODO translate
+            SubtitleText(localization.movements),
             TextButton(
               style: ButtonStyle(
                 textStyle: WidgetStatePropertyAll(TextStyle(
                   color: _isGrouped
                     ? Theme.of(context).colorScheme.primary
-                    : Colors.black87
+                    : Colors.black87,
                 ))
               ),
               onPressed: _handleToggleGrouped,
               child: BodyText(
                 _isGrouped
-                  ? 'Desagrupar lista'
-                  : 'Agrupar por categoría'
+                  ? localization.listUngroup
+                  : localization.listGroupByCategory,
               ),
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                    Theme.of(context).colorScheme.primaryContainer
-                  )
-                ),
-                child: BodyText('Ingresos'), // TODO translate
-              ),
-            ),
-            SizedBox(width: 10),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                    Theme.of(context).colorScheme.errorContainer
-                  )
-                ),
-                child: BodyText('Gastos'), // TODO translate
-              ),
-            ),
-          ],
+        HomeBankMovementsFilters(
+          incomesOn: _incomesOn,
+          expensesOn: _expensesOn,
+          notComputableOn: _notComputableOn,
+          onToggleIncomes: _handleToggleIncomes,
+          onToggleExpenses: _handleToggleExpenses,
+          onToggleNotComputable: _handleToggleNotComputable,
         ),
         SizedBox(height: 20),
         _isGrouped
-          ? HomeBankMovementsGroupedList(items: widget._items)
-          : HomeBankMovementsSimpleList(items: widget._items),
+          ? HomeBankMovementsGroupedList(items: groupedItems)
+          : HomeBankMovementsSimpleList(items: groupedItems),
       ],
     );
   }
