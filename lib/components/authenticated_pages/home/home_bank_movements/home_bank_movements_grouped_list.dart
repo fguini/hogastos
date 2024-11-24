@@ -26,10 +26,8 @@ class HomeBankMovementsGroupedList extends StatelessWidget {
             subtitle: AppLocalizations.of(context)!.movementsCount(
               item.items.length
             ),
-            leading: SizedBox(
-              width: 10,
-              height: 10,
-              child: ColoredBox(color: categoryColor),
+            leading: Icon(
+              item.category.icon,
             ),
             trailing: BodyText(
               AppLocalizations.of(context)!.amountCurrency(item.total),

@@ -54,8 +54,8 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
   List<ItemsByCategory> _getFilteredList() {
     var filteredItems = widget.items.where((item) =>
     (item.isComputableIncome && _incomesOn)
-        || (item.isComputableExpense && _expensesOn)
-        || (item.isNotComputable && _notComputableOn)
+      || (item.isComputableExpense && _expensesOn)
+      || (item.isNotComputable && _notComputableOn)
     ).toList();
 
     return ItemsByCategory.getItemsByCategory(filteredItems);
