@@ -9,10 +9,23 @@ import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/configurations/user_settings.dart';
 
+List<Item> _loadingFakeMovements = List.filled(10, Item(
+  'test1',
+  Category(1, 'churrin1', Colors.grey, Icons.pedal_bike),
+  20,
+  DateTime.now(),
+  ItemType.computable,
+));
+
 class HomeBankMovements extends StatefulWidget {
   final List<Item> items;
+  final bool isLoading;
 
-  const HomeBankMovements({super.key, required this.items});
+  const HomeBankMovements({
+    super.key,
+    required this.items,
+    required this.isLoading,
+  });
 
   @override
   State<HomeBankMovements> createState() => _HomeBankMovementsState();
@@ -52,11 +65,16 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
   }
 
   List<ItemsByCategory> _getFilteredList() {
-    var filteredItems = widget.items.where((item) =>
-    (item.isComputableIncome && _incomesOn)
-      || (item.isComputableExpense && _expensesOn)
-      || (item.isNotComputable && _notComputableOn)
-    ).toList();
+    var itemsToGroup = widget.isLoading
+      ? _loadingFakeMovements
+      : widget.items;
+
+    var filteredItems = itemsToGroup
+      .where((item) =>
+        (item.isComputableIncome && _incomesOn)
+          || (item.isComputableExpense && _expensesOn)
+          || (item.isNotComputable && _notComputableOn)
+      ).toList();
 
     return ItemsByCategory.getItemsByCategory(filteredItems);
   }
@@ -86,7 +104,6 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
   void _handleToggleIncomes() => _handleToggleFilters(incomesOn: !_incomesOn);
   void _handleToggleExpenses() => _handleToggleFilters(expensesOn: !_expensesOn);
   void _handleToggleNotComputable() => _handleToggleFilters(notComputableOn: !_notComputableOn);
-
 
   @override
   Widget build(BuildContext context) {
@@ -129,8 +146,14 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
         ),
         SizedBox(height: 20),
         _isGrouped
-          ? HomeBankMovementsGroupedList(items: groupedItems)
-          : HomeBankMovementsSimpleList(items: groupedItems),
+          ? HomeBankMovementsGroupedList(
+              items: groupedItems,
+              isLoading: widget.isLoading,
+            )
+          : HomeBankMovementsSimpleList(
+              items: groupedItems,
+              isLoading: widget.isLoading,
+            ),
       ],
     );
   }

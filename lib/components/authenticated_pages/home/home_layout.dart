@@ -76,12 +76,34 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  bool _isLoading = true;
+  List<Item> _movements = [];
   MonthAndYear _currentMonthAndYear = MonthAndYear.now();
+  bool _isLoading = false;
 
-  void _handleChangeMonthAndYear(MonthAndYear monthAndYear) => setState(() {
-    _currentMonthAndYear = monthAndYear;
-  });
+  void _loadMonthAndYearMovements(MonthAndYear newMonthAndYear) {
+    setState(() {
+      _movements = [];
+      _currentMonthAndYear = newMonthAndYear;
+      _isLoading = true;
+    });
+
+    Future.delayed(Duration(seconds: 1)).then((_) {
+      setState(() {
+        _movements = _items;
+        _isLoading = false;
+      });
+    });
+  }
+
+  void _handleChangeMonthAndYear(MonthAndYear monthAndYear)
+    => _loadMonthAndYearMovements(monthAndYear);
+
+  @override
+  void initState() {
+    _loadMonthAndYearMovements(MonthAndYear.now());
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +119,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           child: Container(
             padding: cardPadding,
             child: HomeTotals(
-              items: _items,
+              items: _movements,
               isLoading: _isLoading,
             ),
           ),
@@ -106,7 +128,10 @@ class _HomeLayoutState extends State<HomeLayout> {
           child: Card(
             child: Container(
               padding: cardPadding,
-              child: HomeBankMovements(items: _items),
+              child: HomeBankMovements(
+                items: _movements,
+                isLoading: _isLoading,
+              ),
             ),
           ),
         ),

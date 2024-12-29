@@ -25,11 +25,11 @@ class HomeTotals extends StatelessWidget {
     var incomes = items
       .where((item) => item.isComputableIncome)
       .map((item) => item.amount)
-      .reduce((amount1, amount2) => amount1 + amount2);
+      .fold<double>(0, (amount1, amount2) => amount1 + amount2);
     var expenses = items
       .where((item) => item.isComputableExpense)
       .map((item) => item.amount * -1)
-      .reduce((amount1, amount2) => amount1 + amount2);
+      .fold<double>(0, (amount1, amount2) => amount1 + amount2);
 
     var totals = incomes - expenses;
     var maxAmount = max(incomes, expenses) + 40;
