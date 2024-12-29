@@ -17,19 +17,6 @@
             }
         }
     },
-    "balance": "Balance: {amount}",
-    "@balance": {
-        "description": "Balance title plus amount plus currency",
-        "placeholders": {
-            "amount": {
-                "type": "double",
-                "format": "simpleCurrency",
-                "optionalParameters": {
-                    "decimalDigits": 2
-                }
-            }
-        }
-    },
     "expenses": "Gastos",
     "listGroupByCategory": "Agrupar por categoría",
     "listUngroup": "Desagrupar lista",

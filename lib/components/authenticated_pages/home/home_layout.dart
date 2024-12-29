@@ -76,6 +76,7 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
+  bool _isLoading = true;
   MonthAndYear _currentMonthAndYear = MonthAndYear.now();
 
   void _handleChangeMonthAndYear(MonthAndYear monthAndYear) => setState(() {
@@ -95,7 +96,10 @@ class _HomeLayoutState extends State<HomeLayout> {
         Card(
           child: Container(
             padding: cardPadding,
-            child: HomeTotals(items: _items),
+            child: HomeTotals(
+              items: _items,
+              isLoading: _isLoading,
+            ),
           ),
         ),
         Flexible(

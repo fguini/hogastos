@@ -6,11 +6,17 @@ import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals_bar.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/components/texts/title_text.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeTotals extends StatelessWidget {
   final List<Item> items;
+  final bool isLoading;
 
-  const HomeTotals({super.key, required this.items});
+  const HomeTotals({
+    super.key,
+    required this.items,
+    required this.isLoading
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +41,14 @@ class HomeTotals extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TitleText(localization.totals),
-            SubtitleText(localization.balance(totals)),
+            Skeletonizer.zone(
+              child: isLoading
+                ? LoadingSubtitleText(width: 100)
+                : SubtitleText(localization.amountCurrency(totals)),
+            ),
           ],
         ),
         SizedBox(height: 10),
@@ -48,6 +58,7 @@ class HomeTotals extends StatelessWidget {
           spaceBetween: 10,
           max: maxAmount,
           value: incomes,
+          isLoading: isLoading,
         ),
         HomeTotalsBar(
           text: localization.expenses,
@@ -55,6 +66,7 @@ class HomeTotals extends StatelessWidget {
           spaceBetween: 22,
           max: maxAmount,
           value: expenses,
+          isLoading: isLoading,
         ),
       ],
     );
