@@ -73,10 +73,12 @@ class _PageWithMenuState extends State<PageWithMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white70,
         title: BodyText(widget.title),
         actions: [
           ...widget.actions,
+          SizedBox(width: 10),
           ..._user != null
             ? [ AvatarIcon(user: _user!) ]
             : []

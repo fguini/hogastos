@@ -1,9 +1,18 @@
 {
     "appTitle": "Hogastos",
     "actionsCreate": "Crear",
+    "actionsCreateNewCategory": "Crear nueva categoría",
+    "actionsCreateNewMovement": "Crear nuevo movimiento",
+    "actionsExport": "Exportar",
+    "actionsExportToExcel": "Exportar movimientos a un excel",
+    "actionsImport": "Importar",
+    "actionsImportFromExcel": "Importar movimientos desde un excel",
     "actionsLocalAuth": "Autentica para acceder a la aplicación",
     "actionsLogin": "Iniciar sesión",
     "actionsLogout": "Cerrar sesión",
+    "actionsRead": "Ver",
+    "actionsReadCategories": "Ver listado de categorías",
+    "actionsReadYearlyReport": "Ver reporte de balance anual",
     "amountCurrency": "{amount}",
     "@amountCurrency": {
         "description": "Localization for amount plus currency",
@@ -46,6 +55,7 @@
             }
         }
     },
+    "newMovement": "Nuevo movimiento",
     "notComputable": "No computable",
     "notComputableShort": "NC",
     "pageCreateUserTitle": "Crea un pin para acceder",
