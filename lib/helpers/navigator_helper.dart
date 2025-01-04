@@ -31,4 +31,24 @@ class NavigatorHelper {
 
     return Future.value(null);
   }
+
+  static void pop<T extends Object>(
+    BuildContext context,
+    { T? result }
+  ) {
+    if(context.mounted) {
+      return Navigator.of(context).pop(result);
+    }
+  }
+
+  static void popUntil<T extends Object>(
+    BuildContext context,
+    String routeName,
+  ) {
+    if(context.mounted) {
+      return Navigator.of(context).popUntil(
+        (route) => route.settings.name == routeName,
+      );
+    }
+  }
 }

@@ -26,6 +26,8 @@
             }
         }
     },
+    "category": "Categoría",
+    "computable": "Computable",
     "expenses": "Gastos",
     "listGroupByCategory": "Agrupar por categoría",
     "listUngroup": "Desagrupar lista",
@@ -43,7 +45,9 @@
             }
         }
     },
-    "huevo": "huevo",
+    "movementAmount": "Importe",
+    "movementDate": "Fecha del movimiento",
+    "movementText": "Concepto",
     "movements": "Movimientos",
     "movementsCount": "{count} movimientos",
     "@movementsCount": {
@@ -61,6 +65,16 @@
     "pageCreateUserTitle": "Crea un pin para acceder",
     "totals": "Totales",
     "validationsIsRequired": "Es obligatorio",
+    "validationsMaxLength": "El tamaño máximo es {length}",
+    "@validationsMaxLength": {
+        "description": "Max length validation",
+        "placeholders": {
+            "length": {
+                "type": "int",
+                "example": "20"
+            }
+        }
+    },
     "validationsMinLength": "El tamaño minimo es {length}",
     "@validationsMinLength": {
         "description": "Min length validation",
@@ -70,5 +84,7 @@
                 "example": "4"
             }
         }
-    }
+    },
+    "validationsNotInRange": "El valor no está dentro de los parametros esperados",
+    "validationsWrongFormat": "El formato es incorrecto"
 }

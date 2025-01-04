@@ -29,6 +29,12 @@ class AppContainer extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        ),
       ),
       initialRoute: RoutesNames.home,
       onGenerateRoute: Routes().onGenerateRoute,

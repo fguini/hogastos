@@ -18,7 +18,6 @@ class _LoadingAuth extends StatelessWidget {
   }
 }
 
-
 class PageWithMenu extends StatefulWidget {
   final String title;
   final Widget body;
