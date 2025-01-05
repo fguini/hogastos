@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/configurations/routes.dart';
-import 'package:hogastos/helpers/form_validator_helper.dart';
-import 'package:hogastos/helpers/navigator_helper.dart';
 
 typedef FormInputBuilder = Widget Function(
   BuildContext context,
@@ -10,7 +7,14 @@ typedef FormInputBuilder = Widget Function(
   VoidCallback onFieldSubmitted,
 );
 
-FormInputBuilder formInputBuilder(String label) => (
+FormInputBuilder formInputBuilder(
+  String label,
+  {
+    Widget? prefixIcon,
+    Widget? suffixIcon,
+    String? Function(String?)? validator,
+  }
+) => (
   BuildContext context,
   TextEditingController textEditingController,
   FocusNode focusNode,
@@ -21,15 +25,8 @@ FormInputBuilder formInputBuilder(String label) => (
   onFieldSubmitted: (String value) => onFieldSubmitted(),
   decoration: InputDecoration(
     label: Text(label),
-    suffixIcon: IconButton(
-      icon: Icon(Icons.add),
-      onPressed: () =>
-        NavigatorHelper.pushNamed(
-          context,
-          RoutesNames.categoriesCreate,
-          arguments: 'createMovement',
-        ),
-    ),
+    prefixIcon: prefixIcon,
+    suffixIcon: suffixIcon,
   ),
-  validator: FormValidatorHelper.of(context).isRequired().validator,
+  validator: validator,
 );

@@ -4,17 +4,19 @@ import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 
 const double borderRadius = 10;
 
+typedef _AutocompleteOptionToWidget<T extends Object> = Widget Function(T);
+
 class _AutocompleteOptions<T extends Object> extends StatelessWidget {
   const _AutocompleteOptions({
     super.key,
-    required this.displayStringForOption,
+    required this.displayWidgetForOption,
     required this.onSelected,
     required this.openDirection,
     required this.options,
     required this.maxOptionsHeight,
   });
 
-  final AutocompleteOptionToString<T> displayStringForOption;
+  final _AutocompleteOptionToWidget<T> displayWidgetForOption;
 
   final AutocompleteOnSelected<T> onSelected;
   final OptionsViewOpenDirection openDirection;
@@ -69,7 +71,7 @@ class _AutocompleteOptions<T extends Object> extends StatelessWidget {
                           ? Theme.of(context).primaryColorLight
                           : null,
                       ),
-                      child: Text(displayStringForOption(option)),
+                      child: displayWidgetForOption(option),
                     );
                   },
                 ),
@@ -90,7 +92,7 @@ typedef OptionsViewBuilder = Widget Function(
 
 OptionsViewBuilder optionsViewBuilder(
   {
-    required String Function(Category) displayStringForOption,
+    required Widget Function(Category) displayWidgetForOption,
     OptionsViewOpenDirection openDirection = OptionsViewOpenDirection.down,
     double maxOptionsHeight = 200
   }
@@ -99,7 +101,7 @@ OptionsViewBuilder optionsViewBuilder(
   AutocompleteOnSelected<Category> onSelected,
   Iterable<Category> options,
 ) => _AutocompleteOptions<Category>(
-  displayStringForOption: displayStringForOption,
+  displayWidgetForOption: displayWidgetForOption,
   onSelected: onSelected,
   options: options,
   openDirection: openDirection,
