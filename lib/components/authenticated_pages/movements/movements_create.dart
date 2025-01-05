@@ -9,7 +9,7 @@ class MovementsCreate extends StatelessWidget {
   const MovementsCreate({super.key});
 
   void _handleCreate(Item movement) {
-
+    print(movement.text);
   }
 
   @override
