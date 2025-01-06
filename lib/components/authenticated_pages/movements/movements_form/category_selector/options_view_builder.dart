@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
+import 'package:hogastos/models/category.dart';
 
 const double borderRadius = 10;
 

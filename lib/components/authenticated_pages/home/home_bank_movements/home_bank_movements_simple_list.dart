@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/items_by_category.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/movements_by_category.dart';
 import 'package:hogastos/components/common/rounded_list_tile.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/helpers/color_helper.dart';
@@ -8,12 +8,12 @@ import 'package:hogastos/helpers/date_helper.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeBankMovementsSimpleList extends StatelessWidget {
-  final List<ItemsByCategory> items;
+  final List<MovementsByCategory> movements;
   final bool isLoading;
 
   const HomeBankMovementsSimpleList({
     super.key,
-    required this.items,
+    required this.movements,
     required this.isLoading
   });
 
@@ -23,9 +23,9 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
       child: Skeletonizer(
         enabled: isLoading,
         child: ListView.builder(
-          itemCount: items.length,
+          itemCount: movements.length,
           itemBuilder: (_, index) {
-            var item = items[index];
+            var item = movements[index];
             var textColor = getTextColor(item.category.color);
 
             return Column(
@@ -42,7 +42,7 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
                     color: textColor,
                   ),
                 ),
-                ...item.items.map((childItem) => RoundedListTile(
+                ...item.movements.map((childItem) => RoundedListTile(
                   title: childItem.text,
                   subtitle: getFormattedDate(childItem.date),
                   trailing: BodyText(

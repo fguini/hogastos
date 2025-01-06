@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals_bar.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/components/texts/title_text.dart';
+import 'package:hogastos/models/movement.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeTotals extends StatelessWidget {
-  final List<Item> items;
+  final List<Movement> items;
   final bool isLoading;
 
   const HomeTotals({

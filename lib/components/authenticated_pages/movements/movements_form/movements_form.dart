@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/category_selector/category_selector.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_type_selector/movements_type_selector.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/models/category.dart';
+import 'package:hogastos/models/movement.dart';
+import 'package:hogastos/models/movement_type.dart';
 
 const int _movementTextMaxLength = 100;
 
 class MovementsForm extends StatefulWidget {
-  final Item? initialMovement;
+  final Movement? initialMovement;
   final bool isLoading;
-  final void Function(Item movement) onSave;
+  final void Function(Movement movement) onSave;
 
   const MovementsForm({
     super.key,
@@ -25,7 +27,7 @@ class MovementsForm extends StatefulWidget {
 
 class _MovementsFormState extends State<MovementsForm> {
   final _formKey = GlobalKey<FormState>();
-  ItemType type = ItemType.computable;
+  MovementType type = MovementType.computable;
   DateTime? date;
   TextEditingController textController = TextEditingController();
   Category? category;
@@ -44,7 +46,7 @@ class _MovementsFormState extends State<MovementsForm> {
     super.initState();
   }
 
-  void _handleTypeChange(ItemType newType) {
+  void _handleTypeChange(MovementType newType) {
     setState(() {
       type = newType;
     });
@@ -72,7 +74,7 @@ class _MovementsFormState extends State<MovementsForm> {
     }
 
     widget.onSave(
-      Item(
+      Movement(
         textController.text,
         category!,
         double.tryParse(amountController.text) ?? 0,

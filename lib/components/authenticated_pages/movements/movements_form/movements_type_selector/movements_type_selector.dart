@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/models/movement_type.dart';
 
 class MovementsTypeSelector extends StatelessWidget {
-  final ItemType? selectedType;
+  final MovementType? selectedType;
   final bool isLoading;
-  final void Function(ItemType type) onTypeChange;
+  final void Function(MovementType type) onTypeChange;
 
   const MovementsTypeSelector({
     super.key,
@@ -20,15 +20,15 @@ class MovementsTypeSelector extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: SegmentedButton<ItemType>(
+      child: SegmentedButton<MovementType>(
         segments: [
           ButtonSegment(
-            value: ItemType.computable,
+            value: MovementType.computable,
             label: Text(localization.computable),
             enabled: !isLoading,
           ),
           ButtonSegment(
-            value: ItemType.notComputable,
+            value: MovementType.notComputable,
             label: Text(localization.notComputable),
             enabled: !isLoading,
           ),

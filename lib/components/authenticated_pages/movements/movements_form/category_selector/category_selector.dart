@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
+import 'package:hogastos/models/category.dart';
 import 'package:hogastos/services/category_service.dart';
 
 import 'form_input_builder.dart';

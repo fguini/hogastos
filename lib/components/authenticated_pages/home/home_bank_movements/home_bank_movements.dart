@@ -3,22 +3,24 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_filters.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_simple_list.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_grouped_list.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/items_by_category.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/movements_by_category.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/configurations/user_settings.dart';
+import 'package:hogastos/models/category.dart';
+import 'package:hogastos/models/movement.dart';
+import 'package:hogastos/models/movement_type.dart';
 
-List<Item> _loadingFakeMovements = List.filled(10, Item(
+List<Movement> _loadingFakeMovements = List.filled(10, Movement(
   'test1',
   Category(1, 'churrin1', Colors.grey, Icons.pedal_bike),
   20,
   DateTime.now(),
-  ItemType.computable,
+  MovementType.computable,
 ));
 
 class HomeBankMovements extends StatefulWidget {
-  final List<Item> items;
+  final List<Movement> items;
   final bool isLoading;
 
   const HomeBankMovements({
@@ -64,7 +66,7 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
     });
   }
 
-  List<ItemsByCategory> _getFilteredList() {
+  List<MovementsByCategory> _getFilteredList() {
     var itemsToGroup = widget.isLoading
       ? _loadingFakeMovements
       : widget.items;
@@ -76,7 +78,7 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
           || (item.isNotComputable && _notComputableOn)
       ).toList();
 
-    return ItemsByCategory.getItemsByCategory(filteredItems);
+    return MovementsByCategory.getMovementsByCategory(filteredItems);
   }
 
   void _handleToggleFilters({
@@ -147,11 +149,11 @@ class _HomeBankMovementsState extends State<HomeBankMovements> {
         SizedBox(height: 20),
         _isGrouped
           ? HomeBankMovementsGroupedList(
-              items: groupedItems,
+              movements: groupedItems,
               isLoading: widget.isLoading,
             )
           : HomeBankMovementsSimpleList(
-              items: groupedItems,
+              movements: groupedItems,
               isLoading: widget.isLoading,
             ),
       ],

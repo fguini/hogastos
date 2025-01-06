@@ -3,67 +3,26 @@ import 'package:hogastos/components/authenticated_pages/home/home_bank_movements
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/home_date_navigator.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals.dart';
-
-class Category {
-  final int id;
-  final String description;
-  final Color color;
-  final IconData icon;
-
-  Category(
-    this.id,
-    this.description,
-    this.color,
-    this.icon,
-  );
-}
-
-enum ItemType {
-  computable,
-  notComputable,
-}
-
-class Item {
-  final String text;
-  final Category category;
-  final double amount;
-  final DateTime date;
-  final ItemType type;
-
-  Item(
-    this.text,
-    this.category,
-    this.amount,
-    this.date,
-    this.type,
-  );
-
-  bool get isComputable => type == ItemType.computable;
-  bool get isNotComputable => type == ItemType.notComputable || amount == 0;
-
-  bool get isIncome => amount > 0;
-  bool get isExpense => amount < 0;
-
-  bool get isComputableIncome => isComputable && isIncome;
-  bool get isComputableExpense => isComputable && isExpense;
-}
+import 'package:hogastos/models/category.dart';
+import 'package:hogastos/models/movement.dart';
+import 'package:hogastos/models/movement_type.dart';
 
 var _category1 = Category(1, 'churrin1', Colors.greenAccent, Icons.church);
 var _category2 = Category(2, 'churrin2', Colors.purple, Icons.incomplete_circle);
 var _category3 = Category(3, 'churrin3', Colors.blueAccent, Icons.local_airport);
 
 var _items = [
-  Item('test1', _category1, 20, DateTime.now(), ItemType.computable),
-  Item('test2', _category2, 10, DateTime.now(), ItemType.computable),
-  Item('test3', _category3, 4, DateTime.now(), ItemType.computable),
-  Item('test4', _category1, -49, DateTime.now(), ItemType.computable),
-  Item('test5', _category1, 16, DateTime.now(), ItemType.computable),
-  Item('test6', _category2, -20.32, DateTime.now(), ItemType.computable),
-  Item('test7', _category2, -120, DateTime.now(), ItemType.computable),
-  Item('test8', _category2, 1, DateTime.now(), ItemType.computable),
-  Item('test9', _category3, -12, DateTime.now(), ItemType.computable),
-  Item('test10', _category1, -32, DateTime.now(), ItemType.computable),
-  Item('test11', _category1, 44, DateTime.now(), ItemType.computable),
+  Movement('test1', _category1, 20, DateTime.now(), MovementType.computable),
+  Movement('test2', _category2, 10, DateTime.now(), MovementType.computable),
+  Movement('test3', _category3, 4, DateTime.now(), MovementType.computable),
+  Movement('test4', _category1, -49, DateTime.now(), MovementType.computable),
+  Movement('test5', _category1, 16, DateTime.now(), MovementType.computable),
+  Movement('test6', _category2, -20.32, DateTime.now(), MovementType.computable),
+  Movement('test7', _category2, -120, DateTime.now(), MovementType.computable),
+  Movement('test8', _category2, 1, DateTime.now(), MovementType.computable),
+  Movement('test9', _category3, -12, DateTime.now(), MovementType.computable),
+  Movement('test10', _category1, -32, DateTime.now(), MovementType.computable),
+  Movement('test11', _category1, 44, DateTime.now(), MovementType.computable),
 ];
 
 const cardPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
@@ -76,7 +35,7 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  List<Item> _movements = [];
+  List<Movement> _movements = [];
   MonthAndYear _currentMonthAndYear = MonthAndYear.now();
   bool _isLoading = false;
 

@@ -1,0 +1,40 @@
+import 'package:drift/drift.dart';
+import 'package:drift_flutter/drift_flutter.dart';
+import 'package:flutter/material.dart' as material;
+import 'package:hogastos/configurations/authentication.dart';
+import 'package:hogastos/models/movement_type.dart';
+import 'package:hogastos/services/data/column_types/color_column.dart';
+import 'package:hogastos/services/data/column_types/icon_data_column.dart';
+import 'package:hogastos/services/data/column_types/movement_type_column.dart';
+
+import 'tables/category_table.dart';
+import 'tables/movement_table.dart';
+
+part 'db.g.dart';
+
+String _getDbName() {
+  var userToken = AuthState().getUser()?.token;
+
+  if(userToken == null) {
+    throw Exception('Cannot open database if not authenticated');
+  }
+
+  return 'hogastos_db_$userToken';
+}
+
+@DriftDatabase(
+  tables: [
+    Category,
+    Movement,
+  ]
+)
+class Db extends _$Db {
+  static QueryExecutor _openConnection() {
+    return driftDatabase(name: _getDbName());
+  }
+
+  Db() : super(_openConnection());
+
+  @override
+  int get schemaVersion => 0;
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_layout.dart';
+import 'package:hogastos/models/category.dart';
 
 var _category1 = Category(1, 'churrin1', Colors.greenAccent, Icons.church);
 var _category2 = Category(2, 'churrin2', Colors.purple, Icons.incomplete_circle);
