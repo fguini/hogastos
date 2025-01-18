@@ -1,18 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:drift/drift.dart';
 import 'package:hogastos/models/category.dart';
+import 'package:hogastos/services/data/db_connect.dart';
 
-var _category1 = Category(1, 'churrin1', Colors.greenAccent, Icons.church);
-var _category2 = Category(2, 'churrin2', Colors.purple, Icons.incomplete_circle);
-var _category3 = Category(3, 'churrin3', Colors.blueAccent, Icons.local_airport);
+import 'data/db.dart';
 
 class CategoryService {
-  List<Category> getCategoriesByDescription(String? description) {
-    return [
-      _category1,
-      _category2,
-      _category3,
-    ].where(
-      (val) => description == null || val.description.contains(description)
-    ).toList();
+  Db db = DbConnect().db;
+
+  static Category mapFromSql(Categories sqlCategory) => Category(
+    sqlCategory.id,
+    sqlCategory.description,
+    sqlCategory.color,
+    sqlCategory.icon,
+  );
+
+  Future<List<Category>> getCategoriesByDescription(String? description) async {
+    var query = db.select(db.category)..where((c) => c.description.contains(description ?? ''));
+    var rows = await query.get();
+
+    return rows.map(mapFromSql).toList();
   }
 }

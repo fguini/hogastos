@@ -7,8 +7,8 @@ import 'package:hogastos/services/data/column_types/color_column.dart';
 import 'package:hogastos/services/data/column_types/icon_data_column.dart';
 import 'package:hogastos/services/data/column_types/movement_type_column.dart';
 
-import 'tables/category_table.dart';
-import 'tables/movement_table.dart';
+import 'tables/category_table.dart' as categoryTable;
+import 'tables/movement_table.dart' as movementTable;
 
 part 'db.g.dart';
 
@@ -24,8 +24,8 @@ String _getDbName() {
 
 @DriftDatabase(
   tables: [
-    Category,
-    Movement,
+    categoryTable.Category,
+    movementTable.Movement,
   ]
 )
 class Db extends _$Db {
@@ -36,5 +36,5 @@ class Db extends _$Db {
   Db() : super(_openConnection());
 
   @override
-  int get schemaVersion => 0;
+  int get schemaVersion => 1;
 }

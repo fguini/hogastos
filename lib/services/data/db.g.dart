@@ -3,7 +3,7 @@
 part of 'db.dart';
 
 // ignore_for_file: type=lint
-class $CategoryTable extends Category
+class $CategoryTable extends categoryTable.Category
     with TableInfo<$CategoryTable, Categories> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -266,7 +266,7 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
   }
 }
 
-class $MovementTable extends Movement
+class $MovementTable extends movementTable.Movement
     with TableInfo<$MovementTable, Movements> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -292,6 +292,15 @@ class $MovementTable extends Movement
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _categoryIdMeta =
+      const VerificationMeta('categoryId');
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+      'category_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES category (id)'));
   static const VerificationMeta _amountMeta = const VerificationMeta('amount');
   @override
   late final GeneratedColumn<double> amount = GeneratedColumn<double>(
@@ -303,7 +312,8 @@ class $MovementTable extends Movement
       'type', aliasedName, false,
       type: const MovementTypeColumn(), requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, date, description, amount, type];
+  List<GeneratedColumn> get $columns =>
+      [id, date, description, categoryId, amount, type];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -330,6 +340,14 @@ class $MovementTable extends Movement
               data['description']!, _descriptionMeta));
     } else if (isInserting) {
       context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+          _categoryIdMeta,
+          categoryId.isAcceptableOrUnknown(
+              data['category_id']!, _categoryIdMeta));
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
     }
     if (data.containsKey('amount')) {
       context.handle(_amountMeta,
@@ -358,6 +376,8 @@ class $MovementTable extends Movement
           .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
+      categoryId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}category_id'])!,
       amount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
       type: attachedDatabase.typeMapping
@@ -375,12 +395,14 @@ class Movements extends DataClass implements Insertable<Movements> {
   final int id;
   final DateTime date;
   final String description;
+  final int categoryId;
   final double amount;
   final MovementType type;
   const Movements(
       {required this.id,
       required this.date,
       required this.description,
+      required this.categoryId,
       required this.amount,
       required this.type});
   @override
@@ -389,6 +411,7 @@ class Movements extends DataClass implements Insertable<Movements> {
     map['id'] = Variable<int>(id);
     map['date'] = Variable<DateTime>(date);
     map['description'] = Variable<String>(description);
+    map['category_id'] = Variable<int>(categoryId);
     map['amount'] = Variable<double>(amount);
     map['type'] = Variable<MovementType>(type, const MovementTypeColumn());
     return map;
@@ -399,6 +422,7 @@ class Movements extends DataClass implements Insertable<Movements> {
       id: Value(id),
       date: Value(date),
       description: Value(description),
+      categoryId: Value(categoryId),
       amount: Value(amount),
       type: Value(type),
     );
@@ -411,6 +435,7 @@ class Movements extends DataClass implements Insertable<Movements> {
       id: serializer.fromJson<int>(json['id']),
       date: serializer.fromJson<DateTime>(json['date']),
       description: serializer.fromJson<String>(json['description']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
       amount: serializer.fromJson<double>(json['amount']),
       type: serializer.fromJson<MovementType>(json['type']),
     );
@@ -422,6 +447,7 @@ class Movements extends DataClass implements Insertable<Movements> {
       'id': serializer.toJson<int>(id),
       'date': serializer.toJson<DateTime>(date),
       'description': serializer.toJson<String>(description),
+      'categoryId': serializer.toJson<int>(categoryId),
       'amount': serializer.toJson<double>(amount),
       'type': serializer.toJson<MovementType>(type),
     };
@@ -431,12 +457,14 @@ class Movements extends DataClass implements Insertable<Movements> {
           {int? id,
           DateTime? date,
           String? description,
+          int? categoryId,
           double? amount,
           MovementType? type}) =>
       Movements(
         id: id ?? this.id,
         date: date ?? this.date,
         description: description ?? this.description,
+        categoryId: categoryId ?? this.categoryId,
         amount: amount ?? this.amount,
         type: type ?? this.type,
       );
@@ -446,6 +474,8 @@ class Movements extends DataClass implements Insertable<Movements> {
       date: data.date.present ? data.date.value : this.date,
       description:
           data.description.present ? data.description.value : this.description,
+      categoryId:
+          data.categoryId.present ? data.categoryId.value : this.categoryId,
       amount: data.amount.present ? data.amount.value : this.amount,
       type: data.type.present ? data.type.value : this.type,
     );
@@ -457,6 +487,7 @@ class Movements extends DataClass implements Insertable<Movements> {
           ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('description: $description, ')
+          ..write('categoryId: $categoryId, ')
           ..write('amount: $amount, ')
           ..write('type: $type')
           ..write(')'))
@@ -464,7 +495,8 @@ class Movements extends DataClass implements Insertable<Movements> {
   }
 
   @override
-  int get hashCode => Object.hash(id, date, description, amount, type);
+  int get hashCode =>
+      Object.hash(id, date, description, categoryId, amount, type);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -472,6 +504,7 @@ class Movements extends DataClass implements Insertable<Movements> {
           other.id == this.id &&
           other.date == this.date &&
           other.description == this.description &&
+          other.categoryId == this.categoryId &&
           other.amount == this.amount &&
           other.type == this.type);
 }
@@ -480,12 +513,14 @@ class MovementCompanion extends UpdateCompanion<Movements> {
   final Value<int> id;
   final Value<DateTime> date;
   final Value<String> description;
+  final Value<int> categoryId;
   final Value<double> amount;
   final Value<MovementType> type;
   const MovementCompanion({
     this.id = const Value.absent(),
     this.date = const Value.absent(),
     this.description = const Value.absent(),
+    this.categoryId = const Value.absent(),
     this.amount = const Value.absent(),
     this.type = const Value.absent(),
   });
@@ -493,16 +528,19 @@ class MovementCompanion extends UpdateCompanion<Movements> {
     this.id = const Value.absent(),
     required DateTime date,
     required String description,
+    required int categoryId,
     required double amount,
     required MovementType type,
   })  : date = Value(date),
         description = Value(description),
+        categoryId = Value(categoryId),
         amount = Value(amount),
         type = Value(type);
   static Insertable<Movements> custom({
     Expression<int>? id,
     Expression<DateTime>? date,
     Expression<String>? description,
+    Expression<int>? categoryId,
     Expression<double>? amount,
     Expression<MovementType>? type,
   }) {
@@ -510,6 +548,7 @@ class MovementCompanion extends UpdateCompanion<Movements> {
       if (id != null) 'id': id,
       if (date != null) 'date': date,
       if (description != null) 'description': description,
+      if (categoryId != null) 'category_id': categoryId,
       if (amount != null) 'amount': amount,
       if (type != null) 'type': type,
     });
@@ -519,12 +558,14 @@ class MovementCompanion extends UpdateCompanion<Movements> {
       {Value<int>? id,
       Value<DateTime>? date,
       Value<String>? description,
+      Value<int>? categoryId,
       Value<double>? amount,
       Value<MovementType>? type}) {
     return MovementCompanion(
       id: id ?? this.id,
       date: date ?? this.date,
       description: description ?? this.description,
+      categoryId: categoryId ?? this.categoryId,
       amount: amount ?? this.amount,
       type: type ?? this.type,
     );
@@ -542,6 +583,9 @@ class MovementCompanion extends UpdateCompanion<Movements> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
     if (amount.present) {
       map['amount'] = Variable<double>(amount.value);
     }
@@ -558,6 +602,7 @@ class MovementCompanion extends UpdateCompanion<Movements> {
           ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('description: $description, ')
+          ..write('categoryId: $categoryId, ')
           ..write('amount: $amount, ')
           ..write('type: $type')
           ..write(')'))
@@ -572,6 +617,8 @@ abstract class _$Db extends GeneratedDatabase {
   late final $MovementTable movement = $MovementTable(this);
   late final Index categoryId =
       Index('category_id', 'CREATE INDEX category_id ON category (id)');
+  late final Index categoryDescription = Index('category_description',
+      'CREATE INDEX category_description ON category (description)');
   late final Index movementId =
       Index('movement_id', 'CREATE INDEX movement_id ON movement (id)');
   late final Index movementDate =
@@ -588,6 +635,7 @@ abstract class _$Db extends GeneratedDatabase {
         category,
         movement,
         categoryId,
+        categoryDescription,
         movementId,
         movementDate,
         movementType,
@@ -608,6 +656,25 @@ typedef $$CategoryTableUpdateCompanionBuilder = CategoryCompanion Function({
   Value<material.IconData> icon,
 });
 
+final class $$CategoryTableReferences
+    extends BaseReferences<_$Db, $CategoryTable, Categories> {
+  $$CategoryTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$MovementTable, List<Movements>>
+      _movementRefsTable(_$Db db) => MultiTypedResultKey.fromTable(db.movement,
+          aliasName:
+              $_aliasNameGenerator(db.category.id, db.movement.categoryId));
+
+  $$MovementTableProcessedTableManager get movementRefs {
+    final manager = $$MovementTableTableManager($_db, $_db.movement)
+        .filter((f) => f.categoryId.id($_item.id));
+
+    final cache = $_typedResult.readTableOrNull(_movementRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
 class $$CategoryTableFilterComposer extends Composer<_$Db, $CategoryTable> {
   $$CategoryTableFilterComposer({
     required super.$db,
@@ -627,6 +694,27 @@ class $$CategoryTableFilterComposer extends Composer<_$Db, $CategoryTable> {
 
   ColumnFilters<material.IconData> get icon => $composableBuilder(
       column: $table.icon, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> movementRefs(
+      Expression<bool> Function($$MovementTableFilterComposer f) f) {
+    final $$MovementTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.movement,
+        getReferencedColumn: (t) => t.categoryId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MovementTableFilterComposer(
+              $db: $db,
+              $table: $db.movement,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$CategoryTableOrderingComposer extends Composer<_$Db, $CategoryTable> {
@@ -669,6 +757,27 @@ class $$CategoryTableAnnotationComposer extends Composer<_$Db, $CategoryTable> {
 
   GeneratedColumn<material.IconData> get icon =>
       $composableBuilder(column: $table.icon, builder: (column) => column);
+
+  Expression<T> movementRefs<T extends Object>(
+      Expression<T> Function($$MovementTableAnnotationComposer a) f) {
+    final $$MovementTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.movement,
+        getReferencedColumn: (t) => t.categoryId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$MovementTableAnnotationComposer(
+              $db: $db,
+              $table: $db.movement,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$CategoryTableTableManager extends RootTableManager<
@@ -680,9 +789,9 @@ class $$CategoryTableTableManager extends RootTableManager<
     $$CategoryTableAnnotationComposer,
     $$CategoryTableCreateCompanionBuilder,
     $$CategoryTableUpdateCompanionBuilder,
-    (Categories, BaseReferences<_$Db, $CategoryTable, Categories>),
+    (Categories, $$CategoryTableReferences),
     Categories,
-    PrefetchHooks Function()> {
+    PrefetchHooks Function({bool movementRefs})> {
   $$CategoryTableTableManager(_$Db db, $CategoryTable table)
       : super(TableManagerState(
           db: db,
@@ -718,9 +827,32 @@ class $$CategoryTableTableManager extends RootTableManager<
             icon: icon,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) =>
+                  (e.readTable(table), $$CategoryTableReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({movementRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (movementRefs) db.movement],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (movementRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$CategoryTableReferences._movementRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$CategoryTableReferences(db, table, p0)
+                                .movementRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.categoryId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
@@ -733,13 +865,14 @@ typedef $$CategoryTableProcessedTableManager = ProcessedTableManager<
     $$CategoryTableAnnotationComposer,
     $$CategoryTableCreateCompanionBuilder,
     $$CategoryTableUpdateCompanionBuilder,
-    (Categories, BaseReferences<_$Db, $CategoryTable, Categories>),
+    (Categories, $$CategoryTableReferences),
     Categories,
-    PrefetchHooks Function()>;
+    PrefetchHooks Function({bool movementRefs})>;
 typedef $$MovementTableCreateCompanionBuilder = MovementCompanion Function({
   Value<int> id,
   required DateTime date,
   required String description,
+  required int categoryId,
   required double amount,
   required MovementType type,
 });
@@ -747,9 +880,27 @@ typedef $$MovementTableUpdateCompanionBuilder = MovementCompanion Function({
   Value<int> id,
   Value<DateTime> date,
   Value<String> description,
+  Value<int> categoryId,
   Value<double> amount,
   Value<MovementType> type,
 });
+
+final class $$MovementTableReferences
+    extends BaseReferences<_$Db, $MovementTable, Movements> {
+  $$MovementTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $CategoryTable _categoryIdTable(_$Db db) => db.category.createAlias(
+      $_aliasNameGenerator(db.movement.categoryId, db.category.id));
+
+  $$CategoryTableProcessedTableManager get categoryId {
+    final manager = $$CategoryTableTableManager($_db, $_db.category)
+        .filter((f) => f.id($_item.categoryId));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
 
 class $$MovementTableFilterComposer extends Composer<_$Db, $MovementTable> {
   $$MovementTableFilterComposer({
@@ -773,6 +924,26 @@ class $$MovementTableFilterComposer extends Composer<_$Db, $MovementTable> {
 
   ColumnFilters<MovementType> get type => $composableBuilder(
       column: $table.type, builder: (column) => ColumnFilters(column));
+
+  $$CategoryTableFilterComposer get categoryId {
+    final $$CategoryTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.categoryId,
+        referencedTable: $db.category,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoryTableFilterComposer(
+              $db: $db,
+              $table: $db.category,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$MovementTableOrderingComposer extends Composer<_$Db, $MovementTable> {
@@ -797,6 +968,26 @@ class $$MovementTableOrderingComposer extends Composer<_$Db, $MovementTable> {
 
   ColumnOrderings<MovementType> get type => $composableBuilder(
       column: $table.type, builder: (column) => ColumnOrderings(column));
+
+  $$CategoryTableOrderingComposer get categoryId {
+    final $$CategoryTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.categoryId,
+        referencedTable: $db.category,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoryTableOrderingComposer(
+              $db: $db,
+              $table: $db.category,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$MovementTableAnnotationComposer extends Composer<_$Db, $MovementTable> {
@@ -821,6 +1012,26 @@ class $$MovementTableAnnotationComposer extends Composer<_$Db, $MovementTable> {
 
   GeneratedColumn<MovementType> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
+
+  $$CategoryTableAnnotationComposer get categoryId {
+    final $$CategoryTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.categoryId,
+        referencedTable: $db.category,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CategoryTableAnnotationComposer(
+              $db: $db,
+              $table: $db.category,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
 }
 
 class $$MovementTableTableManager extends RootTableManager<
@@ -832,9 +1043,9 @@ class $$MovementTableTableManager extends RootTableManager<
     $$MovementTableAnnotationComposer,
     $$MovementTableCreateCompanionBuilder,
     $$MovementTableUpdateCompanionBuilder,
-    (Movements, BaseReferences<_$Db, $MovementTable, Movements>),
+    (Movements, $$MovementTableReferences),
     Movements,
-    PrefetchHooks Function()> {
+    PrefetchHooks Function({bool categoryId})> {
   $$MovementTableTableManager(_$Db db, $MovementTable table)
       : super(TableManagerState(
           db: db,
@@ -849,6 +1060,7 @@ class $$MovementTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             Value<DateTime> date = const Value.absent(),
             Value<String> description = const Value.absent(),
+            Value<int> categoryId = const Value.absent(),
             Value<double> amount = const Value.absent(),
             Value<MovementType> type = const Value.absent(),
           }) =>
@@ -856,6 +1068,7 @@ class $$MovementTableTableManager extends RootTableManager<
             id: id,
             date: date,
             description: description,
+            categoryId: categoryId,
             amount: amount,
             type: type,
           ),
@@ -863,6 +1076,7 @@ class $$MovementTableTableManager extends RootTableManager<
             Value<int> id = const Value.absent(),
             required DateTime date,
             required String description,
+            required int categoryId,
             required double amount,
             required MovementType type,
           }) =>
@@ -870,13 +1084,49 @@ class $$MovementTableTableManager extends RootTableManager<
             id: id,
             date: date,
             description: description,
+            categoryId: categoryId,
             amount: amount,
             type: type,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map((e) =>
+                  (e.readTable(table), $$MovementTableReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (categoryId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.categoryId,
+                    referencedTable:
+                        $$MovementTableReferences._categoryIdTable(db),
+                    referencedColumn:
+                        $$MovementTableReferences._categoryIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
@@ -889,9 +1139,9 @@ typedef $$MovementTableProcessedTableManager = ProcessedTableManager<
     $$MovementTableAnnotationComposer,
     $$MovementTableCreateCompanionBuilder,
     $$MovementTableUpdateCompanionBuilder,
-    (Movements, BaseReferences<_$Db, $MovementTable, Movements>),
+    (Movements, $$MovementTableReferences),
     Movements,
-    PrefetchHooks Function()>;
+    PrefetchHooks Function({bool categoryId})>;
 
 class $DbManager {
   final _$Db _db;
