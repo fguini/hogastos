@@ -4,6 +4,7 @@ import 'package:hogastos/components/public_pages/page_without_appbar.dart';
 import 'package:hogastos/configurations/authentication.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/constants/pin_length.dart';
+import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -42,8 +43,9 @@ class _UserLoginPageState extends State<UserLoginPage> {
   void initBiometricLogin(BuildContext context) async {
     if(!context.mounted) return;
 
-    var reason = AppLocalizations.of(context)!.actionsLocalAuth;
-    var isAuthenticated = await AuthState().localLogin(reason);
+    var isAuthenticated = await AuthState().localLogin(
+      LocalizationHelper.localization(context),
+    );
 
     if (isAuthenticated) {
       NavigatorHelper.pushNamedAndRemoveUntil(context, RoutesNames.home);

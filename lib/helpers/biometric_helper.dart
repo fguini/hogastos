@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
+import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
 
 class BiometricHelper {
   static final LocalAuthentication auth = LocalAuthentication();
@@ -11,12 +13,28 @@ class BiometricHelper {
         || await auth.isDeviceSupported();
   }
 
-  static Future<bool> authenticate(String localizedReason) async {
+  static Future<bool> authenticate(
+    Localization localization
+  ) async {
     try {
       return await auth.authenticate(
-        localizedReason: localizedReason,
+        localizedReason: localization.biometricAuthReason,
+        authMessages: [
+          AndroidAuthMessages(
+            biometricHint: localization.biometricAuthBiometricHint,
+            biometricNotRecognized: localization.biometricAuthBiometricNotRecognized,
+            biometricRequiredTitle: localization.biometricAuthBiometricRequiredTitle,
+            biometricSuccess: localization.biometricAuthBiometricSuccess,
+            cancelButton: localization.biometricAuthCancelButton,
+            deviceCredentialsRequiredTitle: localization.biometricAuthDeviceCredentialsRequiredTitle,
+            deviceCredentialsSetupDescription: localization.biometricAuthDeviceCredentialsSetupDescription,
+            goToSettingsButton: localization.biometricAuthGoToSettingsButton,
+            goToSettingsDescription: localization.biometricAuthGoToSettingsDescription,
+            signInTitle: localization.biometricAuthSignInTitle,
+          ),
+        ],
         options: const AuthenticationOptions(biometricOnly: true),
-      ); // TODO translate default messages
+      );
     } on PlatformException {
       rethrow;
       // TODO handle error

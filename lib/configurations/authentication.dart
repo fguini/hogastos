@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hogastos/configurations/user_settings.dart';
 import 'package:hogastos/helpers/biometric_helper.dart';
+import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/models/user.dart';
 
 AndroidOptions _getAndroidOptions() => const AndroidOptions(
@@ -76,11 +77,13 @@ class AuthState {
     }
   }
 
-  Future<bool> localLogin(String localizedReason) async {
+  Future<bool> localLogin(Localization localization) async {
     var userSettings = await UserSettings().getUserSettings();
 
     if (userSettings.isBiometricAuthEnabled) {
-      var isAuthenticated = await BiometricHelper.authenticate(localizedReason);
+      var isAuthenticated = await BiometricHelper.authenticate(
+        localization,
+      );
 
       if (isAuthenticated) {
         var userToken = await _AuthCreator.getUserToken();
