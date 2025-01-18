@@ -82,7 +82,7 @@ class _CategorySelectorState extends State<CategorySelector> {
           onPressed: () => NavigatorHelper.pushNamed(
             context,
             RoutesNames.categoriesCreate,
-            arguments: 'createMovement',
+            arguments: RoutesNames.movementsCreate,
           ),
         ),
         validator: FormValidatorHelper

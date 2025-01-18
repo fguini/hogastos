@@ -20,4 +20,10 @@ class CategoryService {
 
     return rows.map(mapFromSql).toList();
   }
+
+  Future<bool> existAnyCategory() async {
+    var categories = await getCategoriesByDescription(null);
+
+    return categories.isNotEmpty;
+  }
 }
