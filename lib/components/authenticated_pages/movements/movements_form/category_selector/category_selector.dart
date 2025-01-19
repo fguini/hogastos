@@ -11,11 +11,13 @@ import 'options_view_builder.dart';
 
 class CategorySelector extends StatefulWidget {
   final Category? initialValue;
+  final bool isLoading;
   final void Function(Category category) onCategoryChanged;
 
   const CategorySelector({
     super.key,
     required this.initialValue,
+    this.isLoading = false,
     required this.onCategoryChanged,
   });
 
@@ -74,6 +76,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       ),
       fieldViewBuilder: formInputBuilder(
         localization.category,
+        isLoading: widget.isLoading,
         prefixIcon: selectedCategory == null
           ? null
           : Icon(selectedCategory!.icon, color: selectedCategory!.color),

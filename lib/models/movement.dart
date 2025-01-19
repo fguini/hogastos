@@ -1,27 +1,14 @@
-import 'category.dart';
-import 'movement_type.dart';
+import 'package:hogastos/models/create_movement.dart';
 
-class Movement {
-  final String text;
-  final Category category;
-  final double amount;
-  final DateTime date;
-  final MovementType type;
+class Movement extends CreateMovement {
+  final int id;
 
   Movement(
-    this.text,
-    this.category,
-    this.amount,
-    this.date,
-    this.type,
+    this.id,
+    super.text,
+    super.category,
+    super.amount,
+    super.date,
+    super.type,
   );
-
-  bool get isComputable => type == MovementType.computable;
-  bool get isNotComputable => type == MovementType.notComputable || amount == 0;
-
-  bool get isIncome => amount > 0;
-  bool get isExpense => amount < 0;
-
-  bool get isComputableIncome => isComputable && isIncome;
-  bool get isComputableExpense => isComputable && isExpense;
 }

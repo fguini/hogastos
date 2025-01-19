@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:hogastos/models/create_category.dart';
 
-class Category {
+class Category extends CreateCategory {
   final int id;
-  final String description;
-  final Color color;
-  final IconData icon;
 
   Category(
     this.id,
-    this.description,
-    this.color,
-    this.icon,
+    super.description,
+    super.color,
+    super.icon,
   );
 }

@@ -4,6 +4,7 @@ import 'package:hogastos/components/authenticated_pages/movements/movements_form
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/models/category.dart';
+import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/models/movement_type.dart';
 
@@ -12,7 +13,7 @@ const int _movementTextMaxLength = 100;
 class MovementsForm extends StatefulWidget {
   final Movement? initialMovement;
   final bool isLoading;
-  final void Function(Movement movement) onSave;
+  final void Function(CreateMovement movement) onSave;
 
   const MovementsForm({
     super.key,
@@ -28,7 +29,7 @@ class MovementsForm extends StatefulWidget {
 class _MovementsFormState extends State<MovementsForm> {
   final _formKey = GlobalKey<FormState>();
   MovementType type = MovementType.computable;
-  DateTime? date;
+  DateTime? date = DateTime.now();
   TextEditingController textController = TextEditingController();
   Category? category;
   TextEditingController amountController = TextEditingController();
@@ -73,20 +74,31 @@ class _MovementsFormState extends State<MovementsForm> {
       return;
     }
 
-    widget.onSave(
-      Movement(
+    var newMovement = widget.initialMovement == null
+      ? CreateMovement(
         textController.text,
         category!,
         double.tryParse(amountController.text) ?? 0,
         date!,
         type,
-      ),
-    );
+      )
+      : Movement(
+        widget.initialMovement!.id,
+        textController.text,
+        category!,
+        double.tryParse(amountController.text) ?? 0,
+        date!,
+        type,
+      );
+
+    widget.onSave(newMovement);
   }
 
   @override
   Widget build(BuildContext context) {
     var localization = LocalizationHelper.localization(context);
+    var disabledFocusNode = FocusNode();
+    disabledFocusNode.canRequestFocus = false;
 
     return Form(
       key: _formKey,
@@ -108,12 +120,14 @@ class _MovementsFormState extends State<MovementsForm> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: MovementsTypeSelector(
                       selectedType: type,
+                      isLoading: widget.isLoading,
                       onTypeChange: _handleTypeChange,
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: InputDatePickerFormField(
+                      focusNode: widget.isLoading ? disabledFocusNode : null,
                       initialDate: widget.initialMovement?.date ?? DateTime.now(),
                       firstDate: DateTime(2000, DateTime.january, 1),
                       lastDate: DateTime(2999, DateTime.december, 31),
@@ -126,6 +140,7 @@ class _MovementsFormState extends State<MovementsForm> {
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
+                      enabled: !widget.isLoading,
                       initialValue: widget.initialMovement?.text,
                       controller: textController,
                       decoration: InputDecoration(
@@ -142,12 +157,14 @@ class _MovementsFormState extends State<MovementsForm> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: CategorySelector(
                       initialValue: widget.initialMovement?.category,
+                      isLoading: widget.isLoading,
                       onCategoryChanged: _handleCategoryChange,
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
+                      enabled: !widget.isLoading,
                       initialValue: widget.initialMovement?.text,
                       controller: amountController,
                       decoration: InputDecoration(

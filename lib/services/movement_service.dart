@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 
 import 'category_service.dart';
@@ -9,6 +10,7 @@ class MovementService {
   Db db = DbConnect().db;
 
   Movement _mapFromSql(Movements sqlMovement, Categories sqlCategory) => Movement(
+    sqlMovement.id,
     sqlMovement.description,
     CategoryService.mapFromSql(sqlCategory),
     sqlMovement.amount,
@@ -26,8 +28,7 @@ class MovementService {
     return _mapFromSql(row.readTable(db.movement), row.readTable(db.category));
   }
 
-
-  Future<Movement> createMovement(Movement movement) async {
+  Future<Movement> createMovement(CreateMovement movement) async {
     var companion = MovementCompanion.insert(
       date: movement.date,
       description: movement.text,

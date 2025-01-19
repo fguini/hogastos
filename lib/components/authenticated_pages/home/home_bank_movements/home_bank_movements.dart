@@ -12,6 +12,7 @@ import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/models/movement_type.dart';
 
 List<Movement> _loadingFakeMovements = List.filled(10, Movement(
+  1,
   'test1',
   Category(1, 'churrin1', Colors.grey, Icons.pedal_bike),
   20,

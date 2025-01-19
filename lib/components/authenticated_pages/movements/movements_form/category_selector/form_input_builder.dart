@@ -10,6 +10,7 @@ typedef FormInputBuilder = Widget Function(
 FormInputBuilder formInputBuilder(
   String label,
   {
+    bool isLoading = false,
     Widget? prefixIcon,
     Widget? suffixIcon,
     String? Function(String?)? validator,
@@ -20,6 +21,7 @@ FormInputBuilder formInputBuilder(
   FocusNode focusNode,
   VoidCallback onFieldSubmitted,
 ) => TextFormField(
+  enabled: !isLoading,
   controller: textEditingController,
   focusNode: focusNode,
   onFieldSubmitted: (String value) => onFieldSubmitted(),

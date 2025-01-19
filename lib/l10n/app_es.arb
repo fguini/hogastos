@@ -1,6 +1,7 @@
 {
     "appTitle": "Hogastos",
     "actionsBack": "Volver",
+    "actionsClose": "Cerrar",
     "actionsCreate": "Crear",
     "actionsCreateNewCategory": "Crear nueva categoría",
     "actionsCreateNewMovement": "Crear nuevo movimiento",
@@ -14,6 +15,7 @@
     "actionsRead": "Ver",
     "actionsReadCategories": "Ver listado de categorías",
     "actionsReadYearlyReport": "Ver reporte de balance anual",
+    "actionsSearch": "Buscar",
     "amountCurrency": "{amount}",
     "@amountCurrency": {
         "description": "Localization for amount plus currency",
@@ -39,6 +41,10 @@
     "biometricAuthReason": "Autentica para acceder a la aplicación",
     "biometricAuthSignInTitle": "Es necesario iniciar sesión",
     "category": "Categoría",
+    "categorySelectColor": "Selecciona color",
+    "categorySelectIcon": "Selecciona icono",
+    "categorySelectIconNotSelected": "Ningún icono seleccionado",
+    "categorySelectIconNoResults": "Sin resultados para",
     "computable": "Computable",
     "expenses": "Gastos",
     "listGroupByCategory": "Agrupar por categoría",
@@ -71,6 +77,7 @@
             }
         }
     },
+    "newCategory": "Nueva categoría",
     "newMovement": "Nuevo movimiento",
     "noCategoriesDialogTitle": "No hay ninguna categoría creada",
     "noCategoriesDialogDescription": "Antes de crear un nuevo movimiento es necesario crear una categoría, dale al botón para ir a la pantalla de creación de categorías.",

@@ -12,17 +12,17 @@ var _category2 = Category(2, 'churrin2', Colors.purple, Icons.incomplete_circle)
 var _category3 = Category(3, 'churrin3', Colors.blueAccent, Icons.local_airport);
 
 var _items = [
-  Movement('test1', _category1, 20, DateTime.now(), MovementType.computable),
-  Movement('test2', _category2, 10, DateTime.now(), MovementType.computable),
-  Movement('test3', _category3, 4, DateTime.now(), MovementType.computable),
-  Movement('test4', _category1, -49, DateTime.now(), MovementType.computable),
-  Movement('test5', _category1, 16, DateTime.now(), MovementType.computable),
-  Movement('test6', _category2, -20.32, DateTime.now(), MovementType.computable),
-  Movement('test7', _category2, -120, DateTime.now(), MovementType.computable),
-  Movement('test8', _category2, 1, DateTime.now(), MovementType.computable),
-  Movement('test9', _category3, -12, DateTime.now(), MovementType.computable),
-  Movement('test10', _category1, -32, DateTime.now(), MovementType.computable),
-  Movement('test11', _category1, 44, DateTime.now(), MovementType.computable),
+  Movement(1, 'test1', _category1, 20, DateTime.now(), MovementType.computable),
+  Movement(2, 'test2', _category2, 10, DateTime.now(), MovementType.computable),
+  Movement(3, 'test3', _category3, 4, DateTime.now(), MovementType.computable),
+  Movement(4, 'test4', _category1, -49, DateTime.now(), MovementType.computable),
+  Movement(5, 'test5', _category1, 16, DateTime.now(), MovementType.computable),
+  Movement(6, 'test6', _category2, -20.32, DateTime.now(), MovementType.computable),
+  Movement(7, 'test7', _category2, -120, DateTime.now(), MovementType.computable),
+  Movement(8, 'test8', _category2, 1, DateTime.now(), MovementType.computable),
+  Movement(9, 'test9', _category3, -12, DateTime.now(), MovementType.computable),
+  Movement(10, 'test10', _category1, -32, DateTime.now(), MovementType.computable),
+  Movement(11, 'test11', _category1, 44, DateTime.now(), MovementType.computable),
 ];
 
 const cardPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);

@@ -8,10 +8,10 @@ class MovementTypeColumn implements CustomSqlType<MovementType> {
   String mapToSqlLiteral(MovementType dartValue) => dartValue.name;
 
   @override
-  Object mapToSqlParameter(MovementType dartValue) => dartValue;
+  Object mapToSqlParameter(MovementType dartValue) => dartValue.name;
 
   @override
-  MovementType read(Object fromSql) => fromSql as MovementType;
+  MovementType read(Object fromSql) => MovementType.values.firstWhere((type) => type.name == fromSql.toString());
 
   @override
   String sqlTypeName(GenerationContext context) => 'MovementType';
