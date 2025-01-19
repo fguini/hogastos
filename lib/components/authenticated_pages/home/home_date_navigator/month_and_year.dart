@@ -34,6 +34,7 @@ class MonthAndYear {
   }
 
   int get _monthIndex => Month.values.indexOf(month);
+  int get monthNumber => _monthIndex + 1;
 
   String locale(BuildContext context) {
     return AppLocalizations.of(context)!.monthAndYear(

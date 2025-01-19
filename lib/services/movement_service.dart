@@ -28,6 +28,22 @@ class MovementService {
     return _mapFromSql(row.readTable(db.movement), row.readTable(db.category));
   }
 
+  Stream<List<Movement>> watchByMonthAndYear(int month, int year) {
+    var from = DateTime(year, month, 1);
+    var to = DateTime(year, month + 1, 0);
+
+    var query = db.select(db.movement).join([
+      innerJoin(db.category, db.category.id.equalsExp(db.movement.categoryId))
+    ])..where(db.movement.date.isBetweenValues(from, to));
+
+    return query.watch().map(
+      (rows) => rows.map((row) => _mapFromSql(
+        row.readTable(db.movement),
+        row.readTable(db.category)
+      )
+    ).toList());
+  }
+
   Future<Movement> createMovement(CreateMovement movement) async {
     var companion = MovementCompanion.insert(
       date: movement.date,
