@@ -7,18 +7,24 @@ import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
 
 class NoCategoriesCreatedDialog extends StatelessWidget {
-  const NoCategoriesCreatedDialog({super.key});
+  final void Function(int?) onPop;
+
+  const NoCategoriesCreatedDialog({super.key, required this.onPop});
 
   void _handleGoBack(BuildContext context) => NavigatorHelper.pushNamedAndRemoveUntil(
     context,
     RoutesNames.home,
   );
 
-  void _handleGoToCreation(BuildContext context) => NavigatorHelper.pushNamed(
-    context,
-    RoutesNames.categoriesCreate,
-    arguments: RoutesNames.movementsCreate,
-  );
+  void _handleGoToCreation(BuildContext context) async {
+    var categoryId = await NavigatorHelper.pushNamed(
+      context,
+      RoutesNames.categoriesCreate,
+      arguments: RoutesNames.movementsCreate,
+    ) as int?;
+
+    onPop(categoryId);
+  }
 
   @override
   Widget build(BuildContext context) {

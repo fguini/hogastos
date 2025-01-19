@@ -6,6 +6,7 @@ import 'package:hogastos/components/common/go_home_action.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
+import 'package:hogastos/models/category.dart';
 import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/services/category_service.dart';
 import 'package:hogastos/services/movement_service.dart';
@@ -21,6 +22,7 @@ class MovementsCreate extends StatefulWidget {
 
 class _MovementsCreateState extends State<MovementsCreate> {
   bool _isLoading = true;
+  Category? _preselectedCategory;
 
   void _handleCreate(CreateMovement movement) {
     setState(() {
@@ -34,13 +36,30 @@ class _MovementsCreateState extends State<MovementsCreate> {
       ));
   }
 
+  void _handlePopWithCategory(int? categoryId) {
+    if(categoryId == null) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    CategoryService().getById(categoryId).then((category) {
+      setState(() {
+        _preselectedCategory = category;
+        _isLoading = false;
+      });
+    });
+  }
+
   void _anyCategoryCreated() {
     CategoryService().existAnyCategory().then(
       (bool exists) {
         if(!exists) {
           DialogTransition.open(
             context,
-            NoCategoriesCreatedDialog(),
+            NoCategoriesCreatedDialog(onPop: _handlePopWithCategory),
             barrierDismissible: false,
           );
         } else {
@@ -64,6 +83,7 @@ class _MovementsCreateState extends State<MovementsCreate> {
     return PageWithMenu(
       title: LocalizationHelper.localization(context).newMovement,
       body: MovementsForm(
+        preselectedCategory: _preselectedCategory,
         isLoading: _isLoading,
         onSave: _handleCreate
       ),

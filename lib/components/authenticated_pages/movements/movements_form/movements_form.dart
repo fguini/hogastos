@@ -12,12 +12,14 @@ const int _movementTextMaxLength = 100;
 
 class MovementsForm extends StatefulWidget {
   final Movement? initialMovement;
+  final Category? preselectedCategory;
   final bool isLoading;
   final void Function(CreateMovement movement) onSave;
 
   const MovementsForm({
     super.key,
     this.initialMovement,
+    this.preselectedCategory,
     this.isLoading = false,
     required this.onSave,
   });
@@ -92,6 +94,17 @@ class _MovementsFormState extends State<MovementsForm> {
       );
 
     widget.onSave(newMovement);
+  }
+
+  @override
+  void didUpdateWidget(covariant MovementsForm oldWidget) {
+    if(oldWidget.preselectedCategory?.id != widget.preselectedCategory?.id) {
+      setState(() {
+        category = widget.preselectedCategory;
+      });
+    }
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
