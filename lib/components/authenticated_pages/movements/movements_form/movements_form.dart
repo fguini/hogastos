@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/category_selector/category_selector.dart';
+import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_income_expense_selector/income_expense.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_type_selector/movements_type_selector.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
@@ -7,6 +8,8 @@ import 'package:hogastos/models/category.dart';
 import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/models/movement_type.dart';
+
+import 'movements_income_expense_selector/movements_income_expense_selector.dart';
 
 const int _movementTextMaxLength = 100;
 
@@ -34,6 +37,7 @@ class _MovementsFormState extends State<MovementsForm> {
   DateTime? date = DateTime.now();
   TextEditingController textController = TextEditingController();
   Category? category;
+  IncomeExpense incomeExpense = IncomeExpense(IncomeExpenseType.expense);
   TextEditingController amountController = TextEditingController();
 
   @override
@@ -67,6 +71,12 @@ class _MovementsFormState extends State<MovementsForm> {
     });
   }
 
+  void _handleIncomeExpenseChange(IncomeExpense newIncomeExpense) {
+    setState(() {
+      incomeExpense = newIncomeExpense;
+    });
+  }
+
   void _handleSave() {
     var isFormValid = _formKey.currentState?.validate() ?? false;
     var isDateEmpty = date == null;
@@ -75,12 +85,15 @@ class _MovementsFormState extends State<MovementsForm> {
     if (!isFormValid || isDateEmpty || isCategoryEmpty) {
       return;
     }
+    var amount = incomeExpense.getAmount(
+      double.tryParse(amountController.text) ?? 0
+    );
 
     var newMovement = widget.initialMovement == null
       ? CreateMovement(
         textController.text,
         category!,
-        double.tryParse(amountController.text) ?? 0,
+        amount,
         date!,
         type,
       )
@@ -88,7 +101,7 @@ class _MovementsFormState extends State<MovementsForm> {
         widget.initialMovement!.id,
         textController.text,
         category!,
-        double.tryParse(amountController.text) ?? 0,
+        amount,
         date!,
         type,
       );
@@ -175,6 +188,14 @@ class _MovementsFormState extends State<MovementsForm> {
                     ),
                   ),
                   Container(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: MovementsIncomeExpenseSelector(
+                      selectedType: incomeExpense,
+                      isLoading: widget.isLoading,
+                      onTypeChange: _handleIncomeExpenseChange,
+                    ),
+                  ),
+                  Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
                       enabled: !widget.isLoading,
@@ -182,6 +203,11 @@ class _MovementsFormState extends State<MovementsForm> {
                       controller: amountController,
                       decoration: InputDecoration(
                         label: Text(localization.movementAmount),
+                        prefixIcon: Icon(
+                          incomeExpense.type == IncomeExpenseType.expense
+                            ? Icons.remove
+                            : Icons.add
+                        ),
                         suffixText: LocalizationHelper.getCurrencySymbol(context),
                         suffixStyle: TextStyle(
                           fontSize: 20,

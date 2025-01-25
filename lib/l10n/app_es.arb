@@ -46,9 +46,11 @@
     "categorySelectIconNotSelected": "Ningún icono seleccionado",
     "categorySelectIconNoResults": "Sin resultados para",
     "computable": "Computable",
+    "expense": "Gasto",
     "expenses": "Gastos",
     "listGroupByCategory": "Agrupar por categoría",
     "listUngroup": "Desagrupar lista",
+    "income": "Ingreso",
     "incomes": "Ingresos",
     "monthAndYear": "{monthDate} {year}",
     "@monthAndYear": {
