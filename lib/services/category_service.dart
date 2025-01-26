@@ -38,6 +38,18 @@ class CategoryService {
     return categories.isNotEmpty;
   }
 
+  Stream<List<Category>> watchCategories({ String? search }) {
+    var query = db.select(db.category);
+
+    if(search?.isNotEmpty ?? false) {
+      query = query..where((c) => c.description.contains(search!));
+    }
+
+    return query.watch().map(
+      (rows) => rows.map(mapFromSql).toList()
+    );
+  }
+
   Future<Category> createCategory(CreateCategory category) async {
     var companion = CategoryCompanion.insert(
       description: category.description,

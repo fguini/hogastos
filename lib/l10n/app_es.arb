@@ -41,6 +41,7 @@
     "biometricAuthGoToSettingsDescription": "Ir 'Configuración > Seguridad' para activar la configuración biométrica.",
     "biometricAuthReason": "Autentica para acceder a la aplicación",
     "biometricAuthSignInTitle": "Es necesario iniciar sesión",
+    "categories": "Categorías",
     "category": "Categoría",
     "categorySelectColor": "Selecciona color",
     "categorySelectIcon": "Selecciona icono",
