@@ -73,4 +73,12 @@ class CategoryService {
 
     return getById(newId);
   }
+
+  Future<Category> deleteCategory(int categoryId) async {
+    var category = await getById(categoryId);
+
+    await (db.delete(db.category)..where((c) => c.id.equals(categoryId))).go();
+
+    return category;
+  }
 }

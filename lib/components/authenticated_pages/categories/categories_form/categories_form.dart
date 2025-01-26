@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hogastos/components/common/error_elevated_button.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/helpers/widget_helper.dart';
 import 'package:hogastos/models/category.dart';
 import 'package:hogastos/models/create_category.dart';
 
@@ -12,12 +14,14 @@ const int _categoryDescriptionMaxLength = 100;
 class CategoriesForm extends StatefulWidget {
   final Category? initialCategory;
   final bool isLoading;
+  final void Function(int)? onDelete;
   final void Function(CreateCategory) onSave;
 
   const CategoriesForm({
     super.key,
     this.initialCategory,
     required this.isLoading,
+    this.onDelete,
     required this.onSave,
   });
 
@@ -84,9 +88,14 @@ class _CategoriesFormState extends State<CategoriesForm> {
     widget.onSave(newCategory);
   }
 
+  void _handleDelete() {
+    widget.onDelete!(widget.initialCategory!.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     var localization = LocalizationHelper.localization(context);
+    var areWeEditing = widget.initialCategory?.id != null;
 
     return Form(
       key: _formKey,
@@ -136,7 +145,21 @@ class _CategoriesFormState extends State<CategoriesForm> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _handleSave,
-                  child: Text(localization.actionsCreate),
+                  child: Text(
+                    !areWeEditing
+                      ? localization.actionsCreate
+                      : localization.actionsSave
+                  ),
+                ),
+              ),
+              ...WidgetHelper.conditionalWidgetToSpread(
+                areWeEditing,
+                SizedBox(
+                  width: double.infinity,
+                  child: ErrorElevatedButton(
+                    onPressed: _handleDelete,
+                    child: Text(localization.actionsDelete),
+                  ),
                 ),
               ),
             ],

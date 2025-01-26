@@ -53,6 +53,18 @@ class _CategoriesEditControllerState extends State<_CategoriesEditController> {
       ));
   }
 
+  void _handleDelete(int id) {
+    setState(() {
+      _isLoading = true;
+    });
+
+    CategoryService().deleteCategory(id)
+      .then((category) => NavigatorHelper.pop(
+        context,
+        result: category.id
+      ));
+  }
+
   @override
   void initState() {
     _loadCategory();
@@ -71,6 +83,7 @@ class _CategoriesEditControllerState extends State<_CategoriesEditController> {
       body: CategoriesForm(
         initialCategory: _category,
         isLoading: _isLoading,
+        onDelete: _handleDelete,
         onSave: (category) => _handleUpdate(category),
       ),
       actions: [

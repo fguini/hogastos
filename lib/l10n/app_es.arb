@@ -5,6 +5,7 @@
     "actionsCreate": "Crear",
     "actionsCreateNewCategory": "Crear nueva categoría",
     "actionsCreateNewMovement": "Crear nuevo movimiento",
+    "actionsDelete": "Eliminar",
     "actionsExport": "Exportar",
     "actionsExportToExcel": "Exportar movimientos a un excel",
     "actionsGo": "Ir",
