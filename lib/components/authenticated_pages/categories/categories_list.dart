@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/page_with_menu.dart';
 import 'package:hogastos/components/common/go_home_action.dart';
 import 'package:hogastos/components/common/rounded_list_tile.dart';
-import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';

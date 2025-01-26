@@ -34,9 +34,13 @@ class _CategoriesFormState extends State<CategoriesForm> {
   @override
   void initState() {
     if(widget.initialCategory != null) {
+      var category = widget.initialCategory!;
+
+      descriptionController.text = category.description;
+
       setState(() {
-        color = widget.initialCategory!.color;
-        icon = widget.initialCategory!.icon;
+        color = category.color;
+        icon = category.icon;
       });
     }
 
@@ -104,7 +108,6 @@ class _CategoriesFormState extends State<CategoriesForm> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
                       enabled: !widget.isLoading,
-                      initialValue: widget.initialCategory?.description,
                       controller: descriptionController,
                       decoration: InputDecoration(
                         label: Text(localization.movementText),

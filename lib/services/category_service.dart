@@ -61,4 +61,16 @@ class CategoryService {
 
     return getById(newId);
   }
+
+  Future<Category> updateCategory(Category category) async {
+    var newId = await (
+      db.update(db.category)..where((c) => c.id.equals(category.id))
+    ).write(CategoryCompanion(
+      description: Value(category.description),
+      color: Value(category.color),
+      icon: Value(category.icon),
+    ));
+
+    return getById(newId);
+  }
 }
