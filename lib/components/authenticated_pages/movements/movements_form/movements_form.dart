@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/category_selector/category_selector.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_income_expense_selector/income_expense.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_type_selector/movements_type_selector.dart';
+import 'package:hogastos/components/common/error_elevated_button.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/helpers/widget_helper.dart';
 import 'package:hogastos/models/category.dart';
 import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
@@ -17,6 +19,7 @@ class MovementsForm extends StatefulWidget {
   final Movement? initialMovement;
   final Category? preselectedCategory;
   final bool isLoading;
+  final void Function(int)? onDelete;
   final void Function(CreateMovement movement) onSave;
 
   const MovementsForm({
@@ -24,6 +27,7 @@ class MovementsForm extends StatefulWidget {
     this.initialMovement,
     this.preselectedCategory,
     this.isLoading = false,
+    this.onDelete,
     required this.onSave,
   });
 
@@ -119,6 +123,10 @@ class _MovementsFormState extends State<MovementsForm> {
     widget.onSave(newMovement);
   }
 
+  void _handleDelete() {
+    widget.onDelete!(widget.initialMovement!.id);
+  }
+
   @override
   void didUpdateWidget(covariant MovementsForm oldWidget) {
     if(oldWidget.preselectedCategory?.id != widget.preselectedCategory?.id) {
@@ -133,8 +141,11 @@ class _MovementsFormState extends State<MovementsForm> {
   @override
   Widget build(BuildContext context) {
     var localization = LocalizationHelper.localization(context);
+
     var disabledFocusNode = FocusNode();
     disabledFocusNode.canRequestFocus = false;
+
+    var areWeEditing = widget.initialMovement?.id != null;
 
     return Form(
       key: _formKey,
@@ -240,9 +251,19 @@ class _MovementsFormState extends State<MovementsForm> {
                 child: ElevatedButton(
                   onPressed: _handleSave,
                   child: Text(
-                    widget.initialMovement?.id == null
+                    !areWeEditing
                       ? localization.actionsCreate
                       : localization.actionsSave
+                  ),
+                ),
+              ),
+              ...WidgetHelper.conditionalWidgetToSpread(
+                areWeEditing,
+                SizedBox(
+                  width: double.infinity,
+                  child: ErrorElevatedButton(
+                    onPressed: _handleDelete,
+                    child: Text(localization.actionsDelete),
                   ),
                 ),
               ),

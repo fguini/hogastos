@@ -61,6 +61,18 @@ class _MovementsEditControllerState extends State<_MovementsEditController> {
       ));
   }
 
+  void _handleDelete(int id) {
+    setState(() {
+      _isLoading = true;
+    });
+
+    MovementService().deleteMovement(id)
+      .then((_) => NavigatorHelper.pushNamedAndRemoveUntil(
+        context,
+        RoutesNames.home
+      ));
+  }
+
   @override
   void initState() {
     _loadMovement();
@@ -77,7 +89,8 @@ class _MovementsEditControllerState extends State<_MovementsEditController> {
         : MovementsForm(
           initialMovement: _movement,
           isLoading: _isLoading,
-          onSave: _handleUpdate
+          onDelete: _handleDelete,
+          onSave: _handleUpdate,
         ),
       actions: [
         GoHomeAction(popUntilHome: true),

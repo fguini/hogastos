@@ -71,4 +71,12 @@ class MovementService {
 
     return getById(newId);
   }
+
+  Future<Movement> deleteMovement(int movementId) async {
+    var movement = await getById(movementId);
+
+    await (db.delete(db.movement)..where((c) => c.id.equals(movementId))).go();
+
+    return movement;
+  }
 }
