@@ -43,10 +43,20 @@ class _MovementsFormState extends State<MovementsForm> {
   @override
   void initState() {
     if(widget.initialMovement != null) {
+      var movement = widget.initialMovement!;
+
+      textController.text = movement.text;
+      amountController.text = movement.amount.abs().toString();
+
       setState(() {
-        type = widget.initialMovement!.type;
-        date = widget.initialMovement!.date;
-        category = widget.initialMovement!.category;
+        type = movement.type;
+        date = movement.date;
+        category = movement.category;
+        incomeExpense = IncomeExpense(
+          movement.amount > 0
+            ? IncomeExpenseType.income
+            : IncomeExpenseType.expense
+        );
       });
     }
 
@@ -167,7 +177,6 @@ class _MovementsFormState extends State<MovementsForm> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
                       enabled: !widget.isLoading,
-                      initialValue: widget.initialMovement?.text,
                       controller: textController,
                       decoration: InputDecoration(
                         label: Text(localization.movementText),
@@ -199,7 +208,6 @@ class _MovementsFormState extends State<MovementsForm> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
                       enabled: !widget.isLoading,
-                      initialValue: widget.initialMovement?.text,
                       controller: amountController,
                       decoration: InputDecoration(
                         label: Text(localization.movementAmount),
@@ -231,7 +239,11 @@ class _MovementsFormState extends State<MovementsForm> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _handleSave,
-                  child: Text(localization.actionsCreate),
+                  child: Text(
+                    widget.initialMovement?.id == null
+                      ? localization.actionsCreate
+                      : localization.actionsSave
+                  ),
                 ),
               ),
             ],

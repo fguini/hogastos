@@ -57,4 +57,18 @@ class MovementService {
 
     return getById(newId);
   }
+
+  Future<Movement> updateMovement(Movement movement) async {
+    var newId = await (
+      db.update(db.movement)..where((m) => m.id.equals(movement.id))
+    ).write(MovementCompanion(
+      date: Value(movement.date),
+      description: Value(movement.text),
+      categoryId: Value(movement.category.id),
+      amount: Value(movement.amount),
+      type: Value(movement.type),
+    ));
+
+    return getById(newId);
+  }
 }

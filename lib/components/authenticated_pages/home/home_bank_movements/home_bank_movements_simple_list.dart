@@ -3,8 +3,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/movements_by_category.dart';
 import 'package:hogastos/components/common/rounded_list_tile.dart';
 import 'package:hogastos/components/texts/body_text.dart';
+import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/date_helper.dart';
+import 'package:hogastos/helpers/navigator_helper.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeBankMovementsSimpleList extends StatelessWidget {
@@ -47,6 +49,11 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
                   subtitle: getFormattedDate(childItem.date),
                   trailing: BodyText(
                     AppLocalizations.of(context)!.amountCurrency(childItem.amount),
+                  ),
+                  onTap: () => NavigatorHelper.pushNamed(
+                    context,
+                    RoutesNames.movementsEdit,
+                    arguments: childItem.id
                   ),
                   withCard: false,
                 )),

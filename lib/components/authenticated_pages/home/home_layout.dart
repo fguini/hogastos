@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/home_date_navigator.dart';
@@ -16,7 +18,7 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  Stream<List<Movement>>? watcher;
+  StreamSubscription<List<Movement>>? watcher;
   List<Movement> _movements = [];
   MonthAndYear _currentMonthAndYear = MonthAndYear.now();
   bool _isLoading = false;
@@ -31,19 +33,29 @@ class _HomeLayoutState extends State<HomeLayout> {
     watcher = MovementService().watchByMonthAndYear(
       newMonthAndYear.monthNumber,
       newMonthAndYear.year
-    )..listen((data) {
-      setState(() {
-        _movements = [
-          ..._movements,
-          ...data,
-        ];
-        _isLoading = false;
-      });
+    ).listen((data) {
+      if(context.mounted) {
+        setState(() {
+          _movements = [
+            ..._movements,
+            ...data,
+          ];
+          _isLoading = false;
+        });
+      }
     });
   }
 
   void _handleChangeMonthAndYear(MonthAndYear monthAndYear)
     => _loadMonthAndYearMovements(monthAndYear);
+
+  @override
+  void dispose() {
+    watcher?.cancel();
+    watcher = null;
+
+    super.dispose();
+  }
 
   @override
   void initState() {

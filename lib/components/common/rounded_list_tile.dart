@@ -9,6 +9,7 @@ class RoundedListTile extends StatelessWidget {
   final String? subtitle;
   final Widget? leading;
   final Widget? trailing;
+  final VoidCallback? onTap;
   final bool withCard;
 
   const RoundedListTile({
@@ -19,6 +20,7 @@ class RoundedListTile extends StatelessWidget {
     this.subtitle,
     this.leading,
     this.trailing,
+    this.onTap,
     this.withCard = true,
   });
 
@@ -31,6 +33,7 @@ class RoundedListTile extends StatelessWidget {
       dense: true,
       leading: leading,
       trailing: trailing,
+      onTap: onTap,
     );
   }
 

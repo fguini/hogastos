@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/categories/categories_create.dart';
 import 'package:hogastos/components/authenticated_pages/home/home.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_create.dart';
+import 'package:hogastos/components/authenticated_pages/movements/movements_edit.dart';
 import 'package:hogastos/components/public_pages/create_user/create_user_page.dart';
 import 'package:hogastos/components/public_pages/user_login/user_login_page.dart';
 
@@ -33,6 +34,7 @@ class Routes {
     RoutesNames.authLogin: const UserLoginPage(),
     RoutesNames.categoriesCreate: const CategoriesCreate(),
     RoutesNames.movementsCreate: const MovementsCreate(),
+    RoutesNames.movementsEdit: const MovementsEdit(),
   };
 
   Route _buildPage(RouteSettings settings, Widget pageWidget) {

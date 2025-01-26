@@ -15,6 +15,7 @@
     "actionsRead": "Ver",
     "actionsReadCategories": "Ver listado de categorías",
     "actionsReadYearlyReport": "Ver reporte de balance anual",
+    "actionsSave": "Guardar",
     "actionsSearch": "Buscar",
     "amountCurrency": "{amount}",
     "@amountCurrency": {
