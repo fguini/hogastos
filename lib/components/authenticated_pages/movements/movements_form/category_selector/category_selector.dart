@@ -16,7 +16,7 @@ class CategorySelector extends StatefulWidget {
 
   const CategorySelector({
     super.key,
-    required this.initialValue,
+    this.initialValue,
     this.isLoading = false,
     required this.onCategoryChanged,
   });

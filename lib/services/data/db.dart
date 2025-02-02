@@ -7,6 +7,7 @@ import 'package:hogastos/services/data/column_types/color_column.dart';
 import 'package:hogastos/services/data/column_types/icon_data_column.dart';
 import 'package:hogastos/services/data/column_types/movement_type_column.dart';
 
+import 'migrations/run_migrations.dart';
 import 'tables/category_table.dart' as categoryTable;
 import 'tables/movement_table.dart' as movementTable;
 
@@ -36,5 +37,12 @@ class Db extends _$Db {
   Db() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onUpgrade: runUpdateMigrations,
+    );
+  }
 }

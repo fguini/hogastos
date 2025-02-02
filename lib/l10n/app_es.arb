@@ -44,6 +44,8 @@
     "biometricAuthSignInTitle": "Es necesario iniciar sesión",
     "categories": "Categorías",
     "category": "Categoría",
+    "categoryDeleteTitle": "Antes de eliminar la categoría",
+    "categoryDeleteDescription": "Esta categoría ya tiene movimientos. Antes de eliminarla, quieres mover todos sus movimientos a otra categoría?",
     "categorySelectColor": "Selecciona color",
     "categorySelectIcon": "Selecciona icono",
     "categorySelectIconNotSelected": "Ningún icono seleccionado",

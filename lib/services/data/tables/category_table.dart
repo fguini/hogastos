@@ -13,4 +13,5 @@ class Category extends Table {
   TextColumn get description => text()();
   Column<Color> get color => customType(const ColorColumn())();
   Column<material.IconData> get icon => customType(const IconDataColumn())();
+  DateTimeColumn get deletedAt => dateTime().nullable()();
 }

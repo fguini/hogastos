@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hogastos/components/animations/dialog_transition.dart';
 import 'package:hogastos/components/authenticated_pages/categories/categories_form/categories_form.dart';
+import 'package:hogastos/components/authenticated_pages/categories/category_delete_dialog/category_delete_dialog.dart';
 import 'package:hogastos/components/authenticated_pages/page_with_menu.dart';
 import 'package:hogastos/components/common/go_home_action.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
@@ -53,16 +55,35 @@ class _CategoriesEditControllerState extends State<_CategoriesEditController> {
       ));
   }
 
-  void _handleDelete(int id) {
+  void _handleDelete(int id, { int? moveToId }) {
     setState(() {
       _isLoading = true;
     });
 
-    CategoryService().deleteCategory(id)
+    CategoryService().deleteCategory(id, moveToId: moveToId)
       .then((category) => NavigatorHelper.pop(
         context,
         result: category.id
       ));
+  }
+
+  void _handleConfirmDelete(int id) {
+    CategoryService().categoryHasMovements(id).then((hasMovements) {
+      if(!hasMovements) {
+        _handleDelete(id);
+      }
+
+      DialogTransition.open(
+        context,
+        CategoryDeleteDialog(
+          onConfirm: (int? moveToId) {
+            NavigatorHelper.pop(context);
+
+            _handleDelete(id, moveToId: moveToId);
+          },
+        ),
+      );
+    });
   }
 
   @override
@@ -83,8 +104,8 @@ class _CategoriesEditControllerState extends State<_CategoriesEditController> {
       body: CategoriesForm(
         initialCategory: _category,
         isLoading: _isLoading,
-        onDelete: _handleDelete,
-        onSave: (category) => _handleUpdate(category),
+        onDelete: _handleConfirmDelete,
+        onSave: _handleUpdate,
       ),
       actions: [
         GoHomeAction(popUntilHome: false),

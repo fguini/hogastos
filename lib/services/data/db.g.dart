@@ -34,8 +34,15 @@ class $CategoryTable extends categoryTable.Category
   late final GeneratedColumn<material.IconData> icon =
       GeneratedColumn<material.IconData>('icon', aliasedName, false,
           type: const IconDataColumn(), requiredDuringInsert: true);
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
   @override
-  List<GeneratedColumn> get $columns => [id, description, color, icon];
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, description, color, icon, deletedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -69,6 +76,10 @@ class $CategoryTable extends categoryTable.Category
     } else if (isInserting) {
       context.missing(_iconMeta);
     }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
     return context;
   }
 
@@ -86,6 +97,8 @@ class $CategoryTable extends categoryTable.Category
           .read(const ColorColumn(), data['${effectivePrefix}color'])!,
       icon: attachedDatabase.typeMapping
           .read(const IconDataColumn(), data['${effectivePrefix}icon'])!,
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
     );
   }
 
@@ -100,11 +113,13 @@ class Categories extends DataClass implements Insertable<Categories> {
   final String description;
   final material.Color color;
   final material.IconData icon;
+  final DateTime? deletedAt;
   const Categories(
       {required this.id,
       required this.description,
       required this.color,
-      required this.icon});
+      required this.icon,
+      this.deletedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -112,6 +127,9 @@ class Categories extends DataClass implements Insertable<Categories> {
     map['description'] = Variable<String>(description);
     map['color'] = Variable<material.Color>(color, const ColorColumn());
     map['icon'] = Variable<material.IconData>(icon, const IconDataColumn());
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
     return map;
   }
 
@@ -121,6 +139,9 @@ class Categories extends DataClass implements Insertable<Categories> {
       description: Value(description),
       color: Value(color),
       icon: Value(icon),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
     );
   }
 
@@ -132,6 +153,7 @@ class Categories extends DataClass implements Insertable<Categories> {
       description: serializer.fromJson<String>(json['description']),
       color: serializer.fromJson<material.Color>(json['color']),
       icon: serializer.fromJson<material.IconData>(json['icon']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
     );
   }
   @override
@@ -142,6 +164,7 @@ class Categories extends DataClass implements Insertable<Categories> {
       'description': serializer.toJson<String>(description),
       'color': serializer.toJson<material.Color>(color),
       'icon': serializer.toJson<material.IconData>(icon),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
     };
   }
 
@@ -149,12 +172,14 @@ class Categories extends DataClass implements Insertable<Categories> {
           {int? id,
           String? description,
           material.Color? color,
-          material.IconData? icon}) =>
+          material.IconData? icon,
+          Value<DateTime?> deletedAt = const Value.absent()}) =>
       Categories(
         id: id ?? this.id,
         description: description ?? this.description,
         color: color ?? this.color,
         icon: icon ?? this.icon,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
       );
   Categories copyWithCompanion(CategoryCompanion data) {
     return Categories(
@@ -163,6 +188,7 @@ class Categories extends DataClass implements Insertable<Categories> {
           data.description.present ? data.description.value : this.description,
       color: data.color.present ? data.color.value : this.color,
       icon: data.icon.present ? data.icon.value : this.icon,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
     );
   }
 
@@ -172,13 +198,14 @@ class Categories extends DataClass implements Insertable<Categories> {
           ..write('id: $id, ')
           ..write('description: $description, ')
           ..write('color: $color, ')
-          ..write('icon: $icon')
+          ..write('icon: $icon, ')
+          ..write('deletedAt: $deletedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, description, color, icon);
+  int get hashCode => Object.hash(id, description, color, icon, deletedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -186,7 +213,8 @@ class Categories extends DataClass implements Insertable<Categories> {
           other.id == this.id &&
           other.description == this.description &&
           other.color == this.color &&
-          other.icon == this.icon);
+          other.icon == this.icon &&
+          other.deletedAt == this.deletedAt);
 }
 
 class CategoryCompanion extends UpdateCompanion<Categories> {
@@ -194,17 +222,20 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
   final Value<String> description;
   final Value<material.Color> color;
   final Value<material.IconData> icon;
+  final Value<DateTime?> deletedAt;
   const CategoryCompanion({
     this.id = const Value.absent(),
     this.description = const Value.absent(),
     this.color = const Value.absent(),
     this.icon = const Value.absent(),
+    this.deletedAt = const Value.absent(),
   });
   CategoryCompanion.insert({
     this.id = const Value.absent(),
     required String description,
     required material.Color color,
     required material.IconData icon,
+    this.deletedAt = const Value.absent(),
   })  : description = Value(description),
         color = Value(color),
         icon = Value(icon);
@@ -213,12 +244,14 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
     Expression<String>? description,
     Expression<material.Color>? color,
     Expression<material.IconData>? icon,
+    Expression<DateTime>? deletedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (description != null) 'description': description,
       if (color != null) 'color': color,
       if (icon != null) 'icon': icon,
+      if (deletedAt != null) 'deleted_at': deletedAt,
     });
   }
 
@@ -226,12 +259,14 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
       {Value<int>? id,
       Value<String>? description,
       Value<material.Color>? color,
-      Value<material.IconData>? icon}) {
+      Value<material.IconData>? icon,
+      Value<DateTime?>? deletedAt}) {
     return CategoryCompanion(
       id: id ?? this.id,
       description: description ?? this.description,
       color: color ?? this.color,
       icon: icon ?? this.icon,
+      deletedAt: deletedAt ?? this.deletedAt,
     );
   }
 
@@ -251,6 +286,9 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
       map['icon'] =
           Variable<material.IconData>(icon.value, const IconDataColumn());
     }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
     return map;
   }
 
@@ -260,7 +298,8 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
           ..write('id: $id, ')
           ..write('description: $description, ')
           ..write('color: $color, ')
-          ..write('icon: $icon')
+          ..write('icon: $icon, ')
+          ..write('deletedAt: $deletedAt')
           ..write(')'))
         .toString();
   }
@@ -648,12 +687,14 @@ typedef $$CategoryTableCreateCompanionBuilder = CategoryCompanion Function({
   required String description,
   required material.Color color,
   required material.IconData icon,
+  Value<DateTime?> deletedAt,
 });
 typedef $$CategoryTableUpdateCompanionBuilder = CategoryCompanion Function({
   Value<int> id,
   Value<String> description,
   Value<material.Color> color,
   Value<material.IconData> icon,
+  Value<DateTime?> deletedAt,
 });
 
 final class $$CategoryTableReferences
@@ -694,6 +735,9 @@ class $$CategoryTableFilterComposer extends Composer<_$Db, $CategoryTable> {
 
   ColumnFilters<material.IconData> get icon => $composableBuilder(
       column: $table.icon, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
 
   Expression<bool> movementRefs(
       Expression<bool> Function($$MovementTableFilterComposer f) f) {
@@ -736,6 +780,9 @@ class $$CategoryTableOrderingComposer extends Composer<_$Db, $CategoryTable> {
 
   ColumnOrderings<material.IconData> get icon => $composableBuilder(
       column: $table.icon, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
 }
 
 class $$CategoryTableAnnotationComposer extends Composer<_$Db, $CategoryTable> {
@@ -757,6 +804,9 @@ class $$CategoryTableAnnotationComposer extends Composer<_$Db, $CategoryTable> {
 
   GeneratedColumn<material.IconData> get icon =>
       $composableBuilder(column: $table.icon, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
 
   Expression<T> movementRefs<T extends Object>(
       Expression<T> Function($$MovementTableAnnotationComposer a) f) {
@@ -807,24 +857,28 @@ class $$CategoryTableTableManager extends RootTableManager<
             Value<String> description = const Value.absent(),
             Value<material.Color> color = const Value.absent(),
             Value<material.IconData> icon = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
           }) =>
               CategoryCompanion(
             id: id,
             description: description,
             color: color,
             icon: icon,
+            deletedAt: deletedAt,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String description,
             required material.Color color,
             required material.IconData icon,
+            Value<DateTime?> deletedAt = const Value.absent(),
           }) =>
               CategoryCompanion.insert(
             id: id,
             description: description,
             color: color,
             icon: icon,
+            deletedAt: deletedAt,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) =>

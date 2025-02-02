@@ -4,6 +4,7 @@ import 'package:hogastos/models/create_category.dart';
 import 'package:hogastos/services/data/db_connect.dart';
 
 import 'data/db.dart';
+import 'movement_service.dart';
 
 class CategoryService {
   Db db = DbConnect().db;
@@ -26,7 +27,7 @@ class CategoryService {
   Future<List<Category>> getCategoriesByDescription(String? description, { int limit = 5 }) async {
     var query = db.select(db.category)
       ..limit(limit)
-      ..where((c) => c.description.contains(description ?? ''));
+      ..where((c) => c.description.contains(description ?? '') & c.deletedAt.isNull());
     var rows = await query.get();
 
     return rows.map(mapFromSql).toList();
@@ -38,8 +39,14 @@ class CategoryService {
     return categories.isNotEmpty;
   }
 
+  Future<bool> categoryHasMovements(int id) async {
+    var movementsCount = await MovementService().movementsWithCategoryCount(id);
+
+    return movementsCount > 0;
+  }
+
   Stream<List<Category>> watchCategories({ String? search }) {
-    var query = db.select(db.category);
+    var query = db.select(db.category)..where((c) => c.deletedAt.isNull());
 
     if(search?.isNotEmpty ?? false) {
       query = query..where((c) => c.description.contains(search!));
@@ -74,10 +81,25 @@ class CategoryService {
     return getById(newId);
   }
 
-  Future<Category> deleteCategory(int categoryId) async {
+  Future<Category> deleteCategory(int categoryId, { int? moveToId }) async {
+    var hasMovements = await categoryHasMovements(categoryId);
+    var hasMoveToId = moveToId != null;
+
+    if(hasMoveToId && hasMovements) {
+      await MovementService().updateMovementsCategories(categoryId, moveToId);
+    }
+
     var category = await getById(categoryId);
 
-    await (db.delete(db.category)..where((c) => c.id.equals(categoryId))).go();
+    if(!hasMovements || hasMoveToId) {
+      await (db.delete(db.category)..where((c) => c.id.equals(categoryId))).go();
+    } else {
+      await (
+        db.update(db.category)..where((c) => c.id.equals(categoryId))
+      ).write(
+        CategoryCompanion(deletedAt: Value(DateTime.now()))
+      );
+    }
 
     return category;
   }

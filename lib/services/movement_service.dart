@@ -28,6 +28,18 @@ class MovementService {
     return _mapFromSql(row.readTable(db.movement), row.readTable(db.category));
   }
 
+  Future<int> movementsWithCategoryCount(int categoryId) async {
+    final count = db.movement.id.count(distinct: true);
+    var query = db.selectOnly(db.movement)
+      ..where(db.movement.categoryId.equals(categoryId));
+
+    query.addColumns([count]);
+
+    var countResult = await query.map((row) => row.read(count)).getSingle();
+
+    return countResult ?? 0;
+  }
+
   Stream<List<Movement>> watchByMonthAndYear(int month, int year) {
     var from = DateTime(year, month, 1);
     var to = DateTime(year, month + 1, 0);
@@ -70,6 +82,14 @@ class MovementService {
     ));
 
     return getById(newId);
+  }
+
+  Future<void> updateMovementsCategories(int fromCategoryId, int toCategoryId) async {
+    await (
+      db.update(db.movement)..where((m) => m.categoryId.equals(fromCategoryId))
+    ).write(MovementCompanion(
+      categoryId: Value(toCategoryId)
+    ));
   }
 
   Future<Movement> deleteMovement(int movementId) async {
