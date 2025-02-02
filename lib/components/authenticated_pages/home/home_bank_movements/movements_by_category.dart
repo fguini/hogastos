@@ -26,6 +26,13 @@ class MovementsByCategory {
       }
     }
 
+    groupedItems.sort((m1, m2) {
+      var m1Total = (m1.total * 100).round().abs();
+      var m2Total = (m2.total * 100).round().abs();
+
+      return m2Total - m1Total;
+    });
+
     return groupedItems;
   }
 }
