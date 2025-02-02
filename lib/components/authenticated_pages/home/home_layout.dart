@@ -33,13 +33,10 @@ class _HomeLayoutState extends State<HomeLayout> {
     watcher = MovementService().watchByMonthAndYear(
       newMonthAndYear.monthNumber,
       newMonthAndYear.year
-    ).listen((data) {
+    ).listen((watchedMovements) {
       if(context.mounted) {
         setState(() {
-          _movements = [
-            ..._movements,
-            ...data,
-          ];
+          _movements = watchedMovements;
           _isLoading = false;
         });
       }
