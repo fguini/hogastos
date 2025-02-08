@@ -56,6 +56,21 @@ class MovementService {
     ).toList());
   }
 
+  Future<List<String>> getMovementSuggestions(String? text) async {
+    if(text?.isEmpty ?? true) {
+      return [];
+    }
+
+    var query = db.selectOnly(db.movement, distinct: true)
+      ..addColumns([db.movement.description])
+      ..limit(5)
+      ..where(db.movement.description.contains(text!));
+
+    var rows = await query.map((r) => r.read(db.movement.description)).get();
+
+    return rows.where((r) => r?.isNotEmpty ?? false).map((r) => r!).toList();
+  }
+
   Future<Movement> createMovement(CreateMovement movement) async {
     var companion = MovementCompanion.insert(
       date: movement.date,

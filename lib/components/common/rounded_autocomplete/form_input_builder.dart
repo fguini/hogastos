@@ -13,6 +13,7 @@ FormInputBuilder formInputBuilder(
     bool isLoading = false,
     Widget? prefixIcon,
     Widget? suffixIcon,
+    void Function(String?)? onChanged,
     String? Function(String?)? validator,
   }
 ) => (
@@ -30,5 +31,6 @@ FormInputBuilder formInputBuilder(
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
   ),
+  onChanged: onChanged,
   validator: validator,
 );

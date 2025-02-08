@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:hogastos/models/category.dart';
 
 const double borderRadius = 10;
 
@@ -84,23 +83,23 @@ class _AutocompleteOptions<T extends Object> extends StatelessWidget {
   }
 }
 
-typedef OptionsViewBuilder = Widget Function(
+typedef OptionsViewBuilder<T extends Object> = Widget Function(
   BuildContext context,
-  AutocompleteOnSelected<Category> onSelected,
-  Iterable<Category> options,
+  AutocompleteOnSelected<T> onSelected,
+  Iterable<T> options,
 );
 
-OptionsViewBuilder optionsViewBuilder(
+OptionsViewBuilder<T> optionsViewBuilder<T extends Object>(
   {
-    required Widget Function(Category) displayWidgetForOption,
+    required Widget Function(T) displayWidgetForOption,
     OptionsViewOpenDirection openDirection = OptionsViewOpenDirection.down,
     double maxOptionsHeight = 200
   }
 ) => (
   BuildContext context,
-  AutocompleteOnSelected<Category> onSelected,
-  Iterable<Category> options,
-) => _AutocompleteOptions<Category>(
+  AutocompleteOnSelected<T> onSelected,
+  Iterable<T> options,
+) => _AutocompleteOptions<T>(
   displayWidgetForOption: displayWidgetForOption,
   onSelected: onSelected,
   options: options,

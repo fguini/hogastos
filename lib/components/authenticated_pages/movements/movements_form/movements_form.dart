@@ -11,9 +11,8 @@ import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/models/movement_type.dart';
 
+import 'movement_text_suggestion/movement_text_suggestion.dart';
 import 'movements_income_expense_selector/movements_income_expense_selector.dart';
-
-const int _movementTextMaxLength = 100;
 
 class MovementsForm extends StatefulWidget {
   final Movement? initialMovement;
@@ -39,7 +38,7 @@ class _MovementsFormState extends State<MovementsForm> {
   final _formKey = GlobalKey<FormState>();
   MovementType type = MovementType.computable;
   DateTime? date = DateTime.now();
-  TextEditingController textController = TextEditingController();
+  String? text;
   Category? category;
   IncomeExpense incomeExpense = IncomeExpense(IncomeExpenseType.expense);
   TextEditingController amountController = TextEditingController();
@@ -49,12 +48,12 @@ class _MovementsFormState extends State<MovementsForm> {
     if(widget.initialMovement != null) {
       var movement = widget.initialMovement!;
 
-      textController.text = movement.text;
       amountController.text = movement.amount.abs().toString();
 
       setState(() {
         type = movement.type;
         date = movement.date;
+        text = movement.text;
         category = movement.category;
         incomeExpense = IncomeExpense(
           movement.amount > 0
@@ -79,7 +78,13 @@ class _MovementsFormState extends State<MovementsForm> {
     });
   }
 
-  void _handleCategoryChange(Category newCategory) {
+  void _handleTextChange(String? newText) {
+    setState(() {
+      text = newText;
+    });
+  }
+
+  void _handleCategoryChange(Category? newCategory) {
     setState(() {
       category = newCategory;
     });
@@ -95,8 +100,9 @@ class _MovementsFormState extends State<MovementsForm> {
     var isFormValid = _formKey.currentState?.validate() ?? false;
     var isDateEmpty = date == null;
     var isCategoryEmpty = category == null;
+    var isTextEmpty = text?.isEmpty ?? true;
 
-    if (!isFormValid || isDateEmpty || isCategoryEmpty) {
+    if (!isFormValid || isDateEmpty || isCategoryEmpty || isTextEmpty) {
       return;
     }
     var amount = incomeExpense.getAmount(
@@ -105,7 +111,7 @@ class _MovementsFormState extends State<MovementsForm> {
 
     var newMovement = widget.initialMovement == null
       ? CreateMovement(
-        textController.text,
+        text!,
         category!,
         amount,
         date!,
@@ -113,7 +119,7 @@ class _MovementsFormState extends State<MovementsForm> {
       )
       : Movement(
         widget.initialMovement!.id,
-        textController.text,
+        text!,
         category!,
         amount,
         date!,
@@ -186,17 +192,10 @@ class _MovementsFormState extends State<MovementsForm> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: TextFormField(
-                      enabled: !widget.isLoading,
-                      controller: textController,
-                      decoration: InputDecoration(
-                        label: Text(localization.movementText),
-                      ),
-                      validator: FormValidatorHelper
-                        .of(context)
-                        .isRequired()
-                        .maxLength(_movementTextMaxLength)
-                        .validator,
+                    child: MovementTextSuggestion(
+                      initialValue: widget.initialMovement?.text,
+                      isLoading: widget.isLoading,
+                      onTextChanged: _handleTextChange,
                     ),
                   ),
                   Container(

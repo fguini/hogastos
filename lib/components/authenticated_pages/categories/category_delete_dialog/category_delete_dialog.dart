@@ -21,9 +21,9 @@ class CategoryDeleteDialog extends StatefulWidget {
 class _CategoryDeleteDialogState extends State<CategoryDeleteDialog> {
   int? _categoryId;
   
-  void _handleCategoryChanged(Category category) {
+  void _handleCategoryChanged(Category? category) {
     setState(() {
-      _categoryId = category.id;
+      _categoryId = category?.id;
     });
   }
 
