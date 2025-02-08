@@ -20,7 +20,7 @@ class _FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var offBackgroundColor = Colors.white70;
     var finalBackgroundColor = isTurnedOn
-      ? backgroundColor.withOpacity(0.6)
+      ? backgroundColor.withAlpha(80)
       : offBackgroundColor;
 
     return Expanded(
@@ -28,6 +28,7 @@ class _FilterButton extends StatelessWidget {
         onPressed: onPressed,
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(finalBackgroundColor),
+          elevation: WidgetStateProperty.all(isTurnedOn ? 1 : 0),
           side: WidgetStateProperty.all(
             BorderSide(
               color: backgroundColor
