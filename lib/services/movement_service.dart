@@ -86,7 +86,7 @@ class MovementService {
   }
 
   Future<Movement> updateMovement(Movement movement) async {
-    var newId = await (
+    await (
       db.update(db.movement)..where((m) => m.id.equals(movement.id))
     ).write(MovementCompanion(
       date: Value(movement.date),
@@ -96,7 +96,7 @@ class MovementService {
       type: Value(movement.type),
     ));
 
-    return getById(newId);
+    return getById(movement.id);
   }
 
   Future<void> updateMovementsCategories(int fromCategoryId, int toCategoryId) async {

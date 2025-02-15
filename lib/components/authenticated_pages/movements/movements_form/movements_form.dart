@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/category_selector/category_selector.dart';
+import 'package:hogastos/components/authenticated_pages/movements/movements_form/date_picker_input_form.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_income_expense_selector/income_expense.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_type_selector/movements_type_selector.dart';
 import 'package:hogastos/components/common/error_elevated_button.dart';
@@ -72,7 +73,7 @@ class _MovementsFormState extends State<MovementsForm> {
     });
   }
 
-  void _handleDateChange(DateTime newDate) {
+  void _handleDateChange(DateTime? newDate) {
     setState(() {
       date = newDate;
     });
@@ -179,15 +180,14 @@ class _MovementsFormState extends State<MovementsForm> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: InputDatePickerFormField(
-                      focusNode: widget.isLoading ? disabledFocusNode : null,
-                      initialDate: widget.initialMovement?.date ?? DateTime.now(),
-                      firstDate: DateTime(2000, DateTime.january, 1),
-                      lastDate: DateTime(2999, DateTime.december, 31),
-                      fieldLabelText: localization.movementDate,
-                      errorFormatText: localization.validationsWrongFormat,
-                      errorInvalidText: localization.validationsNotInRange,
-                      onDateSubmitted: _handleDateChange,
+                    child: DatePickerInputForm(
+                      initialValue: widget.initialMovement?.date ?? DateTime.now(),
+                      isLoading: widget.isLoading,
+                      onDateChanged: _handleDateChange,
+                      label: Text(localization.movementDate),
+                      validator: (String? newValue) {
+                        return null;
+                      },
                     ),
                   ),
                   Container(
