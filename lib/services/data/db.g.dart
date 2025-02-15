@@ -3,7 +3,7 @@
 part of 'db.dart';
 
 // ignore_for_file: type=lint
-class $CategoryTable extends categoryTable.Category
+class $CategoryTable extends category_table.Category
     with TableInfo<$CategoryTable, Categories> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -305,7 +305,7 @@ class CategoryCompanion extends UpdateCompanion<Categories> {
   }
 }
 
-class $MovementTable extends movementTable.Movement
+class $MovementTable extends movement_table.Movement
     with TableInfo<$MovementTable, Movements> {
   @override
   final GeneratedDatabase attachedDatabase;

@@ -17,7 +17,7 @@ class DialogTransition {
       context: context,
       barrierDismissible: barrierDismissible,
       barrierLabel: '',
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionBuilder: (BuildContext context, animation1, animation2, widget) {
         final curvedValue = Curves.easeInOutBack.transform(animation1.value) - 1.0;
 
