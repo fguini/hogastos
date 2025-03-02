@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals_bar.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/components/texts/title_text.dart';

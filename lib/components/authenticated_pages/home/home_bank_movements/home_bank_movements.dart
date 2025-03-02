@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_filters.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_simple_list.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_grouped_list.dart';

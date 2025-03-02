@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/components/animations/dialog_transition.dart';
 import 'package:hogastos/components/public_pages/page_without_appbar.dart';
 import 'package:hogastos/components/texts/body_text.dart';
