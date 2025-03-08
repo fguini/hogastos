@@ -345,6 +345,150 @@ abstract class AppLocalizations {
   /// **'Gastos'**
   String get expenses;
 
+  /// No description provided for @iconSearchTagsAccountBalance.
+  ///
+  /// In es, this message translates to:
+  /// **'banco cuenta corriente balance nomina'**
+  String get iconSearchTagsAccountBalance;
+
+  /// No description provided for @iconSearchTagsBeach.
+  ///
+  /// In es, this message translates to:
+  /// **'playa vacaciones costa sombrilla'**
+  String get iconSearchTagsBeach;
+
+  /// No description provided for @iconSearchTagsBed.
+  ///
+  /// In es, this message translates to:
+  /// **'cama alojamiento vacaciones habitacion'**
+  String get iconSearchTagsBed;
+
+  /// No description provided for @iconSearchTagsBike.
+  ///
+  /// In es, this message translates to:
+  /// **'bici bicicleta moto motocicleta transporte transladar viaje deporte actividad'**
+  String get iconSearchTagsBike;
+
+  /// No description provided for @iconSearchTagsBus.
+  ///
+  /// In es, this message translates to:
+  /// **'autobus bus colectivo publico público transporte direccion'**
+  String get iconSearchTagsBus;
+
+  /// No description provided for @iconSearchTagsBusiness.
+  ///
+  /// In es, this message translates to:
+  /// **'trabajo oficina edificio'**
+  String get iconSearchTagsBusiness;
+
+  /// No description provided for @iconSearchTagsCake.
+  ///
+  /// In es, this message translates to:
+  /// **'tarta torta cumpleaños cumple aniversario año'**
+  String get iconSearchTagsCake;
+
+  /// No description provided for @iconSearchTagsCar.
+  ///
+  /// In es, this message translates to:
+  /// **'carro coche auto automovil transporte direccion'**
+  String get iconSearchTagsCar;
+
+  /// No description provided for @iconSearchTagsCheckroom.
+  ///
+  /// In es, this message translates to:
+  /// **'percha ropa orden armario'**
+  String get iconSearchTagsCheckroom;
+
+  /// No description provided for @iconSearchTagsChild.
+  ///
+  /// In es, this message translates to:
+  /// **'niño bebe niña beba carrito cochecito'**
+  String get iconSearchTagsChild;
+
+  /// No description provided for @iconSearchTagsHome.
+  ///
+  /// In es, this message translates to:
+  /// **'casa hogar domestico'**
+  String get iconSearchTagsHome;
+
+  /// No description provided for @iconSearchTagsGame.
+  ///
+  /// In es, this message translates to:
+  /// **'ocio juegos videojuegos videos'**
+  String get iconSearchTagsGame;
+
+  /// No description provided for @iconSearchTagsGas.
+  ///
+  /// In es, this message translates to:
+  /// **'gas gasolina nafta estacion de servicio gasolinera coche transporte'**
+  String get iconSearchTagsGas;
+
+  /// No description provided for @iconSearchTagsGrade.
+  ///
+  /// In es, this message translates to:
+  /// **'estrella nivel grado favorito especial'**
+  String get iconSearchTagsGrade;
+
+  /// No description provided for @iconSearchTagsLightbulb.
+  ///
+  /// In es, this message translates to:
+  /// **'bombilla bombita luz servicios'**
+  String get iconSearchTagsLightbulb;
+
+  /// No description provided for @iconSearchTagsPlane.
+  ///
+  /// In es, this message translates to:
+  /// **'avion avión vuelo volar viaje vacaciones'**
+  String get iconSearchTagsPlane;
+
+  /// No description provided for @iconSearchTagsPlaceholder.
+  ///
+  /// In es, this message translates to:
+  /// **'hora horario vacío tiempo espacio hueco'**
+  String get iconSearchTagsPlaceholder;
+
+  /// No description provided for @iconSearchTagsRecycling.
+  ///
+  /// In es, this message translates to:
+  /// **'reciclar reciclado renovable renovar otros'**
+  String get iconSearchTagsRecycling;
+
+  /// No description provided for @iconSearchTagsShopping.
+  ///
+  /// In es, this message translates to:
+  /// **'compras ropa accesorios centro comercial mall shopping'**
+  String get iconSearchTagsShopping;
+
+  /// No description provided for @iconSearchTagsSoccer.
+  ///
+  /// In es, this message translates to:
+  /// **'futbol football furbo deporte fulbo balon pelota'**
+  String get iconSearchTagsSoccer;
+
+  /// No description provided for @iconSearchTagsSolidarity.
+  ///
+  /// In es, this message translates to:
+  /// **'solidaridad cruz voluntario voluntariado solidario'**
+  String get iconSearchTagsSolidarity;
+
+  /// No description provided for @iconSearchTagsSupermarket.
+  ///
+  /// In es, this message translates to:
+  /// **'super supermercado mercado compras carro carrito compras'**
+  String get iconSearchTagsSupermarket;
+
+  /// No description provided for @iconSearchTagsTrain.
+  ///
+  /// In es, this message translates to:
+  /// **'transporte tren ferrocarril'**
+  String get iconSearchTagsTrain;
+
+  /// No description provided for @iconSearchTagsWoman.
+  ///
+  /// In es, this message translates to:
+  /// **'mujer chica niña femenina'**
+  String get iconSearchTagsWoman;
+
   /// No description provided for @listGroupByCategory.
   ///
   /// In es, this message translates to:

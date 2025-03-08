@@ -42,7 +42,7 @@ class _CategorySelectorState extends State<CategorySelector> {
 
   Widget _displayWidgetForOption(Category? category) => Row(
     children: category != null ? [
-      Icon(category.icon, color: category.color),
+      Icon(category.icon.iconData, color: category.color),
       SizedBox(width: 4),
       Text(_displayStringForOption(category)),
     ] : [],
@@ -57,7 +57,7 @@ class _CategorySelectorState extends State<CategorySelector> {
   Widget? _prefixIconBuilder(Category? category) {
     return selectedCategory == null
       ? null
-      : Icon(selectedCategory!.icon, color: selectedCategory!.color);
+      : Icon(selectedCategory!.icon.iconData, color: selectedCategory!.color);
   }
 
   Widget? _suffixIconBuilder(Category? category) {

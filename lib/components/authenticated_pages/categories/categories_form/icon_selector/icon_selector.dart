@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconpicker/flutter_iconpicker.dart';
-import 'package:flutter_iconpicker/Models/configuration.dart';
-import 'package:hogastos/components/texts/body_text.dart';
-import 'package:hogastos/components/texts/hint_text.dart';
-import 'package:hogastos/components/texts/input_text.dart';
-import 'package:hogastos/components/texts/subtitle_text.dart';
+import 'package:hogastos/components/common/box_selector.dart';
+import 'package:hogastos/configurations/hogastos_icons/hostastos_icon.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 
 class IconSelector extends StatelessWidget {
-  final IconData? selectedIcon;
+  final HogastosIcon? selectedIcon;
   final bool enabled;
-  final void Function(IconData?) onChanged;
+  final void Function(HogastosIcon?) onChanged;
 
   const IconSelector({
     super.key,
@@ -19,85 +15,24 @@ class IconSelector extends StatelessWidget {
     required this.onChanged
   });
 
-  void _handleOpenPicker(BuildContext context, Localization localization) async {
-    IconPickerIcon? icon = await showIconPicker(
-      context,
-      configuration: SinglePickerConfiguration(
-        iconPackModes: [IconPack.material],
-        preSelected: selectedIcon != null
-          ? IconPickerIcon(
-            data: selectedIcon!,
-            name: localization.categorySelectIcon,
-            pack: IconPack.material
-          )
-          : null,
-        title: SubtitleText(localization.categorySelectIcon),
-        closeChild: BodyText(localization.actionsClose),
-        searchHintText: localization.actionsSearch,
-        noResultsText: localization.categorySelectIconNoResults,
-      ),
-    );
+  Widget _getBoxContentWidget(HogastosIcon icon) => Icon(
+    icon.iconData
+  );
 
-    onChanged(icon?.data);
-  }
+  bool isEqual(item1, item2) => item1.key == item2?.key;
 
   @override
   Widget build(BuildContext context) {
     var localization = LocalizationHelper.localization(context);
 
-    return Container(
-      padding: const EdgeInsets.all(20),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(color: enabled ? Colors.black54 : Colors.black12),
-        borderRadius: BorderRadius.all(Radius.circular(40)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: 6),
-              InputText(localization.categorySelectIcon, enabled: enabled),
-            ],
-          ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: enabled ? Colors.black54 : Colors.black12,
-                    width: 1
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    selectedIcon ?? Icons.crop_square_sharp,
-                    color: enabled ? Colors.black54 : Colors.black12,
-                  ),
-                  onPressed: enabled
-                    ? () => _handleOpenPicker(context, localization)
-                    : null,
-                ),
-              ),
-              SizedBox(width: 14),
-              ...selectedIcon == null
-                ? [HintText(localization.categorySelectIconNotSelected)]
-                : [],
-            ],
-          ),
-        ],
-      ),
+    return BoxSelector<HogastosIcon>(
+      selectedValue: selectedIcon,
+      enabled: enabled,
+      items: HogastosIcons.values,
+      label: localization.categorySelectIcon,
+      getBoxContentWidget: _getBoxContentWidget,
+      isEqual: isEqual,
+      onChanged: onChanged,
     );
   }
 }

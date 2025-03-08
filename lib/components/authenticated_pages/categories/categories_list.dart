@@ -66,7 +66,7 @@ class _CategoriesListState extends State<CategoriesList> {
               backgroundColor: categoryColor,
               textColor: textColor,
               title: category.description,
-              leading: Icon(category.icon, color: textColor),
+              leading: Icon(category.icon.iconData, color: textColor),
               withCard: true,
               onTap: () => NavigatorHelper.pushNamed(
                 context,

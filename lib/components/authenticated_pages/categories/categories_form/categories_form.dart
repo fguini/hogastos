@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/common/error_elevated_button.dart';
+import 'package:hogastos/configurations/hogastos_icons/hostastos_icon.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/widget_helper.dart';
@@ -33,7 +34,7 @@ class _CategoriesFormState extends State<CategoriesForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController descriptionController = TextEditingController();
   Color? color;
-  IconData? icon;
+  HogastosIcon? icon;
 
   @override
   void initState() {
@@ -57,7 +58,7 @@ class _CategoriesFormState extends State<CategoriesForm> {
     });
   }
 
-  void _handleIconChange(IconData? newIcon) {
+  void _handleIconChange(HogastosIcon? newIcon) {
     setState(() {
       icon = newIcon;
     });

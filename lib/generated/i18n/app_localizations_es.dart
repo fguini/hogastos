@@ -143,6 +143,78 @@ class AppLocalizationsEs extends AppLocalizations {
   String get expenses => 'Gastos';
 
   @override
+  String get iconSearchTagsAccountBalance => 'banco cuenta corriente balance nomina';
+
+  @override
+  String get iconSearchTagsBeach => 'playa vacaciones costa sombrilla';
+
+  @override
+  String get iconSearchTagsBed => 'cama alojamiento vacaciones habitacion';
+
+  @override
+  String get iconSearchTagsBike => 'bici bicicleta moto motocicleta transporte transladar viaje deporte actividad';
+
+  @override
+  String get iconSearchTagsBus => 'autobus bus colectivo publico público transporte direccion';
+
+  @override
+  String get iconSearchTagsBusiness => 'trabajo oficina edificio';
+
+  @override
+  String get iconSearchTagsCake => 'tarta torta cumpleaños cumple aniversario año';
+
+  @override
+  String get iconSearchTagsCar => 'carro coche auto automovil transporte direccion';
+
+  @override
+  String get iconSearchTagsCheckroom => 'percha ropa orden armario';
+
+  @override
+  String get iconSearchTagsChild => 'niño bebe niña beba carrito cochecito';
+
+  @override
+  String get iconSearchTagsHome => 'casa hogar domestico';
+
+  @override
+  String get iconSearchTagsGame => 'ocio juegos videojuegos videos';
+
+  @override
+  String get iconSearchTagsGas => 'gas gasolina nafta estacion de servicio gasolinera coche transporte';
+
+  @override
+  String get iconSearchTagsGrade => 'estrella nivel grado favorito especial';
+
+  @override
+  String get iconSearchTagsLightbulb => 'bombilla bombita luz servicios';
+
+  @override
+  String get iconSearchTagsPlane => 'avion avión vuelo volar viaje vacaciones';
+
+  @override
+  String get iconSearchTagsPlaceholder => 'hora horario vacío tiempo espacio hueco';
+
+  @override
+  String get iconSearchTagsRecycling => 'reciclar reciclado renovable renovar otros';
+
+  @override
+  String get iconSearchTagsShopping => 'compras ropa accesorios centro comercial mall shopping';
+
+  @override
+  String get iconSearchTagsSoccer => 'futbol football furbo deporte fulbo balon pelota';
+
+  @override
+  String get iconSearchTagsSolidarity => 'solidaridad cruz voluntario voluntariado solidario';
+
+  @override
+  String get iconSearchTagsSupermarket => 'super supermercado mercado compras carro carrito compras';
+
+  @override
+  String get iconSearchTagsTrain => 'transporte tren ferrocarril';
+
+  @override
+  String get iconSearchTagsWoman => 'mujer chica niña femenina';
+
+  @override
   String get listGroupByCategory => 'Agrupar por categoría';
 
   @override

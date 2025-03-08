@@ -35,7 +35,7 @@ class HomeBankMovementsGroupedList extends StatelessWidget {
                   item.movements.length
               ),
               leading: Icon(
-                item.category.icon,
+                item.category.icon.iconData,
               ),
               trailing: BodyText(
                 AppLocalizations.of(context)!.amountCurrency(item.total),

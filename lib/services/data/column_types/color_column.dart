@@ -1,17 +1,10 @@
 import 'dart:ui';
 
 import 'package:drift/drift.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 
 class ColorColumn implements CustomSqlType<Color> {
   const ColorColumn();
-
-  String _colorToString(Color color) => [
-    color.a,
-    color.b,
-    color.g,
-    color.r,
-    color.colorSpace.name
-  ].join('-');
 
   Color _stringToColor(String sqlValue) {
     var [
@@ -32,10 +25,10 @@ class ColorColumn implements CustomSqlType<Color> {
   }
 
   @override
-  String mapToSqlLiteral(Color dartValue) => _colorToString(dartValue);
+  String mapToSqlLiteral(Color dartValue) => getColorStringSignature(dartValue);
 
   @override
-  Object mapToSqlParameter(Color dartValue) => _colorToString(dartValue);
+  Object mapToSqlParameter(Color dartValue) => getColorStringSignature(dartValue);
 
   @override
   Color read(Object fromSql) => _stringToColor(fromSql as String);

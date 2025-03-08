@@ -2,9 +2,10 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:hogastos/configurations/authentication.dart';
+import 'package:hogastos/configurations/hogastos_icons/hostastos_icon.dart';
 import 'package:hogastos/models/movement_type.dart';
 import 'package:hogastos/services/data/column_types/color_column.dart';
-import 'package:hogastos/services/data/column_types/icon_data_column.dart';
+import 'package:hogastos/services/data/column_types/hogastos_icon_column.dart';
 import 'package:hogastos/services/data/column_types/movement_type_column.dart';
 
 import 'migrations/run_migrations.dart';

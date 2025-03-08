@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hogastos/configurations/hogastos_icons/hostastos_icon.dart';
 import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_filters.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements_simple_list.dart';
@@ -14,7 +15,7 @@ import 'package:hogastos/models/movement_type.dart';
 List<Movement> _loadingFakeMovements = List.filled(10, Movement(
   1,
   'test1',
-  Category(1, 'churrin1', Colors.grey, Icons.pedal_bike),
+  Category(1, 'churrin1', Colors.grey, HogastosIcons.bike),
   20,
   DateTime.now(),
   MovementType.computable,
