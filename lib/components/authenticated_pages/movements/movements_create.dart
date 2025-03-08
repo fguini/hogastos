@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/animations/dialog_transition.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_form/movements_form.dart';
 import 'package:hogastos/components/authenticated_pages/page_with_menu.dart';
 import 'package:hogastos/components/common/go_home_action.dart';
 import 'package:hogastos/configurations/routes.dart';
+import 'package:hogastos/configurations/user_settings.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
 import 'package:hogastos/models/category.dart';
@@ -22,7 +24,9 @@ class MovementsCreate extends StatefulWidget {
 
 class _MovementsCreateState extends State<MovementsCreate> {
   bool _isLoading = true;
+  bool _isReady = false;
   Category? _preselectedCategory;
+  DateTime _initialDate = DateTime.now();
 
   void _handleCreate(CreateMovement movement) {
     setState(() {
@@ -53,8 +57,8 @@ class _MovementsCreateState extends State<MovementsCreate> {
     });
   }
 
-  void _anyCategoryCreated() {
-    CategoryService().existAnyCategory().then(
+  Future<void> _anyCategoryCreated() {
+    return CategoryService().existAnyCategory().then(
       (bool exists) {
         if(!exists) {
           DialogTransition.open(
@@ -71,9 +75,30 @@ class _MovementsCreateState extends State<MovementsCreate> {
     );
   }
 
+  Future<void> _setInitialDate() {
+    return UserSettings().getUserSettings().then((settings) {
+      var currentMonthAndYear = settings.monthAndYearInHome;
+      var isSame = currentMonthAndYear.equals(MonthAndYear.now());
+
+      if(!isSame) {
+        setState(() {
+          _initialDate = DateTime(
+            currentMonthAndYear.year,
+            currentMonthAndYear.monthNumber,
+          );
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
-    _anyCategoryCreated();
+    Future.wait([
+      _setInitialDate(),
+      _anyCategoryCreated(),
+    ]).then((_) => setState(() {
+      _isReady = true;
+    }));
 
     super.initState();
   }
@@ -82,11 +107,14 @@ class _MovementsCreateState extends State<MovementsCreate> {
   Widget build(BuildContext context) {
     return PageWithMenu(
       title: LocalizationHelper.localization(context).newMovement,
-      body: MovementsForm(
-        preselectedCategory: _preselectedCategory,
-        isLoading: _isLoading,
-        onSave: _handleCreate
-      ),
+      body: _isReady
+        ? MovementsForm(
+          initialDate: _initialDate,
+          preselectedCategory: _preselectedCategory,
+          isLoading: _isLoading,
+          onSave: _handleCreate
+        )
+        : CircularProgressIndicator(),
       leading: GoHomeAction(popUntilHome: true),
     );
   }

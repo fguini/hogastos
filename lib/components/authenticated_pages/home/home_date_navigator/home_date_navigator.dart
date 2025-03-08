@@ -34,6 +34,15 @@ class _HomeDateNavigatorState extends State<HomeDateNavigator> {
   void _handleNext() => _setMonthAndYears(monthAndYears.last);
 
   @override
+  void didUpdateWidget(covariant HomeDateNavigator oldWidget) {
+    if(!oldWidget.monthAndYear.equals(widget.monthAndYear)) {
+      _initMonthAndYears();
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void initState() {
     _initMonthAndYears();
 

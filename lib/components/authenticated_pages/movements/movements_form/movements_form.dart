@@ -17,6 +17,7 @@ import 'movements_income_expense_selector/movements_income_expense_selector.dart
 
 class MovementsForm extends StatefulWidget {
   final Movement? initialMovement;
+  final DateTime? initialDate;
   final Category? preselectedCategory;
   final bool isLoading;
   final void Function(int)? onDelete;
@@ -25,6 +26,7 @@ class MovementsForm extends StatefulWidget {
   const MovementsForm({
     super.key,
     this.initialMovement,
+    this.initialDate,
     this.preselectedCategory,
     this.isLoading = false,
     this.onDelete,
@@ -61,6 +63,10 @@ class _MovementsFormState extends State<MovementsForm> {
             ? IncomeExpenseType.income
             : IncomeExpenseType.expense
         );
+      });
+    } else if(widget.initialDate != null) {
+      setState(() {
+        date = widget.initialDate!;
       });
     }
 
@@ -141,6 +147,11 @@ class _MovementsFormState extends State<MovementsForm> {
         category = widget.preselectedCategory;
       });
     }
+    if(oldWidget.initialDate != widget.initialDate) {
+      setState(() {
+        date = widget.initialDate;
+      });
+    }
 
     super.didUpdateWidget(oldWidget);
   }
@@ -181,7 +192,7 @@ class _MovementsFormState extends State<MovementsForm> {
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: DatePickerInputForm(
-                      initialValue: widget.initialMovement?.date ?? DateTime.now(),
+                      initialValue: widget.initialMovement?.date ?? date,
                       isLoading: widget.isLoading,
                       onDateChanged: _handleDateChange,
                       label: Text(localization.movementDate),

@@ -5,8 +5,10 @@ import 'package:hogastos/components/authenticated_pages/home/home_bank_movements
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/home_date_navigator.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals.dart';
+import 'package:hogastos/configurations/user_settings.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 const cardPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
 
@@ -21,7 +23,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   StreamSubscription<List<Movement>>? watcher;
   List<Movement> _movements = [];
   MonthAndYear _currentMonthAndYear = MonthAndYear.now();
-  bool _isLoading = false;
+  bool _isLoading = true;
 
   void _loadMonthAndYearMovements(MonthAndYear newMonthAndYear) {
     setState(() {
@@ -29,6 +31,8 @@ class _HomeLayoutState extends State<HomeLayout> {
       _currentMonthAndYear = newMonthAndYear;
       _isLoading = true;
     });
+
+    UserSettings().saveMonthAndYearInHome(newMonthAndYear);
 
     watcher = MovementService().watchByMonthAndYear(
       newMonthAndYear.monthNumber,
@@ -56,7 +60,9 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   void initState() {
-    _loadMonthAndYearMovements(MonthAndYear.now());
+    UserSettings().getUserSettings().then((settings) {
+      _loadMonthAndYearMovements(settings.monthAndYearInHome);
+    });
 
     super.initState();
   }

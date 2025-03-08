@@ -38,6 +38,7 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
                   title: item.category.description,
                   leading: Icon(
                     item.category.icon.iconData,
+                    color: textColor,
                   ),
                   trailing: BodyText(
                     AppLocalizations.of(context)!.amountCurrency(item.total),

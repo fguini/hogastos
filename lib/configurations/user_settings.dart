@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/models/settings.dart';
 import 'package:hogastos/models/utils/serializable.dart';
 
@@ -10,6 +11,7 @@ AndroidOptions _getAndroidOptions() => const AndroidOptions(
 const _biometricAuthKey = 'biometric-auth';
 const _isGroupedListInHome = 'is-grouped-list-in-home';
 const _filtersOnInHome = 'filters-on-in-home';
+const _monthAndYearInHome = 'month-and-year-in-home';
 
 class _SettingsCreator {
   static final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
@@ -44,6 +46,11 @@ class _SettingsCreator {
       _filtersOnInHome,
       FiltersOnInHome.fromJson
     ) ?? FiltersOnInHome.defaultValue();
+  static Future<MonthAndYear> getMonthAndYearInHome() async =>
+    await _getObjectValue<MonthAndYear>(
+      _monthAndYearInHome,
+      MonthAndYear.fromJson
+    ) ?? MonthAndYear.now();
 
   static Future<void> saveBiometricAuth(bool isEnabled) async =>
     await storage.write(key: _biometricAuthKey, value: isEnabled.toString());
@@ -51,6 +58,8 @@ class _SettingsCreator {
     await storage.write(key: _isGroupedListInHome, value: isGrouped.toString());
   static Future<void> saveFiltersOnInHome(FiltersOnInHome filtersOn) async =>
     await storage.write(key: _filtersOnInHome, value: serialize(filtersOn));
+  static Future<void> saveMonthAndYearInHome(MonthAndYear monthAndYear) async =>
+    await storage.write(key: _monthAndYearInHome, value: serialize(monthAndYear));
 }
 
 class UserSettings {
@@ -65,17 +74,22 @@ class UserSettings {
       isBiometricAuthEnabled: await _SettingsCreator.getBiometricAuth(),
       isGroupedListInHome: await _SettingsCreator.getIsGroupedListInHome(),
       filtersOnInHome: await _SettingsCreator.getFiltersOnInHome(),
+      monthAndYearInHome: await _SettingsCreator.getMonthAndYearInHome(),
     );
 
     return settings!;
   }
 
   Future<void> saveBiometricAuth(bool isEnabled) async {
-    _SettingsCreator.saveBiometricAuth(isEnabled);
+    await _SettingsCreator.saveBiometricAuth(isEnabled);
+
+    settings?.isBiometricAuthEnabled = isEnabled;
   }
 
   Future<void> saveIsGroupedListInHome(bool isGrouped) async {
-    _SettingsCreator.saveIsGroupedListInHome(isGrouped);
+    await _SettingsCreator.saveIsGroupedListInHome(isGrouped);
+
+    settings?.isGroupedListInHome = isGrouped;
   }
 
   Future<void> saveFiltersOnInHome(
@@ -83,12 +97,19 @@ class UserSettings {
     bool incomesOn,
     bool notComputableOn
   ) async {
-    _SettingsCreator.saveFiltersOnInHome(
-      FiltersOnInHome(
-        expensesOn,
-        incomesOn,
-        notComputableOn,
-      ),
+    var newFiltersOnInHome = FiltersOnInHome(
+      expensesOn,
+      incomesOn,
+      notComputableOn,
     );
+    await _SettingsCreator.saveFiltersOnInHome(newFiltersOnInHome);
+
+    settings?.filtersOnInHome = newFiltersOnInHome;
+  }
+
+  Future<void> saveMonthAndYearInHome(MonthAndYear monthAndYear) async {
+    await _SettingsCreator.saveMonthAndYearInHome(monthAndYear);
+
+    settings?.monthAndYearInHome = monthAndYear;
   }
 }

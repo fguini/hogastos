@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/generated/i18n/app_localizations.dart';
+import 'package:hogastos/models/utils/serializable.dart';
 
 enum Month {
   january,
@@ -16,7 +17,7 @@ enum Month {
   december,
 }
 
-class MonthAndYear {
+class MonthAndYear implements JsonConvert<MonthAndYear> {
   Month month;
   int year;
 
@@ -25,12 +26,15 @@ class MonthAndYear {
     required this.year
   });
 
-  factory MonthAndYear.now() {
-    var now = DateTime.now();
-    var month = now.month;
-    var year = now.year;
+  factory MonthAndYear.fromDate(DateTime date) {
+    var month = date.month;
+    var year = date.year;
 
     return MonthAndYear(month: Month.values[month - 1], year: year);
+  }
+
+  factory MonthAndYear.now() {
+    return MonthAndYear.fromDate(DateTime.now());
   }
 
   int get _monthIndex => Month.values.indexOf(month);
@@ -71,5 +75,20 @@ class MonthAndYear {
       month: Month.values[_monthIndex + 1],
       year: year,
     );
+  }
+
+  factory MonthAndYear.fromJson(Map<String, dynamic> json) {
+    return MonthAndYear(
+      month: Month.values[json['month']],
+      year: json['year'],
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'month': _monthIndex,
+      'year': year,
+    };
   }
 }

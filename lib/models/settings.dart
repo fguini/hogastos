@@ -1,3 +1,4 @@
+import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/models/utils/serializable.dart';
 
 class FiltersOnInHome implements JsonConvert<FiltersOnInHome> {
@@ -34,13 +35,15 @@ class FiltersOnInHome implements JsonConvert<FiltersOnInHome> {
 }
 
 class Settings {
-  final bool isBiometricAuthEnabled;
-  final bool isGroupedListInHome;
-  final FiltersOnInHome filtersOnInHome;
+  bool isBiometricAuthEnabled;
+  bool isGroupedListInHome;
+  FiltersOnInHome filtersOnInHome;
+  MonthAndYear monthAndYearInHome;
 
   Settings({
     required this.isBiometricAuthEnabled,
     required this.isGroupedListInHome,
     required this.filtersOnInHome,
+    required this.monthAndYearInHome,
   });
 }
