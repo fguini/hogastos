@@ -188,6 +188,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSearchTagsLightbulb => 'bombilla bombita luz servicios';
 
   @override
+  String get iconSearchTagsPaid => 'dinero ahorro plata moneda balance';
+
+  @override
   String get iconSearchTagsPlane => 'avion avión vuelo volar viaje vacaciones';
 
   @override
@@ -197,6 +200,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSearchTagsRecycling => 'reciclar reciclado renovable renovar otros';
 
   @override
+  String get iconSearchTagsRestaurant => 'restaurante salir salida comer cena';
+
+  @override
+  String get iconSearchTagsRealEstateAgent => 'alquiler de hogar casa prestamo renting';
+
+  @override
+  String get iconSearchTagsSavings => 'ahorros dinero guardado';
+
+  @override
+  String get iconSearchTagsSell => 'venta etiqueta marca compra';
+
+  @override
   String get iconSearchTagsShopping => 'compras ropa accesorios centro comercial mall shopping';
 
   @override
@@ -204,6 +219,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get iconSearchTagsSolidarity => 'solidaridad cruz voluntario voluntariado solidario';
+
+  @override
+  String get iconSearchTagsSubscriptions => 'subscripciones internet mensual periodica';
 
   @override
   String get iconSearchTagsSupermarket => 'super supermercado mercado compras carro carrito compras';

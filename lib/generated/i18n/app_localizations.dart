@@ -435,6 +435,12 @@ abstract class AppLocalizations {
   /// **'bombilla bombita luz servicios'**
   String get iconSearchTagsLightbulb;
 
+  /// No description provided for @iconSearchTagsPaid.
+  ///
+  /// In es, this message translates to:
+  /// **'dinero ahorro plata moneda balance'**
+  String get iconSearchTagsPaid;
+
   /// No description provided for @iconSearchTagsPlane.
   ///
   /// In es, this message translates to:
@@ -453,6 +459,30 @@ abstract class AppLocalizations {
   /// **'reciclar reciclado renovable renovar otros'**
   String get iconSearchTagsRecycling;
 
+  /// No description provided for @iconSearchTagsRestaurant.
+  ///
+  /// In es, this message translates to:
+  /// **'restaurante salir salida comer cena'**
+  String get iconSearchTagsRestaurant;
+
+  /// No description provided for @iconSearchTagsRealEstateAgent.
+  ///
+  /// In es, this message translates to:
+  /// **'alquiler de hogar casa prestamo renting'**
+  String get iconSearchTagsRealEstateAgent;
+
+  /// No description provided for @iconSearchTagsSavings.
+  ///
+  /// In es, this message translates to:
+  /// **'ahorros dinero guardado'**
+  String get iconSearchTagsSavings;
+
+  /// No description provided for @iconSearchTagsSell.
+  ///
+  /// In es, this message translates to:
+  /// **'venta etiqueta marca compra'**
+  String get iconSearchTagsSell;
+
   /// No description provided for @iconSearchTagsShopping.
   ///
   /// In es, this message translates to:
@@ -470,6 +500,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'solidaridad cruz voluntario voluntariado solidario'**
   String get iconSearchTagsSolidarity;
+
+  /// No description provided for @iconSearchTagsSubscriptions.
+  ///
+  /// In es, this message translates to:
+  /// **'subscripciones internet mensual periodica'**
+  String get iconSearchTagsSubscriptions;
 
   /// No description provided for @iconSearchTagsSupermarket.
   ///

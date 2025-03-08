@@ -118,6 +118,13 @@ const _lightbulbIcon = HogastosIcon(
   _lightbulbSearchTag,
 );
 
+String _paidSearchTag(AppLocalizations localization) => localization.iconSearchTagsPaid;
+const _paidIcon = HogastosIcon(
+  'paid',
+  Icons.paid,
+  _paidSearchTag,
+);
+
 String _placeholderSearchTag(AppLocalizations localization) => localization.iconSearchTagsPlaceholder;
 const _placeholderIcon = HogastosIcon(
   'placeholder',
@@ -132,11 +139,39 @@ const _planeIcon = HogastosIcon(
   _planeSearchTag,
 );
 
+String _realEstateAgentSearchTag(AppLocalizations localization) => localization.iconSearchTagsRealEstateAgent;
+const _realEstateAgentIcon = HogastosIcon(
+  'realEstateAgent',
+  Icons.real_estate_agent_outlined,
+  _realEstateAgentSearchTag,
+);
+
 String _recyclingSearchTag(AppLocalizations localization) => localization.iconSearchTagsRecycling;
 const _recyclingIcon = HogastosIcon(
   'recycling',
   Icons.recycling,
   _recyclingSearchTag,
+);
+
+String _restaurantSearchTag(AppLocalizations localization) => localization.iconSearchTagsRestaurant;
+const _restaurantIcon = HogastosIcon(
+  'restaurant',
+  Icons.restaurant,
+  _restaurantSearchTag,
+);
+
+String _savingsSearchTag(AppLocalizations localization) => localization.iconSearchTagsSavings;
+const _savingsIcon = HogastosIcon(
+  'savings',
+  Icons.savings,
+  _savingsSearchTag,
+);
+
+String _sellSearchTag(AppLocalizations localization) => localization.iconSearchTagsSell;
+const _sellIcon = HogastosIcon(
+  'sell',
+  Icons.sell,
+  _sellSearchTag,
 );
 
 String _shoppingSearchTag(AppLocalizations localization) => localization.iconSearchTagsShopping;
@@ -158,6 +193,13 @@ const _solidarityIcon = HogastosIcon(
   'solidarity',
   Icons.local_hospital,
   _solidaritySearchTag,
+);
+
+String _subscriptionsSearchTag(AppLocalizations localization) => localization.iconSearchTagsSubscriptions;
+const _subscriptionsIcon = HogastosIcon(
+  'subscriptions',
+  Icons.subscriptions,
+  _subscriptionsSearchTag,
 );
 
 String _supermarketSearchTag(AppLocalizations localization) => localization.iconSearchTagsSupermarket;
@@ -197,12 +239,18 @@ class HogastosIcons {
   static get gas => _gasIcon;
   static get grade => _gradeIcon;
   static get lightbulb => _lightbulbIcon;
+  static get paid => _paidIcon;
   static get placeholder => _placeholderIcon;
   static get plane => _planeIcon;
+  static get realEstateAgent => _realEstateAgentIcon;
   static get recycling => _recyclingIcon;
+  static get restaurant => _restaurantIcon;
+  static get sell => _sellIcon;
+  static get savings => _savingsIcon;
   static get shopping => _shoppingIcon;
   static get soccer => _soccerIcon;
   static get solidarity => _solidarityIcon;
+  static get subscriptions => _subscriptionsIcon;
   static get supermarket => _supermarketIcon;
   static get train => _trainIcon;
   static get woman => _womanIcon;
@@ -223,12 +271,18 @@ class HogastosIcons {
     gas,
     grade,
     lightbulb,
+    paid,
     placeholder,
     plane,
+    realEstateAgent,
     recycling,
+    restaurant,
+    savings,
+    sell,
     shopping,
     soccer,
     solidarity,
+    subscriptions,
     supermarket,
     train,
     woman,
