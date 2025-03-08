@@ -87,9 +87,7 @@ class _MovementsCreateState extends State<MovementsCreate> {
         isLoading: _isLoading,
         onSave: _handleCreate
       ),
-      actions: [
-        GoHomeAction(popUntilHome: true),
-      ],
+      leading: GoHomeAction(popUntilHome: true),
     );
   }
 }

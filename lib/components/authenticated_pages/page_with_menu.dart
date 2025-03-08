@@ -23,12 +23,14 @@ class PageWithMenu extends StatefulWidget {
   final Widget body;
   final List<Widget> actions;
   final Widget? floatingActionButton;
+  final Widget? leading;
 
   const PageWithMenu({
     super.key,
     required this.title,
     required this.body,
-    required this.actions,
+    this.actions = const [],
+    this.leading,
     this.floatingActionButton
   });
 
@@ -75,6 +77,7 @@ class _PageWithMenuState extends State<PageWithMenu> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white70,
         title: BodyText(widget.title),
+        leading: widget.leading,
         actions: [
           ...widget.actions,
           SizedBox(width: 10),

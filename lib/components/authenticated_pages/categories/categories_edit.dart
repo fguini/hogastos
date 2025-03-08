@@ -107,9 +107,7 @@ class _CategoriesEditControllerState extends State<_CategoriesEditController> {
         onDelete: _handleConfirmDelete,
         onSave: _handleUpdate,
       ),
-      actions: [
-        GoHomeAction(popUntilHome: false),
-      ],
+      leading: GoHomeAction(popUntilHome: false),
     );
   }
 }

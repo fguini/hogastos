@@ -46,9 +46,7 @@ class _CategoriesCreateState extends State<CategoriesCreate> {
         isLoading: _isLoading,
         onSave: (category) => _handleCreate(category, comingFrom),
       ),
-      actions: [
-        GoHomeAction(popUntilHome: comingFrom == null),
-      ],
+      leading: GoHomeAction(popUntilHome: comingFrom == null),
     );
   }
 }

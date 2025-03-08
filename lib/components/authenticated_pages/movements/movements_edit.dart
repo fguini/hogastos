@@ -92,9 +92,7 @@ class _MovementsEditControllerState extends State<_MovementsEditController> {
           onDelete: _handleDelete,
           onSave: _handleUpdate,
         ),
-      actions: [
-        GoHomeAction(popUntilHome: true),
-      ],
+      leading: GoHomeAction(popUntilHome: true),
     );
   }
 }

@@ -76,8 +76,8 @@ class _CategoriesListState extends State<CategoriesList> {
             );
           }
         ),
+      leading: GoHomeAction(),
       actions: [
-        GoHomeAction(),
         IconButton(
           onPressed: () => NavigatorHelper.pushNamed(
             context,
