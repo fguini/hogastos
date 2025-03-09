@@ -71,6 +71,7 @@ class _CategoriesEditControllerState extends State<_CategoriesEditController> {
     CategoryService().categoryHasMovements(id).then((hasMovements) {
       if(!hasMovements) {
         _handleDelete(id);
+        return;
       }
 
       DialogTransition.open(

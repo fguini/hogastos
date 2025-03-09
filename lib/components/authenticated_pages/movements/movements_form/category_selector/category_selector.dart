@@ -72,9 +72,9 @@ class _CategorySelectorState extends State<CategorySelector> {
 
         return;
 
-        CategoryService().getById(newCategoryId as int).then((newCategory) {
-          _handleCategoryChange(newCategory); // TODO this do not update selector
-        });
+        // CategoryService().getById(newCategoryId as int).then((newCategory) {
+          // _handleCategoryChange(newCategory); // TODO this do not update selector
+        // });
       }),
     );
   }
