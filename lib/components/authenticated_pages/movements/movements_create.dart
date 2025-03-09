@@ -45,20 +45,19 @@ class _MovementsCreateState extends State<MovementsCreate> {
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
-
     CategoryService().getById(categoryId).then((category) {
+      NavigatorHelper.pop(context);
+
       setState(() {
         _preselectedCategory = category;
         _isLoading = false;
+        _isReady = true;
       });
     });
   }
 
-  Future<void> _anyCategoryCreated() {
-    return CategoryService().existAnyCategory().then(
+  void _anyCategoryCreated() {
+    CategoryService().existAnyCategory().then(
       (bool exists) {
         if(!exists) {
           DialogTransition.open(
@@ -69,6 +68,7 @@ class _MovementsCreateState extends State<MovementsCreate> {
         } else {
           setState(() {
             _isLoading = false;
+            _isReady = true;
           });
         }
       }
@@ -93,12 +93,9 @@ class _MovementsCreateState extends State<MovementsCreate> {
 
   @override
   void initState() {
-    Future.wait([
-      _setInitialDate(),
-      _anyCategoryCreated(),
-    ]).then((_) => setState(() {
-      _isReady = true;
-    }));
+    _setInitialDate().then((_) {
+      _anyCategoryCreated();
+    });
 
     super.initState();
   }

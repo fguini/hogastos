@@ -64,9 +64,15 @@ class _MovementsFormState extends State<MovementsForm> {
             : IncomeExpenseType.expense
         );
       });
-    } else if(widget.initialDate != null) {
+    }
+    if(widget.initialDate != null) {
       setState(() {
         date = widget.initialDate!;
+      });
+    }
+    if(widget.preselectedCategory != null) {
+      setState(() {
+        category = widget.preselectedCategory!;
       });
     }
 
@@ -212,7 +218,7 @@ class _MovementsFormState extends State<MovementsForm> {
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: CategorySelector(
-                      initialValue: widget.initialMovement?.category,
+                      initialValue: widget.initialMovement?.category ?? category,
                       isLoading: widget.isLoading,
                       onCategoryChanged: _handleCategoryChange,
                     ),

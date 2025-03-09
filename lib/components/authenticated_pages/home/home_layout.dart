@@ -8,7 +8,6 @@ import 'package:hogastos/components/authenticated_pages/home/home_totals/home_to
 import 'package:hogastos/configurations/user_settings.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 const cardPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
 

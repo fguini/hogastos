@@ -67,7 +67,15 @@ class _CategorySelectorState extends State<CategorySelector> {
         context,
         RoutesNames.categoriesCreate,
         arguments: RoutesNames.movementsCreate,
-      ),
+      ).then((newCategoryId) {
+        if(newCategoryId == null) return;
+
+        return;
+
+        CategoryService().getById(newCategoryId as int).then((newCategory) {
+          _handleCategoryChange(newCategory); // TODO this do not update selector
+        });
+      }),
     );
   }
 
