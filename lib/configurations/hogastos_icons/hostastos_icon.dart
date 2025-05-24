@@ -41,6 +41,13 @@ const _bikeIcon = HogastosIcon(
   _bikeSearchTag,
 );
 
+String _booksSearchTag(AppLocalizations localization) => localization.iconSearchTagsBooks;
+const _booksIcon = HogastosIcon(
+  'books',
+  Icons.auto_stories,
+  _booksSearchTag,
+);
+
 String _busSearchTag(AppLocalizations localization) => localization.iconSearchTagsBus;
 const _busIcon = HogastosIcon(
   'bus',
@@ -90,6 +97,14 @@ const _homeIcon = HogastosIcon(
   _homeSearchTag,
 );
 
+String _fitnessCenterSearchTag(AppLocalizations localization) => localization.iconSearchTagsFitnessCenter;
+const _fitnessCenterIcon = HogastosIcon(
+  'fitness_center',
+  Icons.fitness_center,
+  _fitnessCenterSearchTag,
+);
+
+
 String _gameSearchTag(AppLocalizations localization) => localization.iconSearchTagsGame;
 const _gameIcon = HogastosIcon(
   'game',
@@ -125,6 +140,13 @@ const _paidIcon = HogastosIcon(
   _paidSearchTag,
 );
 
+String _physicalTherapySearchTag(AppLocalizations localization) => localization.iconSearchTagsPhysicalTherapy;
+const _physicalTherapyIcon = HogastosIcon(
+  'physicalTherapy',
+  Icons.personal_injury,
+  _physicalTherapySearchTag,
+);
+
 String _placeholderSearchTag(AppLocalizations localization) => localization.iconSearchTagsPlaceholder;
 const _placeholderIcon = HogastosIcon(
   'placeholder',
@@ -137,6 +159,13 @@ const _planeIcon = HogastosIcon(
   'plane',
   Icons.airplanemode_active,
   _planeSearchTag,
+);
+
+String _questionMarkSearchTag(AppLocalizations localization) => localization.iconSearchTagsQuestionMark;
+const _questionMarkIcon = HogastosIcon(
+  'questionMark',
+  Icons.question_mark,
+  _questionMarkSearchTag,
 );
 
 String _realEstateAgentSearchTag(AppLocalizations localization) => localization.iconSearchTagsRealEstateAgent;
@@ -181,6 +210,13 @@ const _shoppingIcon = HogastosIcon(
   _shoppingSearchTag,
 );
 
+String _smartphoneSearchTag(AppLocalizations localization) => localization.iconSearchTagsSmartphone;
+const _smartphoneIcon = HogastosIcon(
+  'smartphone',
+  Icons.smartphone,
+  _smartphoneSearchTag,
+);
+
 String _soccerSearchTag(AppLocalizations localization) => localization.iconSearchTagsSoccer;
 const _soccerIcon = HogastosIcon(
   'soccer',
@@ -216,6 +252,13 @@ const _trainIcon = HogastosIcon(
   _trainSearchTag,
 );
 
+String _volunteerSearchTag(AppLocalizations localization) => localization.iconSearchTagsVolunteer;
+const _volunteerIcon = HogastosIcon(
+  'volunteer',
+  Icons.volunteer_activism,
+  _volunteerSearchTag,
+);
+
 String _womanSearchTag(AppLocalizations localization) => localization.iconSearchTagsWoman;
 const _womanIcon = HogastosIcon(
   'woman',
@@ -228,6 +271,7 @@ class HogastosIcons {
   static get beach => _beachIcon;
   static get bed => _bedIcon;
   static get bike => _bikeIcon;
+  static get book => _booksIcon;
   static get bus => _busIcon;
   static get business => _businessIcon;
   static get cake => _cakeIcon;
@@ -235,24 +279,29 @@ class HogastosIcons {
   static get checkroom => _checkroomIcon;
   static get child => _childIcon;
   static get home => _homeIcon;
+  static get fitnessCenter => _fitnessCenterIcon;
   static get game => _gameIcon;
   static get gas => _gasIcon;
   static get grade => _gradeIcon;
   static get lightbulb => _lightbulbIcon;
   static get paid => _paidIcon;
+  static get physicalTherapy => _physicalTherapyIcon;
   static get placeholder => _placeholderIcon;
   static get plane => _planeIcon;
+  static get questionMark => _questionMarkIcon;
   static get realEstateAgent => _realEstateAgentIcon;
   static get recycling => _recyclingIcon;
   static get restaurant => _restaurantIcon;
   static get sell => _sellIcon;
   static get savings => _savingsIcon;
   static get shopping => _shoppingIcon;
+  static get smartphone => _smartphoneIcon;
   static get soccer => _soccerIcon;
   static get solidarity => _solidarityIcon;
   static get subscriptions => _subscriptionsIcon;
   static get supermarket => _supermarketIcon;
   static get train => _trainIcon;
+  static get volunteer => _volunteerIcon;
   static get woman => _womanIcon;
 
   static List<HogastosIcon> get values => [
@@ -260,6 +309,7 @@ class HogastosIcons {
     beach,
     bed,
     bike,
+    book,
     bus,
     business,
     cake,
@@ -267,24 +317,29 @@ class HogastosIcons {
     checkroom,
     child,
     home,
+    fitnessCenter,
     game,
     gas,
     grade,
     lightbulb,
     paid,
+    physicalTherapy,
     placeholder,
     plane,
+    questionMark,
     realEstateAgent,
     recycling,
     restaurant,
     savings,
     sell,
     shopping,
+    smartphone,
     soccer,
     solidarity,
     subscriptions,
     supermarket,
     train,
+    volunteer,
     woman,
   ];
 }

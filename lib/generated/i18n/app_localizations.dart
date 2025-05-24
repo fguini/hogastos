@@ -369,6 +369,12 @@ abstract class AppLocalizations {
   /// **'bici bicicleta moto motocicleta transporte transladar viaje deporte actividad'**
   String get iconSearchTagsBike;
 
+  /// No description provided for @iconSearchTagsBooks.
+  ///
+  /// In es, this message translates to:
+  /// **'libro libreria biblioteca papel'**
+  String get iconSearchTagsBooks;
+
   /// No description provided for @iconSearchTagsBus.
   ///
   /// In es, this message translates to:
@@ -411,6 +417,12 @@ abstract class AppLocalizations {
   /// **'casa hogar domestico'**
   String get iconSearchTagsHome;
 
+  /// No description provided for @iconSearchTagsFitnessCenter.
+  ///
+  /// In es, this message translates to:
+  /// **'gimnasio deporte fitness'**
+  String get iconSearchTagsFitnessCenter;
+
   /// No description provided for @iconSearchTagsGame.
   ///
   /// In es, this message translates to:
@@ -441,6 +453,12 @@ abstract class AppLocalizations {
   /// **'dinero ahorro plata moneda balance'**
   String get iconSearchTagsPaid;
 
+  /// No description provided for @iconSearchTagsPhysicalTherapy.
+  ///
+  /// In es, this message translates to:
+  /// **'fisio kinesiologia fisioterapia lesion fisica'**
+  String get iconSearchTagsPhysicalTherapy;
+
   /// No description provided for @iconSearchTagsPlane.
   ///
   /// In es, this message translates to:
@@ -452,6 +470,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'hora horario vacío tiempo espacio hueco'**
   String get iconSearchTagsPlaceholder;
+
+  /// No description provided for @iconSearchTagsQuestionMark.
+  ///
+  /// In es, this message translates to:
+  /// **'pregunta otros duda consulta'**
+  String get iconSearchTagsQuestionMark;
 
   /// No description provided for @iconSearchTagsRecycling.
   ///
@@ -489,6 +513,12 @@ abstract class AppLocalizations {
   /// **'compras ropa accesorios centro comercial mall shopping'**
   String get iconSearchTagsShopping;
 
+  /// No description provided for @iconSearchTagsSmartphone.
+  ///
+  /// In es, this message translates to:
+  /// **'movil celular telefono servicio'**
+  String get iconSearchTagsSmartphone;
+
   /// No description provided for @iconSearchTagsSoccer.
   ///
   /// In es, this message translates to:
@@ -518,6 +548,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'transporte tren ferrocarril'**
   String get iconSearchTagsTrain;
+
+  /// No description provided for @iconSearchTagsVolunteer.
+  ///
+  /// In es, this message translates to:
+  /// **'voluntariado solidario voluntario ayuda'**
+  String get iconSearchTagsVolunteer;
 
   /// No description provided for @iconSearchTagsWoman.
   ///

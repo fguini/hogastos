@@ -155,6 +155,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSearchTagsBike => 'bici bicicleta moto motocicleta transporte transladar viaje deporte actividad';
 
   @override
+  String get iconSearchTagsBooks => 'libro libreria biblioteca papel';
+
+  @override
   String get iconSearchTagsBus => 'autobus bus colectivo publico público transporte direccion';
 
   @override
@@ -176,6 +179,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSearchTagsHome => 'casa hogar domestico';
 
   @override
+  String get iconSearchTagsFitnessCenter => 'gimnasio deporte fitness';
+
+  @override
   String get iconSearchTagsGame => 'ocio juegos videojuegos videos';
 
   @override
@@ -191,10 +197,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSearchTagsPaid => 'dinero ahorro plata moneda balance';
 
   @override
+  String get iconSearchTagsPhysicalTherapy => 'fisio kinesiologia fisioterapia lesion fisica';
+
+  @override
   String get iconSearchTagsPlane => 'avion avión vuelo volar viaje vacaciones';
 
   @override
   String get iconSearchTagsPlaceholder => 'hora horario vacío tiempo espacio hueco';
+
+  @override
+  String get iconSearchTagsQuestionMark => 'pregunta otros duda consulta';
 
   @override
   String get iconSearchTagsRecycling => 'reciclar reciclado renovable renovar otros';
@@ -215,6 +227,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get iconSearchTagsShopping => 'compras ropa accesorios centro comercial mall shopping';
 
   @override
+  String get iconSearchTagsSmartphone => 'movil celular telefono servicio';
+
+  @override
   String get iconSearchTagsSoccer => 'futbol football furbo deporte fulbo balon pelota';
 
   @override
@@ -228,6 +243,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get iconSearchTagsTrain => 'transporte tren ferrocarril';
+
+  @override
+  String get iconSearchTagsVolunteer => 'voluntariado solidario voluntario ayuda';
 
   @override
   String get iconSearchTagsWoman => 'mujer chica niña femenina';
