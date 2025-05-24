@@ -345,6 +345,24 @@ abstract class AppLocalizations {
   /// **'Gastos'**
   String get expenses;
 
+  /// No description provided for @exportToExcel.
+  ///
+  /// In es, this message translates to:
+  /// **'Exportar a excel'**
+  String get exportToExcel;
+
+  /// No description provided for @exportToExcelAllMonths.
+  ///
+  /// In es, this message translates to:
+  /// **'Exportar todos los meses'**
+  String get exportToExcelAllMonths;
+
+  /// No description provided for @exportToExcelExport.
+  ///
+  /// In es, this message translates to:
+  /// **'Exportar'**
+  String get exportToExcelExport;
+
   /// No description provided for @iconSearchTagsAccountBalance.
   ///
   /// In es, this message translates to:

@@ -143,6 +143,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get expenses => 'Gastos';
 
   @override
+  String get exportToExcel => 'Exportar a excel';
+
+  @override
+  String get exportToExcelAllMonths => 'Exportar todos los meses';
+
+  @override
+  String get exportToExcelExport => 'Exportar';
+
+  @override
   String get iconSearchTagsAccountBalance => 'banco cuenta corriente balance nomina';
 
   @override
