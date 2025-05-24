@@ -97,6 +97,11 @@ class _MovementsFormState extends State<MovementsForm> {
     });
   }
 
+  void _handleMovementSelected(Movement? newMovement) {
+    _handleTextChange(newMovement?.text);
+    _handleCategoryChange(newMovement?.category);
+  }
+
   void _handleCategoryChange(Category? newCategory) {
     setState(() {
       category = newCategory;
@@ -210,8 +215,9 @@ class _MovementsFormState extends State<MovementsForm> {
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: MovementTextSuggestion(
-                      initialValue: widget.initialMovement?.text,
+                      initialValue: widget.initialMovement,
                       isLoading: widget.isLoading,
+                      onMovementSelected: _handleMovementSelected,
                       onTextChanged: _handleTextChange,
                     ),
                   ),

@@ -25,16 +25,32 @@ class CategorySelector extends StatefulWidget {
 
 class _CategorySelectorState extends State<CategorySelector> {
   Category? selectedCategory;
+  TextEditingController textEditingController = TextEditingController();
+
+  void setSelectedCategory(Category? category) {
+    setState(() {
+      selectedCategory = category;
+    });
+    Future.delayed(Duration(milliseconds: 100))
+      .then((_) => textEditingController.text = category?.description ?? '');
+  }
 
   @override
   void initState() {
     if(widget.initialValue != null) {
-      setState(() {
-        selectedCategory = widget.initialValue;
-      });
+      setSelectedCategory(widget.initialValue);
     }
 
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant CategorySelector oldWidget) {
+    if(oldWidget.initialValue?.id != widget.initialValue?.id) {
+      setSelectedCategory(widget.initialValue);
+    }
+
+    super.didUpdateWidget(oldWidget);
   }
 
   String _displayStringForOption(Category? category) =>
@@ -70,19 +86,15 @@ class _CategorySelectorState extends State<CategorySelector> {
       ).then((newCategoryId) {
         if(newCategoryId == null) return;
 
-        return;
-
-        // CategoryService().getById(newCategoryId as int).then((newCategory) {
-          // _handleCategoryChange(newCategory); // TODO this do not update selector
-        // });
+        CategoryService().getById(newCategoryId as int).then((newCategory) {
+          _handleCategoryChange(newCategory);
+        });
       }),
     );
   }
 
   void _handleCategoryChange(Category? newCategory) {
-    setState(() {
-      selectedCategory = newCategory;
-    });
+    setSelectedCategory(newCategory);
 
     widget.onCategoryChanged(newCategory);
   }
@@ -98,6 +110,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       optionBuilder: _buildOptions,
       label: localization.category,
       isLoading: widget.isLoading,
+      textEditingController: textEditingController,
       inputPrefixIconBuilder: _prefixIconBuilder,
       inputSuffixIconBuilder: _suffixIconBuilder,
       validator: FormValidatorHelper

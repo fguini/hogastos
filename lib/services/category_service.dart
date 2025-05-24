@@ -24,6 +24,14 @@ class CategoryService {
     return mapFromSql(row);
   }
 
+  Future<List<Category>> getByIds(List<int> ids) async {
+    var query = db.select(db.category)..where((c) => c.id.isIn(ids));
+
+    var rows = await query.get();
+
+    return rows.map(mapFromSql).toList();
+  }
+
   Future<List<Category>> getCategoriesByDescription(String? description, { int limit = 5 }) async {
     var query = db.select(db.category)
       ..limit(limit)

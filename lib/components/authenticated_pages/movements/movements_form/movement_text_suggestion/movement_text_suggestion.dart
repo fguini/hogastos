@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/components/common/rounded_autocomplete/rounded_autocomplete.dart';
 import 'package:hogastos/helpers/form_validator_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
 
 const int _movementTextMaxLength = 100;
 
 class MovementTextSuggestion extends StatefulWidget {
-  final String? initialValue;
+  final Movement? initialValue;
   final bool isLoading;
+  final void Function(Movement?) onMovementSelected;
   final void Function(String?) onTextChanged;
 
   const MovementTextSuggestion({
     super.key,
     this.initialValue,
     required this.isLoading,
+    required this.onMovementSelected,
     required this.onTextChanged,
   });
 
@@ -29,19 +32,19 @@ class _MovementTextSuggestionState extends State<MovementTextSuggestion> {
   void initState() {
     if(widget.initialValue != null) {
       setState(() {
-        selectedText = widget.initialValue;
+        selectedText = widget.initialValue?.text;
       });
     }
 
     super.initState();
   }
 
-  String _displayStringForOption(String? text) => text ?? '';
+  String _displayStringForOption(Movement? movement) => movement?.text ?? '';
 
-  Widget _displayWidgetForOption(String? category) =>
-    Text(_displayStringForOption(category));
+  Widget _displayWidgetForOption(Movement? movement) =>
+    Text(_displayStringForOption(movement));
 
-  Future<List<String>> _buildOptions(TextEditingValue textEditingValue) {
+  Future<List<Movement>> _buildOptions(TextEditingValue textEditingValue) {
     return MovementService().getMovementSuggestions(
       textEditingValue.text
     );
@@ -55,11 +58,19 @@ class _MovementTextSuggestionState extends State<MovementTextSuggestion> {
     widget.onTextChanged(newText);
   }
 
+  void _handleMovementSelected(Movement? newMovement) {
+    setState(() {
+      selectedText = newMovement?.text;
+    });
+
+    widget.onMovementSelected(newMovement);
+  }
+
   @override
   Widget build(BuildContext context) {
     var localization = LocalizationHelper.localization(context);
 
-    return RoundedAutocomplete<String>(
+    return RoundedAutocomplete<Movement>(
       initialValue: widget.initialValue,
       displayStringForOption: _displayStringForOption,
       displayWidgetForOption: _displayWidgetForOption,
@@ -72,7 +83,7 @@ class _MovementTextSuggestionState extends State<MovementTextSuggestion> {
         .maxLength(_movementTextMaxLength)
         .validator,
       onInputChanged: _handleTextChange,
-      onValueChanged: _handleTextChange,
+      onValueChanged: _handleMovementSelected,
     );
   }
 }

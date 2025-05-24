@@ -56,19 +56,30 @@ class MovementService {
     ).toList());
   }
 
-  Future<List<String>> getMovementSuggestions(String? text) async {
+  Future<List<Movement>> getMovementSuggestions(String? text) async {
     if(text?.isEmpty ?? true) {
       return [];
     }
 
     var query = db.selectOnly(db.movement, distinct: true)
-      ..addColumns([db.movement.description])
+      ..addColumns([db.movement.description, db.movement.categoryId])
       ..limit(5)
       ..where(db.movement.description.contains(text!));
 
-    var rows = await query.map((r) => r.read(db.movement.description)).get();
+    var rows = await query
+      .map((row) => (row.read(db.movement.description), row.read(db.movement.categoryId)))
+      .get();
 
-    return rows.where((r) => r?.isNotEmpty ?? false).map((r) => r!).toList();
+    var onlyValidRows = rows
+      .where((row) => row.$1 != null && row.$2 != null)
+      .map((row) => (row.$1!, row.$2!));
+    var categoriesIds = onlyValidRows.map((row) => row.$2).toList();
+    var categories = await CategoryService().getByIds(categoriesIds);
+
+    return onlyValidRows.map((row) => Movement.textPlusCategory(
+      row.$1,
+      categories.firstWhere((c) => c.id == row.$2, orElse: () => categories.first)
+    )).toList();
   }
 
   Future<Movement> createMovement(CreateMovement movement) async {

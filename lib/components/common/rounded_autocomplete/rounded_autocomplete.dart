@@ -23,6 +23,7 @@ class RoundedAutocomplete<T extends Object> extends StatelessWidget {
   final T? selectedValue;
   final BuildInputInputIcon<T>? inputPrefixIconBuilder;
   final BuildInputInputIcon<T>? inputSuffixIconBuilder;
+  final TextEditingController? textEditingController;
   final Validator validator;
   final HandleInputChanged? onInputChanged;
   final HandleValueChanged<T> onValueChanged;
@@ -38,6 +39,7 @@ class RoundedAutocomplete<T extends Object> extends StatelessWidget {
     this.selectedValue,
     this.inputPrefixIconBuilder,
     this.inputSuffixIconBuilder,
+    this.textEditingController,
     required this.validator,
     this.onInputChanged,
     required this.onValueChanged,
@@ -63,8 +65,9 @@ class RoundedAutocomplete<T extends Object> extends StatelessWidget {
         suffixIcon: inputSuffixIconBuilder == null
           ? null
           : inputSuffixIconBuilder!(selectedValue),
+        customTextEditingController: textEditingController,
         onChanged: onInputChanged,
-        validator: validator
+        validator: validator,
       ),
       onSelected: onValueChanged,
     );
