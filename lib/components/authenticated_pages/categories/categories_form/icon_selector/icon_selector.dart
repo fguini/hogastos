@@ -6,12 +6,14 @@ import 'package:hogastos/helpers/localization_helper.dart';
 class IconSelector extends StatelessWidget {
   final HogastosIcon? selectedIcon;
   final bool enabled;
+  final Map<String, int> usedIcons;
   final void Function(HogastosIcon?) onChanged;
 
   const IconSelector({
     super.key,
     this.selectedIcon,
     this.enabled = true,
+    this.usedIcons = const {},
     required this.onChanged
   });
 
@@ -30,6 +32,8 @@ class IconSelector extends StatelessWidget {
       enabled: enabled,
       items: HogastosIcons.values,
       label: localization.categorySelectIcon,
+      getItemId: (c) => c.key,
+      usedItems: usedIcons,
       getBoxContentWidget: _getBoxContentWidget,
       isEqual: isEqual,
       onChanged: onChanged,

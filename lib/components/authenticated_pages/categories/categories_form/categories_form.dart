@@ -6,6 +6,7 @@ import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/widget_helper.dart';
 import 'package:hogastos/models/category.dart';
 import 'package:hogastos/models/create_category.dart';
+import 'package:hogastos/services/category_service.dart';
 
 import 'color_selector/color_selector.dart';
 import 'icon_selector/icon_selector.dart';
@@ -35,9 +36,29 @@ class _CategoriesFormState extends State<CategoriesForm> {
   TextEditingController descriptionController = TextEditingController();
   Color? color;
   HogastosIcon? icon;
+  Map<String, int> usedColors = {};
+  Map<String, int> usedIcons = {};
+
+  void getUsedColors() {
+    CategoryService().getUsedColors().then((newUsedColors) {
+      setState(() {
+        usedColors = newUsedColors;
+      });
+    });
+  }
+
+  void getUsedIcons() {
+    CategoryService().getUsedIcons().then((newUsedIcons) {
+      setState(() {
+        usedIcons = newUsedIcons;
+      });
+    });
+  }
 
   @override
   void initState() {
+    getUsedColors();
+    getUsedIcons();
     if(widget.initialCategory != null) {
       var category = widget.initialCategory!;
 
@@ -132,12 +153,14 @@ class _CategoriesFormState extends State<CategoriesForm> {
                   ColorSelector(
                     selectedColor: color,
                     enabled: !widget.isLoading,
+                    usedColors: usedColors,
                     onChanged: _handleColorChange,
                   ),
                   SizedBox(height: 12),
                   IconSelector(
                     selectedIcon: icon,
                     enabled: !widget.isLoading,
+                    usedIcons: usedIcons,
                     onChanged: _handleIconChange,
                   ),
                 ],

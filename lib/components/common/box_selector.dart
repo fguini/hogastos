@@ -6,6 +6,8 @@ class BoxSelector<T> extends StatelessWidget {
   final bool enabled;
   final List<T> items;
   final String label;
+  final Map<String, int> usedItems;
+  final String Function(T)? getItemId;
   final Color Function(T)? getColor;
   final Widget Function(T)? getBoxContentWidget;
   final bool Function(T, T?)? isEqual;
@@ -17,6 +19,8 @@ class BoxSelector<T> extends StatelessWidget {
     required this.enabled,
     required this.items,
     required this.label,
+    this.usedItems = const {},
+    this.getItemId,
     this.getColor,
     this.getBoxContentWidget,
     this.isEqual,
@@ -63,27 +67,38 @@ class BoxSelector<T> extends StatelessWidget {
                 runAlignment: WrapAlignment.spaceEvenly,
                 runSpacing: 10,
                 spacing: 10,
-                children: items.map((item) => InkWell(
-                  onTap: enabled ? () => onChanged(item) : null,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                  child: Container(
-                    height: boxSize,
-                    width: boxSize,
-                    decoration: BoxDecoration(
-                      color: getColor != null
-                        ? getColor!(item)
-                        : null,
-                      border: Border.all(
-                        color: enabled ? Colors.black54 : Colors.black54.withAlpha(80),
-                        width: isSelected(item, selectedValue) ? 4 : 1,
+                children: items.map((item) {
+                  var itemId = getItemId != null ? getItemId!(item) : item.toString();
+                  var used = usedItems.containsKey(itemId)
+                    ? usedItems[itemId]
+                    : null;
+
+                  return InkWell(
+                    onTap: enabled ? () => onChanged(item) : null,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    child: Badge(
+                      label: Text(used?.toString() ?? ''),
+                      isLabelVisible: used != null,
+                      child: Container(
+                        height: boxSize,
+                        width: boxSize,
+                        decoration: BoxDecoration(
+                          color: getColor != null
+                            ? getColor!(item)
+                            : null,
+                          border: Border.all(
+                            color: enabled ? Colors.black54 : Colors.black54.withAlpha(80),
+                            width: isSelected(item, selectedValue) ? 4 : 1,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        child: getBoxContentWidget != null
+                          ? getBoxContentWidget!(item)
+                          : null,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
-                    child: getBoxContentWidget != null
-                      ? getBoxContentWidget!(item)
-                      : null,
-                  ),
-                )).toList(),
+                  );
+                }).toList(),
               )
             ],
           )

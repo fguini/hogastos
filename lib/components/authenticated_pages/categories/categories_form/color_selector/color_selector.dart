@@ -27,18 +27,22 @@ List<Color> _colors = [
 class ColorSelector extends StatelessWidget {
   final Color? selectedColor;
   final bool enabled;
+  final Map<String, int> usedColors;
   final void Function(Color) onChanged;
 
   const ColorSelector({
     super.key,
     this.selectedColor,
     this.enabled = true,
+    this.usedColors = const {},
     required this.onChanged
   });
 
   Color _getColor(Color color) => enabled ? color : color.withAlpha(80);
   bool isEqual(color1, color2) =>
       getColorStringSignature(color1) == getColorStringSignature(color2 ?? Colors.white);
+
+  String getColorId(Color color) => getColorStringSignature(color);
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +53,8 @@ class ColorSelector extends StatelessWidget {
       enabled: enabled,
       items: _colors,
       label: localization.categorySelectColor,
+      getItemId: getColorId,
+      usedItems: usedColors,
       getColor: _getColor,
       isEqual: isEqual,
       onChanged: onChanged,

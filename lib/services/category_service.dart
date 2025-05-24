@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/models/category.dart';
 import 'package:hogastos/models/create_category.dart';
 import 'package:hogastos/services/data/db_connect.dart';
@@ -110,5 +111,44 @@ class CategoryService {
     }
 
     return category;
+  }
+  
+  Future<Map<String, int>> getUsedColors() async {
+    var amountOfColours = db.category.color.count();
+
+    var query = db.selectOnly(db.category)
+      ..addColumns([ db.category.color, amountOfColours ])
+      ..groupBy([db.category.color]);
+    var rows = await query.get();
+
+    Map<String, int> colorsMap = {};
+
+    for (var row in rows) {
+      var color = row.read(db.category.color)!;
+      var colorId = getColorStringSignature(color);
+
+      colorsMap[colorId] = row.read(amountOfColours) ?? 0;
+    }
+
+    return colorsMap;
+  }
+
+  Future<Map<String, int>> getUsedIcons() async {
+    var amountOfIcons = db.category.icon.count();
+
+    var query = db.selectOnly(db.category)
+      ..addColumns([ db.category.icon, amountOfIcons ])
+      ..groupBy([db.category.icon]);
+    var rows = await query.get();
+
+    Map<String, int> iconsMap = {};
+
+    for (var row in rows) {
+      var icon = row.read(db.category.icon)!;
+
+      iconsMap[icon.key] = row.read(amountOfIcons) ?? 0;
+    }
+
+    return iconsMap;
   }
 }
