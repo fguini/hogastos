@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 
@@ -40,13 +41,28 @@ class MovementService {
     return countResult ?? 0;
   }
 
-  Stream<List<Movement>> watchByMonthAndYear(int month, int year) {
+  JoinedSelectStatement<HasResultSet, dynamic> _byMonthAndYearQuery(int month, int year) {
     var from = DateTime(year, month, 1);
     var to = DateTime(year, month + 1, 0);
 
-    var query = db.select(db.movement).join([
+    return db.select(db.movement).join([
       innerJoin(db.category, db.category.id.equalsExp(db.movement.categoryId))
     ])..where(db.movement.date.isBetweenValues(from, to));
+
+  }
+
+  Future<List<Movement>> getByMonthAndYear(int month, int year) async {
+    var query = _byMonthAndYearQuery(month, year);
+    var rows = await query.get();
+
+    return rows.map((row) => _mapFromSql(
+      row.readTable(db.movement),
+      row.readTable(db.category),
+    )).toList();
+  }
+
+  Stream<List<Movement>> watchByMonthAndYear(int month, int year) {
+    var query = _byMonthAndYearQuery(month, year);
 
     return query.watch().map(
       (rows) => rows.map((row) => _mapFromSql(
@@ -80,6 +96,24 @@ class MovementService {
       row.$1,
       categories.firstWhere((c) => c.id == row.$2, orElse: () => categories.first)
     )).toList();
+  }
+
+  Future<List<MonthAndYear>> getMovementsMonthAndYear() async {
+    var month = db.movement.date.strftime('%m').cast<int>();
+    var year = db.movement.date.strftime('%Y').cast<int>();
+
+    var query = db.selectOnly(db.movement, distinct: true)..addColumns([ month, year ]);
+
+    var rows = await query.get();
+
+    return rows
+      .map(
+        (row) => MonthAndYear.fromMonthAndYear(
+          row.read(month)!,
+          row.read(year)!
+        )
+      )
+      .toList();
   }
 
   Future<Movement> createMovement(CreateMovement movement) async {

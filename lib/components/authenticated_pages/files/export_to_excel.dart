@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/components/authenticated_pages/page_with_menu.dart';
 import 'package:hogastos/components/common/go_home_action.dart';
+import 'package:hogastos/components/common/rounded_list_tile.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/services/excel_service.dart';
+import 'package:hogastos/services/movement_service.dart';
 
 class ExportToExcel extends StatefulWidget {
   const ExportToExcel({super.key});
@@ -14,14 +17,40 @@ class ExportToExcel extends StatefulWidget {
 
 class _ExportToExcelState extends State<ExportToExcel> {
   bool _allMonths = true;
-  List<MonthAndYear> selectedMonthAndYears = [];
+  List<MonthAndYear> _monthAndYears = [];
+  final List<MonthAndYear> _selectedMonthAndYears = [];
+
+  void _getMonthAndYears() async {
+    MovementService().getMovementsMonthAndYear().then((newMonthAndYears) => setState(() {
+      _monthAndYears = newMonthAndYears;
+    }));
+  }
+
+  @override
+  void initState() {
+    _getMonthAndYears();
+
+    super.initState();
+  }
 
   void _handleAllMonthsChange(bool newValue) => setState(() {
     _allMonths = newValue;
   });
 
-  void _handleExport() {
+  void _handleMonthAndYearTap(MonthAndYear monthAndYear) => setState(() {
+    if(_selectedMonthAndYears.contains(monthAndYear)) {
+      _selectedMonthAndYears.remove(monthAndYear);
+    } else {
+      _selectedMonthAndYears.add(monthAndYear);
+    }
+  });
 
+  void _handleExport() {
+    var monthsAndYears = _allMonths
+      ? _monthAndYears
+      : _selectedMonthAndYears;
+
+    ExcelService().exportToExcel(monthsAndYears, context: context);
   }
 
   @override
@@ -36,13 +65,37 @@ class _ExportToExcelState extends State<ExportToExcel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                BodyText(localization.exportToExcelAllMonths),
-                Switch(value: _allMonths, onChanged: _handleAllMonthsChange)
-              ],
+            Flexible(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      BodyText(localization.exportToExcelAllMonths),
+                      Switch(value: _allMonths, onChanged: _handleAllMonthsChange)
+                    ],
+                  ),
+                  ..._allMonths ? [] : [
+                    Expanded(child: ListView.builder(
+                      itemCount: _monthAndYears.length,
+                      itemBuilder: (context, index) {
+                        var monthAndYear = _monthAndYears[index];
+
+                        return RoundedListTile(
+                          title: monthAndYear.locale(context),
+                          leading: Icon(
+                            _selectedMonthAndYears.contains(monthAndYear)
+                              ? Icons.check_box_outlined
+                              : Icons.check_box_outline_blank,
+                          ),
+                          onTap: () => _handleMonthAndYearTap(monthAndYear),
+                        );
+                      }
+                    ))
+                  ]
+                ],
+              ),
             ),
             SizedBox(
               width: double.infinity,

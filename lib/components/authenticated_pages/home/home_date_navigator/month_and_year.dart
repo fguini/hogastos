@@ -26,6 +26,10 @@ class MonthAndYear implements JsonConvert<MonthAndYear> {
     required this.year
   });
 
+  factory MonthAndYear.fromMonthAndYear(int month, int year) {
+    return MonthAndYear(month: Month.values[month - 1], year: year);
+  }
+
   factory MonthAndYear.fromDate(DateTime date) {
     var month = date.month;
     var year = date.year;
