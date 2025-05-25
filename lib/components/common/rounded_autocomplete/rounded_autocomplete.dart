@@ -13,7 +13,7 @@ typedef Validator = String? Function(String?);
 typedef HandleInputChanged = void Function(String?);
 typedef HandleValueChanged<T> = void Function(T?);
 
-class RoundedAutocomplete<T extends Object> extends StatelessWidget {
+class RoundedAutocomplete<T extends Object> extends StatefulWidget {
   final T? initialValue;
   final DisplayStringForOption<T> displayStringForOption;
   final DisplayWidgetForOption<T> displayWidgetForOption;
@@ -46,30 +46,53 @@ class RoundedAutocomplete<T extends Object> extends StatelessWidget {
   });
 
   @override
+  State<RoundedAutocomplete<T>> createState() => _RoundedAutocompleteState<T>();
+}
+
+class _RoundedAutocompleteState<T extends Object> extends State<RoundedAutocomplete<T>> {
+  late FocusNode _node;
+  late GlobalKey _globalKey;
+
+  @override
+  void initState() {
+    _node = FocusNode(debugLabel: 'RoundedAutocomplete');
+    _globalKey = GlobalKey();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Autocomplete<T>(
-      initialValue: initialValue == null
+    return RawAutocomplete<T>(
+      key: widget.textEditingController == null
         ? null
-        : TextEditingValue(text: displayStringForOption(initialValue)),
-      displayStringForOption: displayStringForOption,
-      optionsBuilder: optionBuilder,
+        : _globalKey,
+      initialValue: widget.initialValue == null
+        ? null
+        : TextEditingValue(text: widget.displayStringForOption(widget.initialValue)),
+      displayStringForOption: widget.displayStringForOption,
+      optionsBuilder: widget.optionBuilder,
       optionsViewBuilder: optionsViewBuilder(
-        displayWidgetForOption: displayWidgetForOption
+        displayWidgetForOption: widget.displayWidgetForOption
       ),
       fieldViewBuilder: formInputBuilder(
-        label,
-        isLoading: isLoading,
-        prefixIcon: inputPrefixIconBuilder == null
+        widget.label,
+        isLoading: widget.isLoading,
+        prefixIcon: widget.inputPrefixIconBuilder == null
           ? null
-          : inputPrefixIconBuilder!(selectedValue),
-        suffixIcon: inputSuffixIconBuilder == null
+          : widget.inputPrefixIconBuilder!(widget.selectedValue),
+        suffixIcon: widget.inputSuffixIconBuilder == null
           ? null
-          : inputSuffixIconBuilder!(selectedValue),
-        customTextEditingController: textEditingController,
-        onChanged: onInputChanged,
-        validator: validator,
+          : widget.inputSuffixIconBuilder!(widget.selectedValue),
+        customTextEditingController: widget.textEditingController,
+        onChanged: widget.onInputChanged,
+        validator: widget.validator,
       ),
-      onSelected: onValueChanged,
+      focusNode: widget.textEditingController == null
+        ? null
+        : _node,
+      textEditingController: widget.textEditingController,
+      onSelected: widget.onValueChanged,
     );
   }
 }
