@@ -67,9 +67,9 @@ class _RoundedAutocompleteState<T extends Object> extends State<RoundedAutocompl
       key: widget.textEditingController == null
         ? null
         : _globalKey,
-      initialValue: widget.initialValue == null
-        ? null
-        : TextEditingValue(text: widget.displayStringForOption(widget.initialValue)),
+      initialValue: widget.initialValue != null && widget.textEditingController == null
+        ? TextEditingValue(text: widget.displayStringForOption(widget.initialValue))
+        : null,
       displayStringForOption: widget.displayStringForOption,
       optionsBuilder: widget.optionBuilder,
       optionsViewBuilder: optionsViewBuilder(
