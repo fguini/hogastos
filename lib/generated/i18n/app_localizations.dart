@@ -363,6 +363,12 @@ abstract class AppLocalizations {
   /// **'Exportar'**
   String get exportToExcelExport;
 
+  /// No description provided for @exportToExcelSuccess.
+  ///
+  /// In es, this message translates to:
+  /// **'Se han exportado los movimientos al archivo seleccionado!'**
+  String get exportToExcelSuccess;
+
   /// No description provided for @iconSearchTagsAccountBalance.
   ///
   /// In es, this message translates to:

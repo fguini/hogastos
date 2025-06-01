@@ -17,11 +17,14 @@ class ExportToExcel extends StatefulWidget {
 
 class _ExportToExcelState extends State<ExportToExcel> {
   bool _allMonths = true;
+  String? _errorMessage;
+  bool _isLoading = true;
   List<MonthAndYear> _monthAndYears = [];
   final List<MonthAndYear> _selectedMonthAndYears = [];
 
   void _getMonthAndYears() async {
     MovementService().getMovementsMonthAndYear().then((newMonthAndYears) => setState(() {
+      _isLoading = false;
       _monthAndYears = newMonthAndYears;
     }));
   }
@@ -34,10 +37,14 @@ class _ExportToExcelState extends State<ExportToExcel> {
   }
 
   void _handleAllMonthsChange(bool newValue) => setState(() {
+    setState(() {
+      _errorMessage = null;
+    });
     _allMonths = newValue;
   });
 
   void _handleMonthAndYearTap(MonthAndYear monthAndYear) => setState(() {
+    _errorMessage = null;
     if(_selectedMonthAndYears.contains(monthAndYear)) {
       _selectedMonthAndYears.remove(monthAndYear);
     } else {
@@ -46,11 +53,37 @@ class _ExportToExcelState extends State<ExportToExcel> {
   });
 
   void _handleExport() {
+    setState(() {
+      _errorMessage = null;
+      _isLoading = true;
+    });
+
     var monthsAndYears = _allMonths
       ? _monthAndYears
       : _selectedMonthAndYears;
 
-    ExcelService().exportToExcel(monthsAndYears, context: context);
+    ExcelService().exportToExcel(monthsAndYears, context: context)
+      .then((_) {
+        if(context.mounted) {
+          ScaffoldMessenger
+            .of(context)
+            .showSnackBar(
+              SnackBar(
+                content: Text(
+                  LocalizationHelper.localization(context).exportToExcelSuccess
+                )
+              )
+            );
+        }
+      })
+      .onError((Exception error, _) {
+        setState(() {
+          _errorMessage = error.toString();
+        });
+      })
+      .whenComplete(() => setState(() {
+        _isLoading = false;
+      }));
   }
 
   @override
@@ -73,7 +106,12 @@ class _ExportToExcelState extends State<ExportToExcel> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       BodyText(localization.exportToExcelAllMonths),
-                      Switch(value: _allMonths, onChanged: _handleAllMonthsChange)
+                      Switch(
+                        value: _allMonths,
+                        onChanged: _isLoading
+                          ? null
+                          : _handleAllMonthsChange,
+                      )
                     ],
                   ),
                   ..._allMonths ? [] : [
@@ -97,12 +135,25 @@ class _ExportToExcelState extends State<ExportToExcel> {
                 ],
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _handleExport,
-                child: Text(localization.exportToExcelExport),
-              ),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ..._errorMessage != null
+                    ? [ BodyText(_errorMessage!, color: Colors.red) ]
+                    : [],
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _isLoading
+                        ? null
+                        : _handleExport,
+                      child: Text(localization.exportToExcelExport),
+                    ),
+                  )
+                ],
+              )
             ),
           ],
         ),

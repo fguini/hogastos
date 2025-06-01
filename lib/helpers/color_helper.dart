@@ -15,11 +15,10 @@ String getColorStringSignature(Color color) => [
 
 extension HexColor on Color {
   String toHex({bool leadingHashSign = true}) {
-    final hexA = (a * 255).round().toRadixString(16).padLeft(2, '0');
     final hexR = (r * 255).round().toRadixString(16).padLeft(2, '0');
     final hexG = (g * 255).round().toRadixString(16).padLeft(2, '0');
     final hexB = (b * 255).round().toRadixString(16).padLeft(2, '0');
 
-    return '${leadingHashSign ? '#' : ''}$hexA$hexR$hexG$hexB';
+    return '${leadingHashSign ? '#' : ''}$hexR$hexG$hexB';
   }
 }

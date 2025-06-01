@@ -1,19 +1,18 @@
-import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/helpers/color_helper.dart';
+import 'package:hogastos/helpers/date_helper.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ExcelService {
   static const String _defaultSheetName = 'Sheet1';
+  static const String _defaultFileNamePrefix = 'hogastos';
 
-  Future<Map<MonthAndYear, List<Movement>>> _getMonthAndYearsMovements(
-    List<MonthAndYear> monthAndYears
-  ) async {
+  Future<Map<MonthAndYear, List<Movement>>> _getMonthAndYearsMovements(List<MonthAndYear> monthAndYears) async {
     Map<MonthAndYear, List<Movement>> monthAndYearsMovements = {};
 
     for(var monthAndYear in monthAndYears) {
@@ -51,7 +50,7 @@ class ExcelService {
     for (var movement in movements) {
       sheet.appendRow([
         TextCellValue(movement.category.description),
-        TextCellValue(movement.date.toString()),
+        TextCellValue(getFormattedDate(movement.date)),
         TextCellValue(movement.text),
         DoubleCellValue(movement.amount),
       ]);
@@ -63,13 +62,29 @@ class ExcelService {
         movement.category.color.toHex()
       );
 
-      sheet.row(movements.indexOf(movement)).forEach((cell) {
+      sheet.row(movements.indexOf(movement) + 1).forEach((cell) {
         cell?.cellStyle = CellStyle(
           fontColorHex: fontColorHex,
           backgroundColorHex: backgroundColorHex,
         );
       });
     }
+  }
+
+  Future<void> _createDownloadAndOpenFile(Excel excel) async {
+    var now = DateTime.now().toString();
+    var fileName = '$_defaultFileNamePrefix-$now.xlsx';
+    var fileBytes = excel.save(fileName: fileName);
+    var fileData = fileBytes == null
+      ? null
+      : Uint8List.fromList(fileBytes);
+
+    await FlutterFileDialog.saveFile(
+      params: SaveFileDialogParams(
+        data: fileData,
+        fileName: fileName,
+      ),
+    );
   }
 
   Future<void> exportToExcel(List<MonthAndYear> monthAndYears, { required BuildContext context }) async {
@@ -82,12 +97,6 @@ class ExcelService {
       _fillSheetData(sheet, sheetEntry.value);
     }
 
-    var now = DateTime.now().toString();
-    var fileBytes = excel.save();
-    var directory = await getDownloadsDirectory();
-
-    File('$directory/hogastos-movimientos-$now.xlsx')
-      ..createSync(recursive: true)
-      ..writeAsBytesSync(fileBytes!);
+    await _createDownloadAndOpenFile(excel);
   }
 }

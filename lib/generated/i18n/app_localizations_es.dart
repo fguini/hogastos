@@ -152,6 +152,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get exportToExcelExport => 'Exportar';
 
   @override
+  String get exportToExcelSuccess => 'Se han exportado los movimientos al archivo seleccionado!';
+
+  @override
   String get iconSearchTagsAccountBalance => 'banco cuenta corriente balance nomina';
 
   @override

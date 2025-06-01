@@ -56,6 +56,7 @@
     "exportToExcel": "Exportar a excel",
     "exportToExcelAllMonths": "Exportar todos los meses",
     "exportToExcelExport": "Exportar",
+    "exportToExcelSuccess": "Se han exportado los movimientos al archivo seleccionado!",
     "iconSearchTagsAccountBalance": "banco cuenta corriente balance nomina",
     "iconSearchTagsBeach": "playa vacaciones costa sombrilla",
     "iconSearchTagsBed": "cama alojamiento vacaciones habitacion",
