@@ -52,7 +52,6 @@ class ExcelService {
     var localization = LocalizationHelper.localization(context);
 
     sheet.appendRow([
-      TextCellValue(localization.excelHeaderId),
       TextCellValue(localization.excelHeaderCategory),
       TextCellValue(localization.excelHeaderDate),
       TextCellValue(localization.excelHeaderDescription),
@@ -63,7 +62,6 @@ class ExcelService {
   void _fillSheetData(Sheet sheet, List<Movement> movements) {
     for (var movement in movements) {
       sheet.appendRow([
-        IntCellValue(movement.id),
         TextCellValue(movement.category.description),
         TextCellValue(getFormattedDate(movement.date)),
         TextCellValue(movement.text),
