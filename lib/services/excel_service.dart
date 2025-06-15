@@ -5,12 +5,19 @@ import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
 import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/date_helper.dart';
+import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
 
 class ExcelService {
   static const String _defaultSheetName = 'Sheet1';
   static const String _defaultFileNamePrefix = 'hogastos';
+
+  void throwIfUnmounted(BuildContext context) {
+    if(!context.mounted) {
+      throw Exception('Operation cancelled');
+    }
+  }
 
   Future<Map<MonthAndYear, List<Movement>>> _getMonthAndYearsMovements(List<MonthAndYear> monthAndYears) async {
     Map<MonthAndYear, List<Movement>> monthAndYearsMovements = {};
@@ -26,6 +33,8 @@ class ExcelService {
   }
 
   Excel _createExcelWithSheets(List<MonthAndYear> monthAndYears, { required BuildContext context }) {
+    throwIfUnmounted(context);
+
     var excel = Excel.createExcel();
 
     for(var monthAndYear in monthAndYears) {
@@ -37,18 +46,24 @@ class ExcelService {
     return excel;
   }
 
-  void _fillSheetHeaders(Sheet sheet) {
+  void _fillSheetHeaders(Sheet sheet, { required BuildContext context }) {
+    throwIfUnmounted(context);
+
+    var localization = LocalizationHelper.localization(context);
+
     sheet.appendRow([
-      TextCellValue('Categoria'),
-      TextCellValue('Fecha'),
-      TextCellValue('Descripción'),
-      TextCellValue('Importe'),
+      TextCellValue(localization.excelHeaderId),
+      TextCellValue(localization.excelHeaderCategory),
+      TextCellValue(localization.excelHeaderDate),
+      TextCellValue(localization.excelHeaderDescription),
+      TextCellValue(localization.excelHeaderAmount),
     ]);
   }
 
   void _fillSheetData(Sheet sheet, List<Movement> movements) {
     for (var movement in movements) {
       sheet.appendRow([
+        IntCellValue(movement.id),
         TextCellValue(movement.category.description),
         TextCellValue(getFormattedDate(movement.date)),
         TextCellValue(movement.text),
@@ -93,9 +108,11 @@ class ExcelService {
 
     for (var sheetEntry in sheetsData.entries) {
       var sheet = excel[sheetEntry.key.locale(context)];
-      _fillSheetHeaders(sheet);
+      _fillSheetHeaders(sheet, context: context);
       _fillSheetData(sheet, sheetEntry.value);
     }
+
+    throwIfUnmounted(context);
 
     await _createDownloadAndOpenFile(excel);
   }
