@@ -333,6 +333,30 @@ abstract class AppLocalizations {
   /// **'Computable'**
   String get computable;
 
+  /// No description provided for @excelHeaderCategory.
+  ///
+  /// In es, this message translates to:
+  /// **'Categoría'**
+  String get excelHeaderCategory;
+
+  /// No description provided for @excelHeaderDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha'**
+  String get excelHeaderDate;
+
+  /// No description provided for @excelHeaderDescription.
+  ///
+  /// In es, this message translates to:
+  /// **'Descripción'**
+  String get excelHeaderDescription;
+
+  /// No description provided for @excelHeaderAmount.
+  ///
+  /// In es, this message translates to:
+  /// **'Importe'**
+  String get excelHeaderAmount;
+
   /// No description provided for @expense.
   ///
   /// In es, this message translates to:
@@ -584,6 +608,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'mujer chica niña femenina'**
   String get iconSearchTagsWoman;
+
+  /// No description provided for @importFromExcel.
+  ///
+  /// In es, this message translates to:
+  /// **'Importar desde excel'**
+  String get importFromExcel;
+
+  /// No description provided for @importFromExcelImport.
+  ///
+  /// In es, this message translates to:
+  /// **'Importar'**
+  String get importFromExcelImport;
+
+  /// No description provided for @importFromExcelPickFile.
+  ///
+  /// In es, this message translates to:
+  /// **'Seleccionar archivo'**
+  String get importFromExcelPickFile;
 
   /// No description provided for @listGroupByCategory.
   ///

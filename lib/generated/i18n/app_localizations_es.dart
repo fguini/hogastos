@@ -137,6 +137,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get computable => 'Computable';
 
   @override
+  String get excelHeaderCategory => 'Categoría';
+
+  @override
+  String get excelHeaderDate => 'Fecha';
+
+  @override
+  String get excelHeaderDescription => 'Descripción';
+
+  @override
+  String get excelHeaderAmount => 'Importe';
+
+  @override
   String get expense => 'Gasto';
 
   @override
@@ -261,6 +273,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get iconSearchTagsWoman => 'mujer chica niña femenina';
+
+  @override
+  String get importFromExcel => 'Importar desde excel';
+
+  @override
+  String get importFromExcelImport => 'Importar';
+
+  @override
+  String get importFromExcelPickFile => 'Seleccionar archivo';
 
   @override
   String get listGroupByCategory => 'Agrupar por categoría';

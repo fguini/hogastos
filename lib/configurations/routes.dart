@@ -3,6 +3,7 @@ import 'package:hogastos/components/authenticated_pages/categories/categories_cr
 import 'package:hogastos/components/authenticated_pages/categories/categories_edit.dart';
 import 'package:hogastos/components/authenticated_pages/categories/categories_list.dart';
 import 'package:hogastos/components/authenticated_pages/files/export_to_excel.dart';
+import 'package:hogastos/components/authenticated_pages/files/import_from_excel.dart';
 import 'package:hogastos/components/authenticated_pages/home/home.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_create.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_edit.dart';
@@ -39,6 +40,7 @@ class Routes {
     RoutesNames.categoriesCreate: const CategoriesCreate(),
     RoutesNames.categoriesEdit: const CategoriesEdit(),
     RoutesNames.fileExport: const ExportToExcel(),
+    RoutesNames.fileImport: const ImportFromExcel(),
     RoutesNames.movementsCreate: const MovementsCreate(),
     RoutesNames.movementsEdit: const MovementsEdit(),
   };

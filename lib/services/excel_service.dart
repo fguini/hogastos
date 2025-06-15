@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:hogastos/components/authenticated_pages/home/home_date_navigator
 import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/date_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
+import 'package:hogastos/models/excel_import_brief.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
 
@@ -113,5 +115,21 @@ class ExcelService {
     throwIfUnmounted(context);
 
     await _createDownloadAndOpenFile(excel);
+  }
+
+  Future<ExcelImportBrief> pickFileAndOpen() async {
+    var path = await FlutterFileDialog.pickFile(params: OpenFileDialogParams(
+      dialogType: OpenFileDialogType.document,
+      fileExtensionsFilter: [ 'xlsx' ],
+    ));
+
+    if(path == null) {
+      throw Exception('Error abriendo el archivo');
+    }
+
+    var file = File(path).readAsBytesSync();
+    var excel = Excel.decodeBytes(file);
+
+    return ExcelImportBrief.fromExcel(path, excel);
   }
 }
