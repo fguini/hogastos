@@ -1,4 +1,4 @@
-import 'package:d_chart/single_bar/view.dart';
+import 'package:d_chart/types/single_bar/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hogastos/components/texts/body_text.dart';
@@ -43,7 +43,7 @@ class HomeTotalsBar extends StatelessWidget {
                 builder: (_, value, __) => SizedBox(
                   height: 15,
                   width: MediaQuery.sizeOf(context).width - 130,
-                  child: DChartSingleBar(
+                  child: DChartSingleBar( // TODO migrate to new
                     foregroundColor: color,
                     radius: BorderRadius.circular(10),
                     value: value,

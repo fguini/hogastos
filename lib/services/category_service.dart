@@ -33,6 +33,12 @@ class CategoryService {
     return rows.map(mapFromSql).toList();
   }
 
+  Future<List<Category>> getAll() async {
+    var rows = await db.select(db.category).get();
+
+    return rows.map(mapFromSql).toList();
+  }
+
   Future<List<Category>> getCategoriesByDescription(String? description, { int limit = 5 }) async {
     var query = db.select(db.category)
       ..limit(limit)
@@ -76,6 +82,10 @@ class CategoryService {
     var newId = await db.into(db.category).insert(companion);
 
     return getById(newId);
+  }
+
+  Future<List<Category>> createCategories(List<CreateCategory> categories) {
+    return Future.wait(categories.map(createCategory));
   }
 
   Future<Category> updateCategory(Category category) async {

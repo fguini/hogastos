@@ -42,8 +42,8 @@ class MovementService {
   }
 
   JoinedSelectStatement<HasResultSet, dynamic> _byMonthAndYearQuery(int month, int year) {
-    var from = DateTime(year, month, 1);
-    var to = DateTime(year, month + 1, 0);
+    var from = DateTime(year, month, 1, 0, 0, 0, 0, 0);
+    var to = DateTime(year, month + 1, 0, 23, 59, 59, 999);
 
     return db.select(db.movement).join([
       innerJoin(db.category, db.category.id.equalsExp(db.movement.categoryId))
@@ -128,6 +128,10 @@ class MovementService {
     var newId = await db.into(db.movement).insert(companion);
 
     return getById(newId);
+  }
+
+  Future<List<Movement>> createMovements(List<CreateMovement> movements) {
+    return Future.wait(movements.map(createMovement));
   }
 
   Future<Movement> updateMovement(Movement movement) async {

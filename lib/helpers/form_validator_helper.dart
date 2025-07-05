@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
-import 'package:money2/money2.dart';
+import 'package:intl/intl.dart';
 
 typedef FormValidator = String? Function(String? newValue);
 typedef FormValidatorBuilder = FormValidator Function(BuildContext context);
 
 typedef ValueValidator = bool Function(String? newValue);
 
-var _euroCurrency = Currency.create(
-  'EUR',
-  2,
+var _euroCurrency = NumberFormat.currency(
+  locale: 'es',
+  name: 'EUR',
   symbol: '€',
-  groupSeparator: '.',
-  decimalSeparator: ',',
-  pattern: '#,##0.00 S'
+  decimalDigits: 2,
+  customPattern: '#,##0.00 S'
 ); // TODO change this to make it multilanguage-currency
 
 class FormValidatorHelper {
@@ -88,7 +87,7 @@ class FormValidatorHelper {
 
   static bool isAmountValueValid(String? newValue) {
     var value = newValue ?? '';
-    var money = Money.tryParse(value, isoCode: _euroCurrency.isoCode);
+    var money = _euroCurrency.tryParse(value);
 
     return value.isNotEmpty && money != null;
   }

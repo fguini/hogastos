@@ -18,6 +18,7 @@
     "actionsReadYearlyReport": "Ver reporte de balance anual",
     "actionsSave": "Guardar",
     "actionsSearch": "Buscar",
+    "alphabet": "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
     "amountCurrency": "{amount}",
     "@amountCurrency": {
         "description": "Localization for amount plus currency",
@@ -98,8 +99,26 @@
     "iconSearchTagsVolunteer": "voluntariado solidario voluntario ayuda",
     "iconSearchTagsWoman": "mujer chica niña femenina",
     "importFromExcel": "Importar desde excel",
+    "importFromExcelColumnTitle": "Columna {columnLetter}",
+    "@importFromExcelColumnTitle": {
+        "description": "Title of column select dialog",
+        "placeholders": {
+            "columnLetter": {
+                "type": "String"
+            }
+        }
+    },
+    "importFromExcelColumnAssignment": "Asignar columna a",
+    "importFromExcelColumnNotAssigned": "Sin asignar",
+    "importFromExcelColumnApplyToAll": "Aplicar a todas",
     "importFromExcelImport": "Importar",
     "importFromExcelPickFile": "Seleccionar archivo",
+    "importFromExcelHasHeaders": "Tiene cabecera",
+    "importFromExcelPreview": "Importar (Vista previa)",
+    "importFromExcelPreviewCategories": "Categorías a ser creados",
+    "importFromExcelPreviewCategoriesEmpty": "No se creará ninguna categoría",
+    "importFromExcelPreviewMovements": "Movimientos a ser creados",
+    "importFromExcelSelectFile": "Selecciona un archivo para comenzar a importar los movimientos",
     "listGroupByCategory": "Agrupar por categoría",
     "listUngroup": "Desagrupar lista",
     "income": "Ingreso",

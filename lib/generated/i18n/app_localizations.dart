@@ -61,7 +61,8 @@ import 'app_localizations_es.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -69,7 +70,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -81,17 +83,16 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('es')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('es')];
 
   /// No description provided for @appTitle.
   ///
@@ -206,6 +207,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Buscar'**
   String get actionsSearch;
+
+  /// No description provided for @alphabet.
+  ///
+  /// In es, this message translates to:
+  /// **'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'**
+  String get alphabet;
 
   /// Localization for amount plus currency
   ///
@@ -615,6 +622,30 @@ abstract class AppLocalizations {
   /// **'Importar desde excel'**
   String get importFromExcel;
 
+  /// Title of column select dialog
+  ///
+  /// In es, this message translates to:
+  /// **'Columna {columnLetter}'**
+  String importFromExcelColumnTitle(String columnLetter);
+
+  /// No description provided for @importFromExcelColumnAssignment.
+  ///
+  /// In es, this message translates to:
+  /// **'Asignar columna a'**
+  String get importFromExcelColumnAssignment;
+
+  /// No description provided for @importFromExcelColumnNotAssigned.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin asignar'**
+  String get importFromExcelColumnNotAssigned;
+
+  /// No description provided for @importFromExcelColumnApplyToAll.
+  ///
+  /// In es, this message translates to:
+  /// **'Aplicar a todas'**
+  String get importFromExcelColumnApplyToAll;
+
   /// No description provided for @importFromExcelImport.
   ///
   /// In es, this message translates to:
@@ -626,6 +657,42 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Seleccionar archivo'**
   String get importFromExcelPickFile;
+
+  /// No description provided for @importFromExcelHasHeaders.
+  ///
+  /// In es, this message translates to:
+  /// **'Tiene cabecera'**
+  String get importFromExcelHasHeaders;
+
+  /// No description provided for @importFromExcelPreview.
+  ///
+  /// In es, this message translates to:
+  /// **'Importar (Vista previa)'**
+  String get importFromExcelPreview;
+
+  /// No description provided for @importFromExcelPreviewCategories.
+  ///
+  /// In es, this message translates to:
+  /// **'Categorías a ser creados'**
+  String get importFromExcelPreviewCategories;
+
+  /// No description provided for @importFromExcelPreviewCategoriesEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'No se creará ninguna categoría'**
+  String get importFromExcelPreviewCategoriesEmpty;
+
+  /// No description provided for @importFromExcelPreviewMovements.
+  ///
+  /// In es, this message translates to:
+  /// **'Movimientos a ser creados'**
+  String get importFromExcelPreviewMovements;
+
+  /// No description provided for @importFromExcelSelectFile.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecciona un archivo para comenzar a importar los movimientos'**
+  String get importFromExcelSelectFile;
 
   /// No description provided for @listGroupByCategory.
   ///
@@ -766,7 +833,8 @@ abstract class AppLocalizations {
   String get validationsWrongFormat;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -775,24 +843,24 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['es'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'es': return AppLocalizationsEs();
+    case 'es':
+      return AppLocalizationsEs();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
+    'that was used.',
   );
 }

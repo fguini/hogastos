@@ -1,104 +1,81 @@
 import 'package:excel/excel.dart';
 
-class SheetStats {
-  List<String> list = [];
-
-  void add(String sheet) {
-    list.add(sheet);
-  }
-
-  get count => list.length;
-}
-
-class RowStats {
-  Map<String, List<String>> listPerSheet = {};
-
-  void add(String sheet, String row) {
-    listPerSheet[sheet] ??= [];
-
-    listPerSheet[sheet]!.add(row);
-  }
-
-  get count => listPerSheet.values
-    .map((rows) => rows.length)
-    .reduce((count, sheetCount) => count + sheetCount);
-}
-
 class ColumnData {
-  final String sheetName;
   final String columnName;
   final CellValue? columnValue;
 
   const ColumnData({
-    required this.sheetName,
     required this.columnName,
     required this.columnValue,
   });
 }
 
-class ColumnStats {
-  List<ColumnData> columnsAvailable = [];
+class TableStats {
+  final String tableName;
+  final List<ColumnData> columns;
+  final List<String> rows;
 
-  void add(String sheetName, String columnName, CellValue? columnValue) {
-    var exist = columnsAvailable.where(
-      (c) => c.sheetName == sheetName && c.columnName == columnName
-    );
-
-    if(exist.isNotEmpty) return;
-
-    columnsAvailable.add(
-      ColumnData(
-        sheetName: sheetName,
-        columnName: columnName,
-        columnValue: columnValue,
-      ),
-    );
-  }
-
-  get count => columnsAvailable.length;
+  TableStats({
+    required this.tableName,
+    required this.columns,
+    required this.rows,
+  });
 }
 
 class ExcelImportBrief {
   final String path;
-  final SheetStats sheets;
-  final RowStats rows;
-  final ColumnStats columns;
+  final List<TableStats> tables;
 
   ExcelImportBrief({
     required this.path,
-    required this.sheets,
-    required this.rows,
-    required this.columns,
+    required this.tables,
   });
 
-  factory ExcelImportBrief.fromExcel(String path, Excel excel) {
-    var brief = ExcelImportBrief(
-      path: path,
-      sheets: SheetStats(),
-      rows: RowStats(),
-      columns: ColumnStats(),
-    );
+  static List<String> _getTableRows(Excel excel, String table) {
+    List<String> rows = [];
 
-    for (var table in excel.tables.keys) {
-      brief.sheets.add(table);
-
-      if(excel.tables[table] == null) continue;
-
-      for (var row in excel.tables[table]!.rows) {
-        brief.rows.add(table, excel.tables[table]!.rows.indexOf(row).toString());
-
-        for (var cell in row) {
-          if(cell == null) continue;
-
-          brief.columns.add(
-            table,
-            cell.columnIndex.toString(),
-            cell.value,
-          );
-        }
-      }
+    for (var row in excel.tables[table]!.rows) {
+      rows.add(excel.tables[table]!.rows.indexOf(row).toString());
     }
 
-    return brief;
+    return rows;
+  }
+
+  static List<ColumnData> _getTableColumns(Excel excel, String table) {
+    List<ColumnData> columns = [];
+
+    var rowQuantity = excel.tables[table]!.rows.length;
+    var rowIndex = rowQuantity > 1 ? 1 : 0;
+
+    for (var cell in excel.tables[table]!.rows[rowIndex]) {
+      if(cell == null) continue;
+
+      columns.add(
+        ColumnData(
+          columnName: cell.columnIndex.toString(),
+          columnValue: cell.value,
+        ),
+      );
+    }
+
+    return columns;
+  }
+
+  factory ExcelImportBrief.fromExcel(String path, Excel excel) {
+    List<TableStats> tables = [];
+
+    for (var table in excel.tables.keys) {
+      if(excel.tables[table] == null) continue;
+
+      tables.add(
+        TableStats(
+          tableName: table,
+          rows: _getTableRows(excel, table),
+          columns: _getTableColumns(excel, table),
+        ),
+      );
+    }
+
+    return ExcelImportBrief(path: path, tables: tables);
   }
 }
