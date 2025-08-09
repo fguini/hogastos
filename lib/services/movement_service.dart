@@ -3,6 +3,7 @@ import 'package:hogastos/components/authenticated_pages/home/home_date_navigator
 import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 
+import '../models/movement_type.dart';
 import 'category_service.dart';
 import 'data/db.dart';
 import 'data/db_connect.dart';
@@ -77,23 +78,33 @@ class MovementService {
       return [];
     }
 
+    final maxAmount = db.movement.amount.max();
+
     var query = db.selectOnly(db.movement, distinct: true)
-      ..addColumns([db.movement.description, db.movement.categoryId])
+      ..addColumns([db.movement.description, db.movement.categoryId, db.movement.type, maxAmount])
       ..limit(5)
-      ..where(db.movement.description.contains(text!));
+      ..where(db.movement.description.contains(text!))
+      ..groupBy([db.movement.description, db.movement.categoryId]);
 
     var rows = await query
-      .map((row) => (row.read(db.movement.description), row.read(db.movement.categoryId)))
+      .map((row) => (
+        row.read(db.movement.description),
+        row.read(db.movement.categoryId),
+        row.read(db.movement.type),
+        row.read(maxAmount),
+      ))
       .get();
 
     var onlyValidRows = rows
       .where((row) => row.$1 != null && row.$2 != null)
-      .map((row) => (row.$1!, row.$2!));
+      .map((row) => (row.$1!, row.$2!, row.$3, row.$4));
     var categoriesIds = onlyValidRows.map((row) => row.$2).toList();
     var categories = await CategoryService().getByIds(categoriesIds);
 
-    return onlyValidRows.map((row) => Movement.textPlusCategory(
+    return onlyValidRows.map((row) => Movement.partialPlusCategory(
       row.$1,
+      row.$3 ?? MovementType.computable,
+      row.$4 ?? 0,
       categories.firstWhere((c) => c.id == row.$2, orElse: () => categories.first)
     )).toList();
   }

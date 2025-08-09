@@ -19,12 +19,17 @@ class Movement extends CreateMovement {
     text = newText ?? '';
   }
 
-  static Movement textPlusCategory(String text, Category category) => Movement(
+  static Movement partialPlusCategory(
+    String text,
+    MovementType type,
+    double amount,
+    Category category,
+  ) => Movement(
     0,
     text,
     category,
-    0,
+    amount,
     DateTime.now(),
-    MovementType.computable
+    type,
   );
 }

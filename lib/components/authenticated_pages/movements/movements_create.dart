@@ -77,14 +77,20 @@ class _MovementsCreateState extends State<MovementsCreate> {
 
   Future<void> _setInitialDate() {
     return UserSettings().getUserSettings().then((settings) {
+      var nowMonthAndYear = MonthAndYear.now();
       var currentMonthAndYear = settings.monthAndYearInHome;
-      var isSame = currentMonthAndYear.equals(MonthAndYear.now());
+      var isSame = currentMonthAndYear.equals(nowMonthAndYear);
 
       if(!isSame) {
         setState(() {
+          var weAreOnFuture = currentMonthAndYear.isFutureThan(nowMonthAndYear);
+          var monthModifier = weAreOnFuture ? 0 : 1;
+          var dayOfMonth = weAreOnFuture ? 1 : 0;
+
           _initialDate = DateTime(
             currentMonthAndYear.year,
-            currentMonthAndYear.monthNumber,
+            currentMonthAndYear.monthNumber + monthModifier,
+            dayOfMonth,
           );
         });
       }

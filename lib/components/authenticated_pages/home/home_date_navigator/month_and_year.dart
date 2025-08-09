@@ -52,6 +52,9 @@ class MonthAndYear implements JsonConvert<MonthAndYear> {
   }
 
   bool equals(MonthAndYear other) => other.month == month && other.year == year;
+  bool isFutureThan(MonthAndYear other) => other.year < year || (
+    other.year == year && other.monthNumber < monthNumber
+  );
 
   MonthAndYear getPrevious() {
     if(_monthIndex == 0) {

@@ -97,11 +97,6 @@ class _MovementsFormState extends State<MovementsForm> {
     });
   }
 
-  void _handleMovementSelected(Movement? newMovement) {
-    _handleTextChange(newMovement?.text);
-    _handleCategoryChange(newMovement?.category);
-  }
-
   void _handleCategoryChange(Category? newCategory) {
     setState(() {
       category = newCategory;
@@ -112,6 +107,23 @@ class _MovementsFormState extends State<MovementsForm> {
     setState(() {
       incomeExpense = newIncomeExpense;
     });
+  }
+
+  void _handleMovementSelected(Movement? newMovement) {
+    _handleTextChange(newMovement?.text);
+    _handleCategoryChange(newMovement?.category);
+
+    if(newMovement != null) {
+      _handleIncomeExpenseChange(
+        IncomeExpense(
+          newMovement.amount <= 0
+            ? IncomeExpenseType.expense
+            : IncomeExpenseType.income
+        )
+      );
+      _handleTypeChange(newMovement.type);
+      amountController.text = newMovement.amount.abs().toString();
+    }
   }
 
   void _handleSave() {
