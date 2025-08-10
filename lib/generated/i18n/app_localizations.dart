@@ -820,6 +820,18 @@ abstract class AppLocalizations {
   /// **'Por mes'**
   String get reportsYearByMonthTitle;
 
+  /// No description provided for @reportsYearByMonthShowEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Mostrar meses sin datos'**
+  String get reportsYearByMonthShowEmpty;
+
+  /// No description provided for @reportsYearByMonthNotShowEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Ocultar meses sin datos'**
+  String get reportsYearByMonthNotShowEmpty;
+
   /// No description provided for @totals.
   ///
   /// In es, this message translates to:

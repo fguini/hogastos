@@ -170,6 +170,8 @@
     "reportsNoData": "No hay datos para este periodo de tiempo",
     "reportsYearTitle": "Reporte de balance anual",
     "reportsYearByMonthTitle": "Por mes",
+    "reportsYearByMonthShowEmpty": "Mostrar meses sin datos",
+    "reportsYearByMonthNotShowEmpty": "Ocultar meses sin datos",
     "totals": "Totales",
     "validationsIsRequired": "Es obligatorio",
     "validationsMaxLength": "El tamaño máximo es {length}",

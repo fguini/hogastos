@@ -417,6 +417,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportsYearByMonthTitle => 'Por mes';
 
   @override
+  String get reportsYearByMonthShowEmpty => 'Mostrar meses sin datos';
+
+  @override
+  String get reportsYearByMonthNotShowEmpty => 'Ocultar meses sin datos';
+
+  @override
   String get totals => 'Totales';
 
   @override
