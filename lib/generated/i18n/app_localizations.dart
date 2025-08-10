@@ -802,6 +802,12 @@ abstract class AppLocalizations {
   /// **'Crea un pin para acceder'**
   String get pageCreateUserTitle;
 
+  /// No description provided for @reportsNoData.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay datos para este periodo de tiempo'**
+  String get reportsNoData;
+
   /// No description provided for @reportsYearTitle.
   ///
   /// In es, this message translates to:

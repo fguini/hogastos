@@ -408,6 +408,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pageCreateUserTitle => 'Crea un pin para acceder';
 
   @override
+  String get reportsNoData => 'No hay datos para este periodo de tiempo';
+
+  @override
   String get reportsYearTitle => 'Reporte de balance anual';
 
   @override

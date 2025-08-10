@@ -11,6 +11,8 @@ import 'package:hogastos/models/dates/navigable_year.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
 
+import 'reports_layout.dart';
+
 class ReportsYear extends StatefulWidget {
   const ReportsYear({super.key});
 
@@ -63,16 +65,24 @@ class _ReportsYearState extends State<ReportsYear> {
                 onChange: _handleChange,
               ),
             ),
-            LayoutCard(
-              child: MovementTotals(
-                isLoading: _isLoading,
-                items: _movements,
-              ),
-            ),
-            LayoutCard(
-              child: ReportsYearByMonth(
-                isLoading: _isLoading,
-                movements: _movements,
+            ReportsLayout(
+              isLoading: _isLoading,
+              items: _movements,
+              child: Column(
+                children: [
+                  LayoutCard(
+                    child: MovementTotals(
+                      isLoading: _isLoading,
+                      items: _movements,
+                    ),
+                  ),
+                  LayoutCard(
+                    child: ReportsYearByMonth(
+                      isLoading: _isLoading,
+                      movements: _movements,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

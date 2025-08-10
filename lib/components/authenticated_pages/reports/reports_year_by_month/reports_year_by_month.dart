@@ -27,7 +27,7 @@ class ReportsYearByMonth extends StatelessWidget {
         ReportsYearByMonthChart(
           isLoading: isLoading,
           movements: movements,
-        )
+        ),
       ],
     );
   }
