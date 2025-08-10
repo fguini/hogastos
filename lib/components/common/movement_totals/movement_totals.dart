@@ -33,7 +33,6 @@ class MovementTotals extends StatelessWidget {
       .fold<double>(0, (amount1, amount2) => amount1 + amount2);
 
     var totals = incomes - expenses;
-    var maxAmount = max(incomes, expenses) + 40;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

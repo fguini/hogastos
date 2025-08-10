@@ -12,14 +12,14 @@ class ReportsYearByCategoryChart extends StatelessWidget {
   });
 
   Map<int, double> _getCategoriesBalance() {
-    var expenses = movements.where((m) => m.isComputableExpense);
+    var computable = movements.where((m) => m.isComputable);
     Map<int, double> categoriesBalance = {};
 
-    for(var movement in expenses) {
+    for(var movement in computable) {
       var category = movement.category.id;
       var categoryBalance = categoriesBalance[category] ?? 0;
 
-      categoriesBalance[category] = categoryBalance + movement.amount.abs();
+      categoriesBalance[category] = categoryBalance + movement.amount;
     }
 
     return categoriesBalance;
@@ -38,12 +38,16 @@ class ReportsYearByCategoryChart extends StatelessWidget {
     var balance = _getCategoriesBalance();
 
     for(var categoryId in balance.keys) {
-      data.add(
-        OrdinalData(
-          domain: categoryId.toString(),
-          measure: balance[categoryId],
-        ),
-      );
+      var measure = balance[categoryId]!;
+
+      if(measure <= 0) {
+        data.add(
+          OrdinalData(
+            domain: categoryId.toString(),
+            measure: measure.abs(),
+          ),
+        );
+      }
     }
 
     data.sort((d1, d2) {
