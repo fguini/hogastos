@@ -93,10 +93,8 @@ class MovementService {
       return [];
     }
 
-    final maxAmount = db.movement.amount.max();
-
     var query = db.selectOnly(db.movement, distinct: true)
-      ..addColumns([db.movement.description, db.movement.categoryId, db.movement.type, maxAmount])
+      ..addColumns([db.movement.description, db.movement.categoryId])
       ..limit(5)
       ..where(db.movement.description.contains(text!))
       ..groupBy([db.movement.description, db.movement.categoryId]);
@@ -105,21 +103,28 @@ class MovementService {
       .map((row) => (
         row.read(db.movement.description),
         row.read(db.movement.categoryId),
-        row.read(db.movement.type),
-        row.read(maxAmount),
       ))
       .get();
 
     var onlyValidRows = rows
       .where((row) => row.$1 != null && row.$2 != null)
-      .map((row) => (row.$1!, row.$2!, row.$3, row.$4));
+      .map((row) => (row.$1!, row.$2!));
     var categoriesIds = onlyValidRows.map((row) => row.$2).toList();
     var categories = await CategoryService().getByIds(categoriesIds);
 
+    var lastEqualRowsQuery = db.selectOnly(db.movement, distinct: true)
+      ..addColumns([db.movement.description, db.movement.categoryId, db.movement.amount, db.movement.type])
+      ..where(db.movement.description.isIn(onlyValidRows.map((row) => row.$1)));
+    var lastEqualRows = await lastEqualRowsQuery.get();
+
     return onlyValidRows.map((row) => Movement.partialPlusCategory(
       row.$1,
-      row.$3 ?? MovementType.computable,
-      row.$4 ?? 0,
+      lastEqualRows.where((equalRow) => equalRow.read(db.movement.description) == row.$1)
+        .lastOrNull
+        ?.read(db.movement.type) ?? MovementType.computable,
+    lastEqualRows.where((equalRow) => equalRow.read(db.movement.description) == row.$1)
+        .lastOrNull
+        ?.read(db.movement.amount) ?? 0,
       categories.firstWhere((c) => c.id == row.$2, orElse: () => categories.first)
     )).toList();
   }
