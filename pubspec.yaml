@@ -2,7 +2,7 @@ name: hogastos
 description: "Hogastos is an application to control your home accounts."
 publish_to: 'none'
 
-version: 1.4.0+5
+version: 1.4.1+6
 
 environment:
   sdk: ^3.7.0
