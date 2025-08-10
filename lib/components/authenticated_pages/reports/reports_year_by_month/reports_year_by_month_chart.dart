@@ -41,14 +41,14 @@ class ReportsYearByMonthChart extends StatelessWidget {
   }
 
   NumericGroup _getIncomeNumericGroup() {
-    var incomes = movements.where((m) => m.amount >= 0);
+    var incomes = movements.where((m) => m.isComputableIncome);
     var incomesByMonth = _getByMonth(incomes);
 
     return _getNumericGroup('incomes', incomesByMonth);
   }
 
   NumericGroup _getExpenseNumericGroup() {
-    var expenses = movements.where((m) => m.amount < 0);
+    var expenses = movements.where((m) => m.isComputableExpense);
     var expensesByMonth = _getByMonth(expenses);
 
     return _getNumericGroup('expenses', expensesByMonth);

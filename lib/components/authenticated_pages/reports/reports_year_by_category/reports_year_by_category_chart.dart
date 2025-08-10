@@ -12,7 +12,7 @@ class ReportsYearByCategoryChart extends StatelessWidget {
   });
 
   Map<int, double> _getCategoriesBalance() {
-    var expenses = movements.where((m) => m.amount <= 0);
+    var expenses = movements.where((m) => m.isComputableExpense);
     Map<int, double> categoriesBalance = {};
 
     for(var movement in expenses) {
@@ -75,7 +75,11 @@ class ReportsYearByCategoryChart extends StatelessWidget {
         configSeriesBar: ConfigSeriesBarO(
           customColor: (_, data, _) => _getCategoryColor(int.parse(data.domain)) ?? Colors.amber,
           domain: (_, data, _) => '${_getCategoryDescription(int.parse(data.domain))} ${localization.amountCurrency(data.measure?.toDouble() ?? 0)}',
+          cornerRadius: 50,
           showBarLabel: true,
+          barLabelDecorator: BarLabelDecoratorO(
+            labelPadding: 12,
+          ),
         ),
         groupList: [ _getOrdinalGroup() ],
       ),
