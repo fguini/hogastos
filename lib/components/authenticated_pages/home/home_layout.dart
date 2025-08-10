@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/home_bank_movements.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/home_date_navigator.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals.dart';
+import 'package:hogastos/components/common/date_navigator.dart';
+import 'package:hogastos/components/common/layout_card.dart';
+import 'package:hogastos/components/common/movement_totals/movement_totals.dart';
+import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/configurations/user_settings.dart';
+import 'package:hogastos/models/dates/navigable_date.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
-
-const cardPadding = EdgeInsets.symmetric(horizontal: 20, vertical: 10);
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -46,8 +46,8 @@ class _HomeLayoutState extends State<HomeLayout> {
     });
   }
 
-  void _handleChangeMonthAndYear(MonthAndYear monthAndYear)
-    => _loadMonthAndYearMovements(monthAndYear);
+  void _handleChangeMonthAndYear(NavigableDate monthAndYear)
+    => _loadMonthAndYearMovements(monthAndYear as MonthAndYear);
 
   @override
   void dispose() {
@@ -71,28 +71,22 @@ class _HomeLayoutState extends State<HomeLayout> {
     return Column(
       children: [
         Card(
-          child: HomeDateNavigator(
-            monthAndYear: _currentMonthAndYear,
+          child: DateNavigator<MonthAndYear>(
+            value: _currentMonthAndYear,
             onChange: _handleChangeMonthAndYear,
           ),
         ),
-        Card(
-          child: Container(
-            padding: cardPadding,
-            child: HomeTotals(
-              items: _movements,
-              isLoading: _isLoading,
-            ),
+        LayoutCard(
+          child: MovementTotals(
+            items: _movements,
+            isLoading: _isLoading,
           ),
         ),
         Flexible(
-          child: Card(
-            child: Container(
-              padding: cardPadding,
-              child: HomeBankMovements(
-                items: _movements,
-                isLoading: _isLoading,
-              ),
+          child: LayoutCard(
+            child: HomeBankMovements(
+              items: _movements,
+              isLoading: _isLoading,
             ),
           ),
         ),

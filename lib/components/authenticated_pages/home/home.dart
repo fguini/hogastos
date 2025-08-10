@@ -42,7 +42,7 @@ class Home extends StatelessWidget {
         ),
         ListTile(
           title: BodyText(AppLocalizations.of(context)!.actionsReadYearlyReport),
-          onTap: () => _goTo(context, RoutesNames.reportYear),
+          onTap: () => _goTo(context, RoutesNames.reportsYear),
         ),
       ]
   );

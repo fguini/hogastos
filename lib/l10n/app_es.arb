@@ -157,6 +157,7 @@
     "notComputable": "No computable",
     "notComputableShort": "NC",
     "pageCreateUserTitle": "Crea un pin para acceder",
+    "reportsYearTitle": "Reporte de balance anual",
     "totals": "Totales",
     "validationsIsRequired": "Es obligatorio",
     "validationsMaxLength": "El tamaño máximo es {length}",

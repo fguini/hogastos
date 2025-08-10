@@ -1,4 +1,4 @@
-import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
+import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/models/utils/serializable.dart';
 
 class FiltersOnInHome implements JsonConvert<FiltersOnInHome> {

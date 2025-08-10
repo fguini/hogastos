@@ -796,6 +796,12 @@ abstract class AppLocalizations {
   /// **'Crea un pin para acceder'**
   String get pageCreateUserTitle;
 
+  /// No description provided for @reportsYearTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Reporte de balance anual'**
+  String get reportsYearTitle;
+
   /// No description provided for @totals.
   ///
   /// In es, this message translates to:

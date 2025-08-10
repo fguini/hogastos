@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/models/utils/serializable.dart';
 
+import 'navigable_date.dart';
+
 enum Month {
   january,
   february,
@@ -17,7 +19,7 @@ enum Month {
   december,
 }
 
-class MonthAndYear implements JsonConvert<MonthAndYear> {
+class MonthAndYear extends NavigableDate implements JsonConvert<MonthAndYear> {
   Month month;
   int year;
 
@@ -44,6 +46,7 @@ class MonthAndYear implements JsonConvert<MonthAndYear> {
   int get _monthIndex => Month.values.indexOf(month);
   int get monthNumber => _monthIndex + 1;
 
+  @override
   String locale(BuildContext context) {
     return AppLocalizations.of(context)!.monthAndYear(
       DateTime(year, _monthIndex + 1),
@@ -51,11 +54,17 @@ class MonthAndYear implements JsonConvert<MonthAndYear> {
     );
   }
 
-  bool equals(MonthAndYear other) => other.month == month && other.year == year;
+  @override
+  bool equals(NavigableDate other) {
+    var theOther = other as MonthAndYear;
+
+    return theOther.month == month && theOther.year == year;
+  }
   bool isFutureThan(MonthAndYear other) => other.year < year || (
     other.year == year && other.monthNumber < monthNumber
   );
 
+  @override
   MonthAndYear getPrevious() {
     if(_monthIndex == 0) {
       return MonthAndYear(
@@ -70,6 +79,7 @@ class MonthAndYear implements JsonConvert<MonthAndYear> {
     );
   }
 
+  @override
   MonthAndYear getNext() {
     if(month == Month.december) {
       return MonthAndYear(

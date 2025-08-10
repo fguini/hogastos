@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
+import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/models/create_movement.dart';
 import 'package:hogastos/models/movement.dart';
 
@@ -42,14 +42,17 @@ class MovementService {
     return countResult ?? 0;
   }
 
+  JoinedSelectStatement<HasResultSet, dynamic> _byDateQuery(DateTime from, DateTime to) {
+    return db.select(db.movement).join([
+      innerJoin(db.category, db.category.id.equalsExp(db.movement.categoryId))
+    ])..where(db.movement.date.isBetweenValues(from, to));
+  }
+
   JoinedSelectStatement<HasResultSet, dynamic> _byMonthAndYearQuery(int month, int year) {
     var from = DateTime(year, month, 1, 0, 0, 0, 0, 0);
     var to = DateTime(year, month + 1, 0, 23, 59, 59, 999);
 
-    return db.select(db.movement).join([
-      innerJoin(db.category, db.category.id.equalsExp(db.movement.categoryId))
-    ])..where(db.movement.date.isBetweenValues(from, to));
-
+    return _byDateQuery(from, to);
   }
 
   Future<List<Movement>> getByMonthAndYear(int month, int year) async {
@@ -71,6 +74,18 @@ class MovementService {
         row.readTable(db.category)
       )
     ).toList());
+  }
+
+  Future<List<Movement>> getByYear(int year) async {
+    var from = DateTime(year, 1, 1, 0, 0, 0, 0, 0);
+    var to = DateTime(year + 1, 1, 0, 23, 59, 59, 999);
+
+    var rows = await _byDateQuery(from, to).get();
+
+    return rows.map((row) => _mapFromSql(
+      row.readTable(db.movement),
+      row.readTable(db.category),
+    )).toList();
   }
 
   Future<List<Movement>> getMovementSuggestions(String? text) async {

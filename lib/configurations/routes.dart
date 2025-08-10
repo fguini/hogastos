@@ -7,6 +7,7 @@ import 'package:hogastos/components/authenticated_pages/files/import_from_excel.
 import 'package:hogastos/components/authenticated_pages/home/home.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_create.dart';
 import 'package:hogastos/components/authenticated_pages/movements/movements_edit.dart';
+import 'package:hogastos/components/authenticated_pages/reports/reports_year.dart';
 import 'package:hogastos/components/public_pages/create_user/create_user_page.dart';
 import 'package:hogastos/components/public_pages/user_login/user_login_page.dart';
 
@@ -26,7 +27,7 @@ class RoutesNames {
   static String movementsCreate = '/movements/create';
   static String movementsEdit = '/movements/edit';
 
-  static String reportYear = '/report/year';
+  static String reportsYear = '/report/year';
 
   static String settings = '/settings';
 }
@@ -43,6 +44,7 @@ class Routes {
     RoutesNames.fileImport: const ImportFromExcel(),
     RoutesNames.movementsCreate: const MovementsCreate(),
     RoutesNames.movementsEdit: const MovementsEdit(),
+    RoutesNames.reportsYear: const ReportsYear()
   };
 
   Route _buildPage(RouteSettings settings, Widget pageWidget) {

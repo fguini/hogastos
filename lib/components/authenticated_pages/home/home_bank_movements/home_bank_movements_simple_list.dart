@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/components/authenticated_pages/home/home_bank_movements/movements_by_category.dart';
 import 'package:hogastos/components/common/rounded_list_tile.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/configurations/routes.dart';
 import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/date_helper.dart';
+import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/helpers/navigator_helper.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -21,6 +21,8 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var localization = LocalizationHelper.localization(context);
+
     return Flexible(
       child: Skeletonizer(
         enabled: isLoading,
@@ -41,7 +43,7 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
                     color: textColor,
                   ),
                   trailing: BodyText(
-                    AppLocalizations.of(context)!.amountCurrency(item.total),
+                    localization.amountCurrency(item.total),
                     color: textColor,
                   ),
                 ),
@@ -49,7 +51,7 @@ class HomeBankMovementsSimpleList extends StatelessWidget {
                   title: childItem.text,
                   subtitle: getFormattedDate(childItem.date),
                   trailing: BodyText(
-                    AppLocalizations.of(context)!.amountCurrency(childItem.amount),
+                    localization.amountCurrency(childItem.amount),
                   ),
                   onTap: () => NavigatorHelper.pushNamed(
                     context,

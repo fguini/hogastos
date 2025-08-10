@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
+import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/components/authenticated_pages/page_with_menu.dart';
 import 'package:hogastos/components/common/go_home_action.dart';
 import 'package:hogastos/components/common/rounded_list_tile.dart';

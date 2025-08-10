@@ -2,17 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hogastos/generated/i18n/app_localizations.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_totals/home_totals_bar.dart';
 import 'package:hogastos/components/texts/subtitle_text.dart';
 import 'package:hogastos/components/texts/title_text.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeTotals extends StatelessWidget {
+import 'movement_totals_bar.dart';
+
+class MovementTotals extends StatelessWidget {
   final List<Movement> items;
   final bool isLoading;
 
-  const HomeTotals({
+  const MovementTotals({
     super.key,
     required this.items,
     required this.isLoading
@@ -52,7 +53,7 @@ class HomeTotals extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10),
-        HomeTotalsBar(
+        MovementTotalsBar(
           text: localization.incomes,
           color: Theme.of(context).colorScheme.primary,
           spaceBetween: 10,
@@ -60,7 +61,7 @@ class HomeTotals extends StatelessWidget {
           value: incomes,
           isLoading: isLoading,
         ),
-        HomeTotalsBar(
+        MovementTotalsBar(
           text: localization.expenses,
           color: Theme.of(context).colorScheme.error,
           spaceBetween: 22,

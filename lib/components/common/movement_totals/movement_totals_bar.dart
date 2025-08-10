@@ -4,7 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeTotalsBar extends StatelessWidget {
+class MovementTotalsBar extends StatelessWidget {
   final String text;
   final Color color;
   final double value;
@@ -12,7 +12,7 @@ class HomeTotalsBar extends StatelessWidget {
   final double spaceBetween;
   final bool isLoading;
 
-  const HomeTotalsBar({
+  const MovementTotalsBar({
     super.key,
     required this.text,
     required this.color,

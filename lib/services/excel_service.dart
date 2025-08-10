@@ -4,7 +4,7 @@ import 'package:excel/excel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:hogastos/components/authenticated_pages/files/import_column_selector/column_selection.dart';
-import 'package:hogastos/components/authenticated_pages/home/home_date_navigator/month_and_year.dart';
+import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/models/category.dart';
