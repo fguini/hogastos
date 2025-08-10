@@ -7,7 +7,7 @@ import 'package:hogastos/components/texts/title_text.dart';
 import 'package:hogastos/models/movement.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import 'movement_totals_bar.dart';
+import 'movement_totals_chart.dart';
 
 class MovementTotals extends StatelessWidget {
   final List<Movement> items;
@@ -52,22 +52,9 @@ class MovementTotals extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10),
-        MovementTotalsBar(
-          text: localization.incomes,
-          color: Theme.of(context).colorScheme.primary,
-          spaceBetween: 10,
-          max: maxAmount,
-          value: incomes,
-          isLoading: isLoading,
-        ),
-        MovementTotalsBar(
-          text: localization.expenses,
-          color: Theme.of(context).colorScheme.error,
-          spaceBetween: 22,
-          max: maxAmount,
-          value: expenses,
-          isLoading: isLoading,
+        MovementTotalsChart(
+          expenses: expenses,
+          incomes: incomes,
         ),
       ],
     );
