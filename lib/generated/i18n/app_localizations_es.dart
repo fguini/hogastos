@@ -414,7 +414,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportsYearTitle => 'Reporte de balance anual';
 
   @override
-  String get reportsYearByMonthTitle => 'Por mes';
+  String get reportsYearByCategoryTitle => 'Gastos por categoría';
+
+  @override
+  String get reportsYearByMonthTitle => 'Mensual';
 
   @override
   String get reportsYearByMonthShowEmpty => 'Mostrar meses sin datos';

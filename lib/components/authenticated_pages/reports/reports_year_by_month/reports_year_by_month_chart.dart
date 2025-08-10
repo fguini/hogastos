@@ -7,13 +7,11 @@ import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/models/movement.dart';
 
 class ReportsYearByMonthChart extends StatelessWidget {
-  final bool isLoading;
   final List<Movement> movements;
   final bool showEmpty;
 
   const ReportsYearByMonthChart({
     super.key,
-    this.isLoading = false,
     required this.movements,
     required this.showEmpty,
   });
@@ -74,7 +72,7 @@ class ReportsYearByMonthChart extends StatelessWidget {
     var desiredTicks = maxMonth - minMonth;
 
     return AspectRatio(
-      aspectRatio: 2,
+      aspectRatio: 16 / 9,
       child: DChartLineN(
         animate: true,
         domainAxis: DomainAxisN(

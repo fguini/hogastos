@@ -814,10 +814,16 @@ abstract class AppLocalizations {
   /// **'Reporte de balance anual'**
   String get reportsYearTitle;
 
+  /// No description provided for @reportsYearByCategoryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Gastos por categoría'**
+  String get reportsYearByCategoryTitle;
+
   /// No description provided for @reportsYearByMonthTitle.
   ///
   /// In es, this message translates to:
-  /// **'Por mes'**
+  /// **'Mensual'**
   String get reportsYearByMonthTitle;
 
   /// No description provided for @reportsYearByMonthShowEmpty.

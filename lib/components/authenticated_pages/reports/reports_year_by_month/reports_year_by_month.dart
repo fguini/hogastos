@@ -35,6 +35,7 @@ class _ReportsYearByMonthState extends State<ReportsYearByMonth> {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SubtitleText(localization.reportsYearByMonthTitle),
             TextButton(
@@ -56,11 +57,12 @@ class _ReportsYearByMonthState extends State<ReportsYearByMonth> {
             ),
           ],
         ),
-        ReportsYearByMonthChart(
-          isLoading: widget.isLoading,
-          movements: widget.movements,
-          showEmpty: _showEmpty,
-        ),
+        widget.isLoading
+          ? CircularProgressIndicator()
+          : ReportsYearByMonthChart(
+            movements: widget.movements,
+            showEmpty: _showEmpty,
+          ),
       ],
     );
   }

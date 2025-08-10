@@ -12,6 +12,7 @@ import 'package:hogastos/models/movement.dart';
 import 'package:hogastos/services/movement_service.dart';
 
 import 'reports_layout.dart';
+import 'reports_year_by_category/reports_year_by_category.dart';
 
 class ReportsYear extends StatefulWidget {
   const ReportsYear({super.key});
@@ -53,40 +54,47 @@ class _ReportsYearState extends State<ReportsYear> {
   Widget build(BuildContext context) {
     return PageWithMenu(
       title: LocalizationHelper.localization(context).reportsYearTitle,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              child: DateNavigator<NavigableYear>(
-                value: _year,
-                onChange: _handleChange,
-              ),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Card(
+            child: DateNavigator<NavigableYear>(
+              value: _year,
+              onChange: _handleChange,
             ),
-            ReportsLayout(
-              isLoading: _isLoading,
-              items: _movements,
-              child: Column(
-                children: [
-                  LayoutCard(
-                    child: MovementTotals(
-                      isLoading: _isLoading,
-                      items: _movements,
+          ),
+          ReportsLayout(
+            isLoading: _isLoading,
+            items: _movements,
+            child: Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    LayoutCard(
+                      child: MovementTotals(
+                        isLoading: _isLoading,
+                        items: _movements,
+                      ),
                     ),
-                  ),
-                  LayoutCard(
-                    child: ReportsYearByMonth(
-                      isLoading: _isLoading,
-                      movements: _movements,
+                    LayoutCard(
+                      child: ReportsYearByMonth(
+                        isLoading: _isLoading,
+                        movements: _movements,
+                      ),
                     ),
-                  ),
-                ],
+                    LayoutCard(
+                      child: ReportsYearByCategory(
+                        movements: _movements,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            )
+          ),
+        ],
       ),
       leading: GoHomeAction(popUntilHome: true),
     );
