@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/authenticated_pages/page_with_menu.dart';
+import 'package:hogastos/components/authenticated_pages/reports/reports_year_by_month/reports_year_by_month.dart';
 import 'package:hogastos/components/common/date_navigator.dart';
 import 'package:hogastos/components/common/go_home_action.dart';
 import 'package:hogastos/components/common/layout_card.dart';
@@ -50,24 +51,32 @@ class _ReportsYearState extends State<ReportsYear> {
   Widget build(BuildContext context) {
     return PageWithMenu(
       title: LocalizationHelper.localization(context).reportsYearTitle,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Card(
-            child: DateNavigator<NavigableYear>(
-              value: _year,
-              onChange: _handleChange,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              child: DateNavigator<NavigableYear>(
+                value: _year,
+                onChange: _handleChange,
+              ),
             ),
-          ),
-          LayoutCard(
-            child: MovementTotals(
-              isLoading: _isLoading,
-              items: _movements,
+            LayoutCard(
+              child: MovementTotals(
+                isLoading: _isLoading,
+                items: _movements,
+              ),
             ),
-          )
-        ],
+            LayoutCard(
+              child: ReportsYearByMonth(
+                isLoading: _isLoading,
+                movements: _movements,
+              ),
+            ),
+          ],
+        ),
       ),
       leading: GoHomeAction(popUntilHome: true),
     );

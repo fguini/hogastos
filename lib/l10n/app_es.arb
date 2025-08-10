@@ -123,6 +123,16 @@
     "listUngroup": "Desagrupar lista",
     "income": "Ingreso",
     "incomes": "Ingresos",
+    "month": "{monthDate}",
+    "@month": {
+        "description": "Month name",
+        "placeholders": {
+            "monthDate": {
+                "type": "DateTime",
+                "format": "MMM"
+            }
+        }
+    },
     "monthAndYear": "{monthDate} {year}",
     "@monthAndYear": {
         "description": "Short month and year text",
@@ -158,6 +168,7 @@
     "notComputableShort": "NC",
     "pageCreateUserTitle": "Crea un pin para acceder",
     "reportsYearTitle": "Reporte de balance anual",
+    "reportsYearByMonthTitle": "Por mes",
     "totals": "Totales",
     "validationsIsRequired": "Es obligatorio",
     "validationsMaxLength": "El tamaño máximo es {length}",

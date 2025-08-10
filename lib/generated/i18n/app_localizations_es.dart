@@ -353,6 +353,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get incomes => 'Ingresos';
 
   @override
+  String month(DateTime monthDate) {
+    final intl.DateFormat monthDateDateFormat = intl.DateFormat.MMM(localeName);
+    final String monthDateString = monthDateDateFormat.format(monthDate);
+
+    return '$monthDateString';
+  }
+
+  @override
   String monthAndYear(DateTime monthDate, int year) {
     final intl.DateFormat monthDateDateFormat = intl.DateFormat.MMM(localeName);
     final String monthDateString = monthDateDateFormat.format(monthDate);
@@ -401,6 +409,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportsYearTitle => 'Reporte de balance anual';
+
+  @override
+  String get reportsYearByMonthTitle => 'Por mes';
 
   @override
   String get totals => 'Totales';

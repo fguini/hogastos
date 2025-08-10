@@ -718,6 +718,12 @@ abstract class AppLocalizations {
   /// **'Ingresos'**
   String get incomes;
 
+  /// Month name
+  ///
+  /// In es, this message translates to:
+  /// **'{monthDate}'**
+  String month(DateTime monthDate);
+
   /// Short month and year text
   ///
   /// In es, this message translates to:
@@ -801,6 +807,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Reporte de balance anual'**
   String get reportsYearTitle;
+
+  /// No description provided for @reportsYearByMonthTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Por mes'**
+  String get reportsYearByMonthTitle;
 
   /// No description provided for @totals.
   ///
