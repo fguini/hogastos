@@ -26,7 +26,7 @@ class ImportColumnSelector extends StatelessWidget {
     required this.onHandleApplyToAll,
   });
 
-  _handleColumnSelectionChange(String table)
+  void Function(Map<String, ExcelColumnDefinition?>) _handleColumnSelectionChange(String table)
     => (Map<String, ExcelColumnDefinition?> newColumnSelection)
       => onColumnSelectionChanged(table, newColumnSelection);
 

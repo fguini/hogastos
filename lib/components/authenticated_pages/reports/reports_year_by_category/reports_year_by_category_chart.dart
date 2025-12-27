@@ -1,5 +1,6 @@
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/models/movement.dart';
 
@@ -67,6 +68,7 @@ class ReportsYearByCategoryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     var localization = LocalizationHelper.localization(context);
 
     return AspectRatio(
@@ -83,6 +85,7 @@ class ReportsYearByCategoryChart extends StatelessWidget {
           showBarLabel: true,
           barLabelDecorator: BarLabelDecoratorO(
             labelPadding: 12,
+            outsideLabelStyle: LabelStyle(color: getDefaultThemeTextColor(theme)),
           ),
         ),
         groupList: [ _getOrdinalGroup() ],

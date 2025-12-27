@@ -173,6 +173,7 @@
     "reportsYearByMonthTitle": "Mensual",
     "reportsYearByMonthShowEmpty": "Mostrar meses sin datos",
     "reportsYearByMonthNotShowEmpty": "Ocultar meses sin datos",
+    "settingsTheme": "Tema",
     "totals": "Totales",
     "validationsIsRequired": "Es obligatorio",
     "validationsMaxLength": "El tamaño máximo es {length}",

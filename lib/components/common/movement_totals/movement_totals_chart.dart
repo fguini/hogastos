@@ -1,5 +1,6 @@
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 
 const _expenseId = 'expense';
@@ -19,6 +20,7 @@ class MovementTotalsChart extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var localization = LocalizationHelper.localization(context);
+    var themeTextColor = getDefaultThemeTextColor(theme);
 
     return AspectRatio(
       aspectRatio: 4,
@@ -29,7 +31,7 @@ class MovementTotalsChart extends StatelessWidget {
         domainAxis: DomainAxisO(
           showAxisLine: false,
           labelStyle: LabelStyle(
-            color: Colors.black87,
+            color: themeTextColor,
             fontSize: 16,
           ),
           tickLabelJustification: TickLabelJustification.outside,
@@ -52,6 +54,7 @@ class MovementTotalsChart extends StatelessWidget {
           barLabelDecorator: BarLabelDecoratorO(
             labelAnchor: BarLabelAnchor.end,
             labelPadding: 15,
+            outsideLabelStyle: LabelStyle(color: themeTextColor),
           ),
         ),
         groupList: [

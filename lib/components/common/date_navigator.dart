@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hogastos/components/texts/body_text.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/models/dates/navigable_date.dart';
 
 class DateNavigator<TDate extends NavigableDate> extends StatefulWidget {
@@ -63,8 +64,10 @@ class _DateNavigatorState<TDate extends NavigableDate> extends State<DateNavigat
             child: BodyText(
               date.locale(context),
               color: date.equals(widget.value)
-                ? theme.primaryColorDark
-                : Colors.black54,
+                ? theme.colorScheme.brightness == Brightness.dark
+                    ? theme.primaryColorLight
+                    : theme.primaryColorDark
+                : getDefaultThemeTextColor(theme),
             ),
           )),
         IconButton(onPressed: _handleNext, icon: Icon(Icons.arrow_right)),

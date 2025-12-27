@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hogastos/configurations/themes.dart';
 
-Color getTextColor(Color backgroundColor) =>
-  backgroundColor.computeLuminance() > 0.5
-    ? Colors.black87
-    : Colors.white70;
+Color getTextColor(Color backgroundColor) => backgroundColor.computeLuminance() > 0.5
+  ? lightTheme.textTheme.bodyMedium?.color ?? Colors.black87
+  : darkTheme.textTheme.bodyMedium?.color ?? Colors.white70;
+
+Color getDefaultThemeTextColor(ThemeData theme) => theme.textTheme.bodyMedium?.color
+  ?? Colors.black87;
 
 String getColorStringSignature(Color color) => [
   color.a,

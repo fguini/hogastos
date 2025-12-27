@@ -426,6 +426,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportsYearByMonthNotShowEmpty => 'Ocultar meses sin datos';
 
   @override
+  String get settingsTheme => 'Tema';
+
+  @override
   String get totals => 'Totales';
 
   @override

@@ -10,10 +10,21 @@ class InputText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
+    var textColor = enabled ? Colors.black54 : Colors.black26;
+    if (theme.textTheme.bodyMedium != null) {
+      textColor = theme.textTheme.bodyMedium!.color!.withAlpha(
+        enabled
+          ? 100
+          : 60
+      );
+    }
+
     return BaseText(
       text,
       fontSize: 18,
-      color: enabled ? Colors.black54 : Colors.black26,
+      color: textColor,
     );
   }
 }

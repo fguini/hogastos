@@ -838,6 +838,12 @@ abstract class AppLocalizations {
   /// **'Ocultar meses sin datos'**
   String get reportsYearByMonthNotShowEmpty;
 
+  /// No description provided for @settingsTheme.
+  ///
+  /// In es, this message translates to:
+  /// **'Tema'**
+  String get settingsTheme;
+
   /// No description provided for @totals.
   ///
   /// In es, this message translates to:

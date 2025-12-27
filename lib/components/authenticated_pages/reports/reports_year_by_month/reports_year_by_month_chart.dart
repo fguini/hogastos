@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:hogastos/helpers/color_helper.dart';
 import 'package:hogastos/helpers/localization_helper.dart';
 import 'package:hogastos/models/dates/month_and_year.dart';
 import 'package:hogastos/models/movement.dart';
@@ -56,6 +57,7 @@ class ReportsYearByMonthChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     var localization = LocalizationHelper.localization(context);
 
     var incomesNumericGroup = _getIncomeNumericGroup();
@@ -71,6 +73,8 @@ class ReportsYearByMonthChart extends StatelessWidget {
 
     var desiredTicks = maxMonth - minMonth;
 
+    var labelTextColor = getDefaultThemeTextColor(theme);
+
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: DChartLineN(
@@ -84,10 +88,12 @@ class ReportsYearByMonthChart extends StatelessWidget {
           tickLabelFormatter: (num? num) => num == null
             ? ''
             : localization.month(DateTime(DateTime.now().year, num.toInt() + 1)),
+          labelStyle: LabelStyle(color: labelTextColor)
         ),
         measureAxis: MeasureAxis(
           numericTickProvider: NumericTickProvider(desiredTickCount: 5),
           showAxisLine: false,
+          labelStyle: LabelStyle(color: labelTextColor),
         ),
         groupList: [ incomesNumericGroup, expensesNumericGroup ],
       ),

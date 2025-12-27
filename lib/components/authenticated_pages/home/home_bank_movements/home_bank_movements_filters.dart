@@ -18,10 +18,14 @@ class _FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var offBackgroundColor = Colors.white70;
+    var theme = Theme.of(context);
+
     var finalBackgroundColor = isTurnedOn
       ? backgroundColor.withAlpha(80)
-      : offBackgroundColor;
+      : Colors.transparent;
+    var textColor = isTurnedOn
+      ? getTextColor(finalBackgroundColor)
+      : getDefaultThemeTextColor(theme);
 
     return Expanded(
       child: ElevatedButton(
@@ -29,15 +33,10 @@ class _FilterButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(finalBackgroundColor),
           elevation: WidgetStateProperty.all(isTurnedOn ? 1 : 0),
-          side: WidgetStateProperty.all(
-            BorderSide(
-              color: backgroundColor
-            )
-          ),
         ),
         child: BodyText(
           text,
-          color: getTextColor(finalBackgroundColor),
+          color: textColor,
         ),
       ),
     );

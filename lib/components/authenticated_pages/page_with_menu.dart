@@ -75,7 +75,6 @@ class _PageWithMenuState extends State<PageWithMenu> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white70,
         title: BodyText(widget.title),
         leading: widget.leading,
         actions: [

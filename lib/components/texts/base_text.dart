@@ -10,17 +10,20 @@ class BaseText extends StatelessWidget {
     {
       super.key,
       required this.fontSize,
-      this.color = Colors.black87,
+      this.color,
     }
   );
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textColor = color ?? theme.textTheme.bodyMedium?.color ?? Colors.black87;
+
     return Text(
       text,
       style: TextStyle(
         fontSize: fontSize,
-        color: color,
+        color: textColor,
       ),
     );
   }
