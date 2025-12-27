@@ -24,16 +24,13 @@ class AppContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isDarkMode = true;
-    var themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light; // ThemeMode.system
-
     return MaterialApp(
       title: 'Hogastos',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: themeMode,
+      themeMode: ThemeMode.system,
       initialRoute: RoutesNames.home,
       onGenerateRoute: Routes().onGenerateRoute,
     );

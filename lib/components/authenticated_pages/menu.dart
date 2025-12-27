@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hogastos/components/common/error_elevated_button.dart';
-import 'package:hogastos/components/common/rounded_list_tile.dart';
-import 'package:hogastos/generated/i18n/app_localizations.dart';
 import 'package:hogastos/components/animations/dialog_transition.dart';
 import 'package:hogastos/components/texts/body_text.dart';
 import 'package:hogastos/configurations/authentication.dart';
