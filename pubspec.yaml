@@ -29,7 +29,6 @@ dependencies:
   intl: ^0.20.2
   jiffy: ^6.4.3
   local_auth: ^2.3.0
-  local_auth_android: ^1.0.46
   pin_code_fields: ^8.0.1
   skeletonizer: ^2.1.0+1
 
