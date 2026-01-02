@@ -7,6 +7,10 @@ version: 1.5.1+8
 environment:
   sdk: ^3.7.0
 
+platforms:
+  android:
+  ios:
+
 dependencies:
   flutter:
     sdk: flutter
@@ -39,3 +43,8 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+
+flutter_launcher_icons:
+  ios: true
+  image_path: "assets/icon/icon.png"
+  remove_alpha_ios: true
